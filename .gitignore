@@ -1,0 +1,8 @@
+/node_modules
+/.next
+/.vs
+
+*.sh
+*.lock
+*.log
+*.suo

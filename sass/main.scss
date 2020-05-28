@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+// Colours
+$red: #920000;
+$blue: #00b0e0;
+$inverted: rgb(63, 54, 54);
+
+$grey-lighter: rgb(50, 50, 50);
+$grey: rgb(30, 30, 30);
+$grey-darker: rgb(26, 24, 24);
+$white: #FFFFFF;
+$bright: rgb(228, 228, 228);
+
+// Setting the derived variables
+$primary: $blue;
+$body-color: $grey;
+$primary-invert: $white;
+$title-color: $grey;
+$input-icon-color: $grey;
+
+$body-background-color: $bright;
+$input-color: $grey;
+
+$column-gap: 0.75rem;
+$family-sans-serif: "Helvetica", "Arial", sans-serif;
+
+// Import the rest of Bulma
+@import "../node_modules/bulma/bulma";
+@import "../node_modules/bulma/bulma.sass";  
