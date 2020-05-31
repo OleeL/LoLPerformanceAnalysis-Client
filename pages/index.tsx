@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import styled from 'styled-components';
-import { stringToRegion, getSummonerId } from "../Shared/Requests";
+import GetSummonerData from "../Shared/Requests";
 
 const Page = styled.div`
     padding: 30vh 0;
@@ -15,12 +15,7 @@ const SummonerInput = styled.input`
     margin: 0px 0px 10px;
 `
 
-const DoThing = (summonerName: string, serverRegion: string) =>
-{
-    console.log("Welcome "+summonerName+" from "+serverRegion);
-    
-    console.log(getSummonerId(summonerName, stringToRegion(serverRegion)));
-}
+const GetSummonerName = async (summonerName: string, serverRegion: string) => console.log(await GetSummonerData(summonerName, serverRegion));
 
 
 const index = () => {
@@ -29,7 +24,7 @@ const index = () => {
     
     const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        DoThing(summonerName, serverRegion);
+        GetSummonerName(summonerName, serverRegion);
     }
     
     return (

@@ -21,7 +21,7 @@ const MyApp = (props: AppProps<{}>) => {
         if (html && html.length > 0) {
             html[0].setAttribute('lang', 'en');
         }
-
+        
         const timer = setTimeout(async () => {
             await handleConnection();
         });
