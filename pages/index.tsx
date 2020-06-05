@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import styled from 'styled-components';
-import GetSummonerData from "../Shared/Requests";
+import { GetChampionRotations, GetSummonerData } from "../Shared/Requests";
 
 const Page = styled.div`
     padding: 30vh 0;
@@ -15,7 +15,10 @@ const SummonerInput = styled.input`
     margin: 0px 0px 10px;
 `
 
-const GetSummonerName = async (summonerName: string, serverRegion: string) => console.log(await GetSummonerData(summonerName, serverRegion));
+const GetSummonerName = async (summonerName: string, serverRegion: string) => {
+    console.log(await GetSummonerData(summonerName, serverRegion));
+    console.log(await GetChampionRotations());
+}
 
 
 const index = () => {
