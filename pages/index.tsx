@@ -8,16 +8,34 @@ const Page = styled.div`
 
 const Title = styled.h1`
     text-align: center;
-    margin: 20px;
 `
 
 const SummonerInput = styled.input`
     margin: 0px 0px 10px;
 `
 
+const ImageContainer = styled.div`
+    text-align: center;
+    width: 100vw;
+    overflow: hidden;
+    margin: 4px 0px 10px 0px;
+
+`
+
+const Image = styled.img`
+    border-radius: 400px;
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    width: 100px;
+    margin: 0;
+
+
+`
+
 const GetSummonerName = async (summonerName: string, serverRegion: string) => {
     console.log(await GetSummonerData(summonerName, serverRegion));
-    console.log(await GetChampionRotations());
+    console.log(await GetChampionRotations(serverRegion));
 }
 
 
@@ -36,6 +54,9 @@ const index = () => {
                 <div className="column is-full">
                         <Title className="title">Olangutan Analytics</Title>
                 </div>
+                <ImageContainer>
+                    <Image src={"data/images/Olangutan.jpg"} alt="Olangutan" />
+                </ImageContainer>
                 <form className="columns is-mobile is-multiline is-centered is-vcentered" onSubmit={e => HandleForm(e)}>
                     <div className="column is-full">
                         <SummonerInput className="input is-rounded is-focused" value={summonerName} onChange={ e => setSummonerName(e.target.value) } type="text" placeholder="Summoner Name"/>
