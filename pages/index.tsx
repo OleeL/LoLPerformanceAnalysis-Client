@@ -1,6 +1,7 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import styled from 'styled-components';
 import { GetChampionRotations, GetSummonerData } from "../Shared/Requests";
+import { useStore } from "../Shared/StoreContext";
 
 const Page = styled.div`
     padding: 30vh 0;
@@ -19,7 +20,6 @@ const ImageContainer = styled.div`
     width: 100vw;
     overflow: hidden;
     margin: 4px 0px 10px 0px;
-
 `
 
 const Image = styled.img`
@@ -29,37 +29,36 @@ const Image = styled.img`
     border-style: solid;
     width: 100px;
     margin: 0;
-
-
 `
 
-const GetSummonerName = async (summonerName: string, serverRegion: string) => {
-    console.log(await GetSummonerData(summonerName, serverRegion));
-    console.log(await GetChampionRotations(serverRegion));
-}
+const GetSummonerName = (summonerName: string, serverRegion: string) => 
+    GetSummonerData(summonerName, serverRegion);
 
 
 const index = () => {
     const [summonerName, setSummonerName] = useState("");
     const [serverRegion, setServerRegion] = useState("EUW");
+
+    const store = useStore();
     
-    const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const HandleForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        GetSummonerName(summonerName, serverRegion);
+        store.setPlayerId(await GetSummonerName(summonerName, serverRegion));
+        console.log(store.playerId);
     }
-    
+
     return (
         <>
             <Page className="columns is-mobile is-multiline is-centered is-vcentered">
                 <div className="column is-full">
-                        <Title className="title">Olangutan Analytics</Title>
+                    <Title className="title">Olangutan Analytics</Title>
                 </div>
                 <ImageContainer>
                     <Image src={"data/images/Olangutan.jpg"} alt="Olangutan" />
                 </ImageContainer>
                 <form className="columns is-mobile is-multiline is-centered is-vcentered" onSubmit={e => HandleForm(e)}>
                     <div className="column is-full">
-                        <SummonerInput className="input is-rounded is-focused" value={summonerName} onChange={ e => setSummonerName(e.target.value) } type="text" placeholder="Summoner Name"/>
+                        <SummonerInput className="input is-rounded is-focused" value={summonerName} onChange={e => setSummonerName(e.target.value)} type="text" placeholder="Summoner Name" />
                     </div>
                     <div className="column is-one-quarter">
                         <div className="select">
@@ -83,7 +82,7 @@ const index = () => {
                     </div>
                 </form>
             </Page>
-            <footer className="footer" style={{height:"0", position:"absolute", bottom: "0", width: "100%"}}>
+            <footer className="footer" style={{ height: "0", position: "absolute", bottom: "0", width: "100%" }}>
                 <div className="content has-text-centered">
                     <p>
                         <strong>Olangutan Analytics</strong> isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.

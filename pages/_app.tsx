@@ -5,7 +5,7 @@ import { StoreProvider, useStore } from '../Shared/StoreContext';
 
 import {AppProps} from 'next/app'
 import '../sass/main.scss'
-import handleConnection from '../Shared/SignalR';
+import handleConnection, { SignalRReconnect } from '../Shared/SignalR';
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -21,11 +21,9 @@ const MyApp = (props: AppProps<{}>) => {
         if (html && html.length > 0) {
             html[0].setAttribute('lang', 'en');
         }
-        
         const timer = setTimeout(async () => {
-            await handleConnection();
+            await SignalRReconnect(store);
         });
-        
 
         return () => clearTimeout(timer)
         
