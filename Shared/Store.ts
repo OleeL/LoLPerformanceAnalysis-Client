@@ -1,12 +1,12 @@
 
 import {observable} from 'mobx';
+import { Summoner } from './GameInterfaces';
 
 export const createStore = () => {
     const store = observable({
-        playerId: "" as string,
-        
-        setPlayerId: (id: string) => {
-            store.playerId = id;
+        summoner: {} as Summoner,
+        setSummoner: (id: Summoner) => {
+            store.summoner = id;
         }
     });
     

@@ -1,8 +1,9 @@
 import { SendRequest } from "./SignalR";
+import { Summoner } from "./GameInterfaces";
 
-export const GetSummonerData = (summonerName: string, serverRegion: string): Promise<string> =>
-    SendRequest("GetSummonerName", [summonerName, serverRegion]);
+export const SendGetSummoner = (summonerName: string, serverRegion: string): Promise<Summoner> =>
+    SendRequest("GetSummoner", [summonerName, serverRegion]);
 
-export const GetChampionRotations = (serverRegion): Promise<string> =>
+export const SendGetChampionRotations = (serverRegion): Promise<string> =>
     SendRequest("GetChampionRotations", [serverRegion]);
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FormEvent } from "react";
 import styled from 'styled-components';
-import { GetChampionRotations, GetSummonerData } from "../Shared/Requests";
+import { SendGetSummoner } from "../Shared/Requests";
 import { useStore } from "../Shared/StoreContext";
 
 const Page = styled.div`
@@ -31,10 +31,6 @@ const Image = styled.img`
     margin: 0;
 `
 
-const GetSummonerName = (summonerName: string, serverRegion: string) => 
-    GetSummonerData(summonerName, serverRegion);
-
-
 const index = () => {
     const [summonerName, setSummonerName] = useState("");
     const [serverRegion, setServerRegion] = useState("EUW");
@@ -43,8 +39,11 @@ const index = () => {
     
     const HandleForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        store.setPlayerId(await GetSummonerName(summonerName, serverRegion));
-        console.log(store.playerId);
+        const results = await SendGetSummoner(summonerName, serverRegion);
+        store.setSummoner(results);
+        console.log("Name: "+results.name);
+        console.log("Level: "+results.summonerLevel);
+        console.log("AccountId: "+results.accountId);
     }
 
     return (
