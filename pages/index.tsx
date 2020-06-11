@@ -2,6 +2,7 @@ import React, { useState, useEffect, FormEvent } from "react";
 import styled from 'styled-components';
 import { SendGetSummoner } from "../Shared/Requests";
 import { useStore } from "../Shared/StoreContext";
+import { useRouter } from 'next/router'
 
 const Page = styled.div`
     padding: 30vh 0;
@@ -35,15 +36,13 @@ const index = () => {
     const [summonerName, setSummonerName] = useState("");
     const [serverRegion, setServerRegion] = useState("EUW");
 
+    const Router = useRouter();
     const store = useStore();
     
     const HandleForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const results = await SendGetSummoner(summonerName, serverRegion);
-        store.setSummoner(results);
-        console.log("Name: "+results.name);
-        console.log("Level: "+results.summonerLevel);
-        console.log("AccountId: "+results.accountId);
+        store.setSummoner(await SendGetSummoner(summonerName, serverRegion));
+        Router.replace("/data");
     }
 
     return (
