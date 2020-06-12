@@ -2,7 +2,7 @@ import * as signalR from "@microsoft/signalr";
 import { TStore } from "./Store";
 import { OnGameUpdate } from "./SignalRListeners";
 
-let connection: signalR.HubConnection | null = null;
+export let connection: signalR.HubConnection | null = null;
 
 const handleConnection = async (store: TStore) => {
     
@@ -19,7 +19,10 @@ const handleConnection = async (store: TStore) => {
         connection.serverTimeoutInMilliseconds = 100000; // 100 second
 
         const startSignalRConnection = connection => connection.start()
-            .then(() => console.info('Websocket Connection Established'))
+            .then(() => {
+                console.info('Websocket Connection Established')
+                store.connected = true;
+            })
             .catch(err => console.error('SignalR Connection Error: ', err));
 
         // re-establish the connection if connection dropped
@@ -39,6 +42,7 @@ const CreateListeners = (store: TStore) => {
 }
 
 const OnDisconnect = (store: TStore) => {
+    store.connected = false;
     connection = null;
     setTimeout(() => SignalRReconnect(store), 500);
 }
@@ -62,10 +66,8 @@ export const SendRequest = async (funcName: string, parameters: any): Promise<an
         if (connection.state !== signalR.HubConnectionState.Connected) {
             return;
         }
-        if (connection && connection.state === signalR.HubConnectionState.Connected) {
-            const result = await connection.invoke<void>(funcName, ...parameters);
-            return result;
-        }    
+        const result = await connection.invoke<void>(funcName, ...parameters);
+        return result;
     }
     catch {
         return;

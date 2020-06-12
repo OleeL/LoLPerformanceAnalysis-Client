@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { SendGetSummoner } from "../Shared/Requests";
 import { useStore } from "../Shared/StoreContext";
 import { useRouter } from 'next/router'
+import { TStore } from "../Shared/Store";
 
 const Page = styled.div`
     padding: 30vh 0;
@@ -37,12 +38,13 @@ const index = () => {
     const [serverRegion, setServerRegion] = useState("EUW");
 
     const Router = useRouter();
-    const store = useStore();
+    const store: TStore = useStore();
     
     const HandleForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        store.setSummoner(await SendGetSummoner(summonerName, serverRegion));
-        Router.replace("/data");
+        store.setSummoner(await SendGetSummoner(summonerName, serverRegion), serverRegion);
+        // Router.replace("/summoner/"+store.summoner.name);
+        Router.replace("/"+serverRegion+"/"+summonerName);
     }
 
     return (

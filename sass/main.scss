@@ -18,7 +18,7 @@ $primary-invert: $white;
 $title-color: $grey;
 $input-icon-color: $grey;
 
-$body-background-color: $bright;
+$body-background-color: $white;
 $input-color: $grey;
 
 $column-gap: 0.75rem;
@@ -27,3 +27,4 @@ $family-sans-serif: "Helvetica", "Arial", sans-serif;
 // Import the rest of Bulma
 @import "../node_modules/bulma/bulma";
 @import "../node_modules/bulma/bulma.sass";  
+@import "../node_modules/bulma-pageloader/dist/css/bulma-pageloader.min.css";
