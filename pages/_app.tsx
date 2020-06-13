@@ -1,17 +1,18 @@
-import React, {useEffect} from 'react'
-import {createGlobalStyle} from "styled-components"
 import { StoreProvider, useStore } from '../Shared/StoreContext';
+import { SignalRReconnect } from '../Shared/SignalR';
+import {createGlobalStyle} from "styled-components";
+import React, {useEffect} from 'react';
+import {AppProps} from 'next/app';
 
-
-import {AppProps} from 'next/app'
-import '../sass/main.scss'
-import handleConnection, { SignalRReconnect } from '../Shared/SignalR';
+import 'mobx-react-lite/batchingForReactDom';
+import '../sass/main.scss';
 
 const GlobalStyles = createGlobalStyle`
     body {
         margin: 0;
     }
 `;
+
 const MyApp = (props: AppProps<{}>) => {
     
     useEffect(() => {

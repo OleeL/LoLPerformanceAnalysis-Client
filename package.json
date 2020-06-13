@@ -23,7 +23,6 @@
     "react-dom": "^16.13.1",
     "react-spring": "^8.0.27",
     "styled-components": "^5.1.0",
-    "twisted": "^1.23.7",
     "typescript": "^3.9.3"
   },
   "devDependencies": {

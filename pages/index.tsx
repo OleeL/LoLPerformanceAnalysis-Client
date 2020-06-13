@@ -5,6 +5,8 @@ import { useStore } from "../Shared/StoreContext";
 import { useRouter } from 'next/router'
 import { TStore } from "../Shared/Store";
 
+const Primary = "#00b0e0";
+
 const Page = styled.div`
     padding: 30vh 0;
 `;
@@ -26,11 +28,20 @@ const ImageContainer = styled.div`
 
 const Image = styled.img`
     border-radius: 400px;
-    border-color: black;
+    border-color: ${Primary};
     border-width: 1px;
     border-style: solid;
     width: 100px;
     margin: 0;
+`
+
+const Footer = styled.footer`
+    height: 0;
+    position: absolute;
+    bottom: 0; 
+    width: 100%;
+    background: ${Primary};
+    color: white;
 `
 
 const index = () => {
@@ -42,8 +53,6 @@ const index = () => {
     
     const HandleForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        store.setSummoner(await SendGetSummoner(summonerName, serverRegion), serverRegion);
-        // Router.replace("/summoner/"+store.summoner.name);
         Router.replace("/"+serverRegion+"/"+summonerName);
     }
 
@@ -82,13 +91,13 @@ const index = () => {
                     </div>
                 </form>
             </Page>
-            <footer className="footer" style={{ height: "0", position: "absolute", bottom: "0", width: "100%" }}>
+            <Footer className="footer">
                 <div className="content has-text-centered">
                     <p>
-                        <strong>Olangutan Analytics</strong> isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+                        <b>Olangutan Analytics</b> isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
                     </p>
                 </div>
-            </footer>
+            </Footer>
         </>
     );
 }
