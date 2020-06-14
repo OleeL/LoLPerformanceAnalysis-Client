@@ -5,6 +5,7 @@ import { useStore } from "../../Shared/StoreContext";
 import { SendGetSummoner } from '../../Shared/Requests';
 import { TStore } from '../../Shared/Store';
 import { useObserver } from 'mobx-react-lite';
+import { getLeagueType, LeagueType } from '../../Shared/GameInterfaces';
 
 const SummonerIconSize = 60;
 
@@ -18,7 +19,7 @@ const Tile = styled.article`
     box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
 `
 
-const Image = styled.img`
+const SummonerIcon = styled.img`
     position: absolute;
     
     width: ${SummonerIconSize}px;
@@ -29,6 +30,10 @@ const Image = styled.img`
     bottom: 0;
 
     border-radius: 12px;
+`
+
+const RankedIcon = styled.img`
+
 `
 
 const PlayerTile = styled.article`
@@ -88,9 +93,14 @@ const Summoner = () => {
         const strSummoner = newSummoner;
         const summonerLevel = store.summoner?.summonerLevel;
         const profileIconId = store.summoner?.profileIconId;
+        
+        const rank          = store.summoner?.leagueEntry.findIndex(type => getLeagueType(type.queueType) === LeagueType.SOLO_DUO)
+        const tier          = store.summoner?.leagueEntry[rank].tier;
+        const pathRank      = (tier + '_' + store.summoner?.leagueEntry[rank].rank).toLowerCase();
+        console.log(pathRank);
         const connected = store.connected;
 
-        if (connected && !store.summoner) return <>Couldn't find summoner</>
+        if (connected && !store.summoner && store.receivedData) return <>Couldn't find summoner</>
         
         return (
             <>
@@ -103,7 +113,8 @@ const Summoner = () => {
                                     <Player>
                                         <p className="title">{strSummoner}</p>
                                         <p className="subtitle">({strRegion}) Level: {summonerLevel}</p>
-                                        <Image src={`http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${profileIconId}.png`} />
+                                        <SummonerIcon src={`http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${profileIconId}.png`} />
+                                        <RankedIcon src={`/data/tier-icons/${pathRank}.png`} />
                                     </Player>
                                 </PlayerTile>
                                 <Tile className="tile is-child notification is-warning">

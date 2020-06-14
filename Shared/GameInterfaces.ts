@@ -12,7 +12,7 @@ export interface ISummoner {
     puuid: string;         // Encrypted PUUID. Exact length of 78 characters.
     summonerLevel: number; // Summoner level associated with the summoner.
     
-    leagueEntry?: LeagueEntryDTO;
+    leagueEntry?: LeagueEntryDTO[];
 }
 
 export interface MiniSeriesDTO {
@@ -24,17 +24,31 @@ export interface MiniSeriesDTO {
 
 export interface LeagueEntryDTO {
     leagueId: string;
-    summonerId: string; // Player's encrypted summonerId.
+    summonerId: string;   // Player's encrypted summonerId.
     summonerName: string;
     queueType: string;
     tier: string;
     rank: string;
     leaguePoints: number;
-    wins: number; // Winning team on Summoners Rift.
-    losses: number; // Losing team on Summoners Rift.
+    wins: number;         // Winning team on Summoners Rift.
+    losses: number;       // Losing team on Summoners Rift.
     hotStreak: boolean;
     veteran: boolean;
     freshBlood: boolean;
     inactive: boolean;
     miniSeries?: MiniSeriesDTO;
+}
+
+export const getLeagueType = (leagueType: string): LeagueType => {
+    switch (leagueType) {
+        case "RANKED_SOLO_5x5": return LeagueType.SOLO_DUO;
+        case "RANKED_FLEX_SR":  return LeagueType.FLEX;
+        default:                return LeagueType.UNRANKED;
+    }
+}
+
+export enum LeagueType {
+    SOLO_DUO,
+    FLEX,
+    UNRANKED
 }
