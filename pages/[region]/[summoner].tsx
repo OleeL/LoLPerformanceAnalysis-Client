@@ -5,54 +5,18 @@ import { useStore } from "../../Shared/StoreContext";
 import { SendGetSummoner } from '../../Shared/Requests';
 import { TStore } from '../../Shared/Store';
 import { useObserver } from 'mobx-react-lite';
-import { getLeagueType, LeagueType } from '../../Shared/GameInterfaces';
-
-const SummonerIconSize = 60;
+import SummonerDetails from '../../components/SummonerTile';
+import ExtraTile from '../../components/ExtraTile';
+import StatisticsTile from '../../components/StatisticsTile';
 
 const Tiles = styled.div`
-    padding: 20px;
+    padding: 64px 20px 20px 20px;
 `
 
-const Tile = styled.article`
+export const Tile = styled.article`
     -webkit-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
     box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-`
-
-const SummonerIcon = styled.img`
-    position: absolute;
-    
-    width: ${SummonerIconSize}px;
-    height: ${SummonerIconSize}px;
-
-    right: 0;
-    top: 0;
-    bottom: 0;
-
-    border-radius: 12px;
-`
-
-const RankedIcon = styled.img`
-
-`
-
-const PlayerTile = styled.article`
-    padding: 20px;
-    
-    -webkit-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-    box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-`
-
-const Player = styled.div`
-    padding: 0px ${SummonerIconSize+10}px 0px 0px;
-    position: relative;
-`
-
-const Highlight = styled.div`
-    ${props => props.hover ? `-webkit-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);` : ``}
-    ${props => props.hover ? `-moz-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);` : ``}
-    ${props => props.hover ? `box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);` : ``}
 `
 
 const StringListToString = (str: string | string[]): string => {
@@ -76,8 +40,6 @@ const Summoner = () => {
     const router = useRouter();
     const { region, summoner } = router.query;
     
-    const [hover, setHover] = useState(false);
-    
     const newRegion   = StringListToString(region).toUpperCase();
     const newSummoner = StringListToString(summoner);
     
@@ -89,15 +51,6 @@ const Summoner = () => {
 
     return useObserver(() => {
 
-        const strRegion = newRegion;
-        const strSummoner = newSummoner;
-        const summonerLevel = store.summoner?.summonerLevel;
-        const profileIconId = store.summoner?.profileIconId;
-        
-        const rank          = store.summoner?.leagueEntry.findIndex(type => getLeagueType(type.queueType) === LeagueType.SOLO_DUO)
-        const tier          = store.summoner?.leagueEntry[rank].tier;
-        const pathRank      = (tier + '_' + store.summoner?.leagueEntry[rank].rank).toLowerCase();
-        console.log(pathRank);
         const connected = store.connected;
 
         if (connected && !store.summoner && store.receivedData) return <>Couldn't find summoner</>
@@ -109,37 +62,15 @@ const Summoner = () => {
                     <div className="tile is-vertical is-8">
                         <div className="tile">
                             <div className="tile is-parent is-vertical">
-                                <PlayerTile className="tile is-child notification is-primary">
-                                    <Player>
-                                        <p className="title">{strSummoner}</p>
-                                        <p className="subtitle">({strRegion}) Level: {summonerLevel}</p>
-                                        <SummonerIcon src={`http://ddragon.leagueoflegends.com/cdn/10.12.1/img/profileicon/${profileIconId}.png`} />
-                                        <RankedIcon src={`/data/tier-icons/${pathRank}.png`} />
-                                    </Player>
-                                </PlayerTile>
-                                <Tile className="tile is-child notification is-warning">
-                                    <p className="title">...tiles</p>
-                                    <p className="subtitle">Bottom tile</p>
-                                </Tile>
+                                <SummonerDetails />
+                                <ExtraTile />
                             </div>
                             <div className="tile is-parent">
-                                <Tile className="tile is-child notification is-info">
-                                    <p className="title" style={{margin: "0px"}}>Elo tracker</p>
-                                    <Highlight 
-                                        onMouseEnter={() => setHover(true)}
-                                        onMouseLeave={() => setHover(false)}
-                                        hover={hover}
-                                    >
-                                        <p className="subtitle">Solo duo</p>
-                                        <figure className="image is-4by3">
-                                            <img src="https://bulma.io/images/placeholders/640x480.png" />
-                                        </figure>
-                                    </Highlight>
-                                </Tile>
+                                <StatisticsTile />
                             </div>
                         </div>
                         <div className="tile is-parent">
-                            <Tile className="tile is-child notification is-danger">
+                            <Tile className="tile is-child notification is-info">
                                 <p className="title">Wide tile</p>
                                 <p className="subtitle">Aligned with the right tile</p>
                                 <div className="content">
@@ -149,7 +80,7 @@ const Summoner = () => {
                         </div>
                     </div>
                     <div className="tile is-parent">
-                        <Tile className="tile is-child notification is-success">
+                        <Tile className="tile is-child notification is-info">
                             <div className="content">
                                 <p className="title">Tall tile</p>
                                 <p className="subtitle">With even more content</p>
