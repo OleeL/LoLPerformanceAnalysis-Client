@@ -128,17 +128,17 @@ const Summoner = () => {
                             </div>
                         </div>
                         <div className="tile is-parent">
-                            <article className="tile is-child notification is-danger">
+                            <Tile className="tile is-child notification is-danger">
                                 <p className="title">Wide tile</p>
                                 <p className="subtitle">Aligned with the right tile</p>
                                 <div className="content">
                                     Content
                                 </div>
-                            </article>
+                            </Tile>
                         </div>
                     </div>
                     <div className="tile is-parent">
-                        <article className="tile is-child notification is-success">
+                        <Tile className="tile is-child notification is-success">
                             <div className="content">
                                 <p className="title">Tall tile</p>
                                 <p className="subtitle">With even more content</p>
@@ -146,7 +146,7 @@ const Summoner = () => {
                                     Content
                                 </div>
                             </div>
-                        </article>
+                        </Tile>
                     </div>
                 </Tiles>
             </>

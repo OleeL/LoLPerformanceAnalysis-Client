@@ -11,4 +11,30 @@ export interface ISummoner {
     id: string;            // Encrypted summoner ID. Max length 63 characters.
     puuid: string;         // Encrypted PUUID. Exact length of 78 characters.
     summonerLevel: number; // Summoner level associated with the summoner.
+    
+    leagueEntry?: LeagueEntryDTO;
+}
+
+export interface MiniSeriesDTO {
+    losses: number;
+    progress: string;
+    target: number;
+    wins: number;
+}
+
+export interface LeagueEntryDTO {
+    leagueId: string;
+    summonerId: string; // Player's encrypted summonerId.
+    summonerName: string;
+    queueType: string;
+    tier: string;
+    rank: string;
+    leaguePoints: number;
+    wins: number; // Winning team on Summoners Rift.
+    losses: number; // Losing team on Summoners Rift.
+    hotStreak: boolean;
+    veteran: boolean;
+    freshBlood: boolean;
+    inactive: boolean;
+    miniSeries?: MiniSeriesDTO;
 }
