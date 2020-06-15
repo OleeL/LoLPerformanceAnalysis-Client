@@ -38,7 +38,6 @@ const RankedSection = styled.div`
     -webkit-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
     -moz-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
     box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
-    ,
 `
 
 const RankedText = styled.span`

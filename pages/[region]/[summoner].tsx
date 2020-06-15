@@ -8,6 +8,7 @@ import { useObserver } from 'mobx-react-lite';
 import SummonerDetails from '../../components/SummonerTile';
 import ExtraTile from '../../components/ExtraTile';
 import StatisticsTile from '../../components/StatisticsTile';
+import TallTile from '../../components/TallTile';
 
 const Tiles = styled.div`
     padding: 64px 20px 20px 20px;
@@ -80,15 +81,7 @@ const Summoner = () => {
                         </div>
                     </div>
                     <div className="tile is-parent">
-                        <Tile className="tile is-child notification is-info">
-                            <div className="content">
-                                <p className="title">Tall tile</p>
-                                <p className="subtitle">With even more content</p>
-                                <div className="content">
-                                    Content
-                                </div>
-                            </div>
-                        </Tile>
+                        <TallTile />
                     </div>
                 </Tiles>
             </>
