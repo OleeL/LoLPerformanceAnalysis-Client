@@ -9,6 +9,7 @@ import SummonerDetails from '../../components/SummonerTile';
 import ExtraTile from '../../components/ExtraTile';
 import StatisticsTile from '../../components/StatisticsTile';
 import TallTile from '../../components/TallTile';
+import MatchHistory from '../../components/MatchHistory';
 
 const Tiles = styled.div`
     padding: 64px 20px 20px 20px;
@@ -33,6 +34,7 @@ const GetSummoner = async (store: TStore, summoner: string, region: string) => {
     store.setReceivedData(false)
     const results = await SendGetSummoner(summoner, region);
     store.setSummoner(results, region);
+    console.log(store.summoner);
 }
 
 const Summoner = () => {
@@ -71,13 +73,7 @@ const Summoner = () => {
                             </div>
                         </div>
                         <div className="tile is-parent">
-                            <Tile className="tile is-child notification is-info">
-                                <p className="title">Wide tile</p>
-                                <p className="subtitle">Aligned with the right tile</p>
-                                <div className="content">
-                                    Content
-                                </div>
-                            </Tile>
+                            <MatchHistory />
                         </div>
                     </div>
                     <div className="tile is-parent">

@@ -13,6 +13,7 @@ export interface ISummoner {
     summonerLevel: number; // Summoner level associated with the summoner.
     
     leagueEntry?: LeagueEntryDTO[];
+    matchList?: MatchlistDTO;
 }
 
 export interface MiniSeriesDTO {
@@ -37,6 +38,24 @@ export interface LeagueEntryDTO {
     freshBlood: boolean;
     inactive: boolean;
     miniSeries?: MiniSeriesDTO;
+}
+
+export interface MatchlistDTO {
+    startIndex:  number;
+    totalGames:  number;
+    endIndex:  number;
+    matches:  MatchReferenceDTO[];
+}
+
+export interface MatchReferenceDTO {
+    gameId: number;
+    role: string;
+    season: number;
+    platformId: string;
+    champion: number;
+    queue: number;
+    lane: string;
+    timestamp: number;
 }
 
 export const getLeagueType = (leagueType: string): LeagueType => {
