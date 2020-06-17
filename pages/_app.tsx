@@ -32,10 +32,8 @@ const MyApp = (props: AppProps<{}>) => {
 
 
     const {Component, pageProps} = props;
-
     return (
         <StoreProvider>
-            
             <GlobalStyles/>
             <Component {...pageProps} />
         </StoreProvider>

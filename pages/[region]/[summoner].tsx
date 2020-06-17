@@ -54,13 +54,13 @@ const Summoner = () => {
 
     return useObserver(() => {
 
-        const connected = store.connected;
+        const {connected, receivedData} = store;
 
         if (connected && !store.summoner && store.receivedData) return <>Couldn't find summoner</>
         
         return (
             <>
-                <div className={`pageloader ${connected ? ``: `is-active`}`}><span className="title">Getting Summoner Data...</span></div>
+                <div className={`pageloader ${connected || !receivedData ? ``: `is-active`}`}><span className="title">Getting Summoner Data...</span></div>
                 <Tiles className="tile is-ancestor">
                     <div className="tile is-vertical is-8">
                         <div className="tile">
