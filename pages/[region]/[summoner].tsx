@@ -60,7 +60,7 @@ const Summoner = () => {
         
         return (
             <>
-                <div className={`pageloader ${connected || !receivedData ? ``: `is-active`}`}><span className="title">Getting Summoner Data...</span></div>
+                <div className={`pageloader ${connected && receivedData ? ``: `is-active`}`}><span className="title">Getting Summoner Data...</span></div>
                 <Tiles className="tile is-ancestor">
                     <div className="tile is-vertical is-8">
                         <div className="tile">
