@@ -10,6 +10,7 @@ import ExtraTile from '../../components/ExtraTile';
 import StatisticsTile from '../../components/StatisticsTile';
 import TallTile from '../../components/TallTile';
 import MatchHistory from '../../components/MatchHistory';
+import TopBar from '../../components/TopBar';
 
 const Tiles = styled.div`
     padding: 64px 20px 20px 20px;
@@ -60,6 +61,7 @@ const Summoner = () => {
         return (
             <>
                 <div className={`pageloader ${connected && receivedData ? ``: `is-active`}`}><span className="title">Getting Summoner Data...</span></div>
+                <TopBar />
                 <Tiles className="tile is-ancestor">
                     <div className="tile is-vertical is-8">
                         <div className="tile">

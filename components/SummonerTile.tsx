@@ -78,7 +78,6 @@ const SummonerDetails: React.FC = () => {
 
     return (
         <>
-            <TopBar />
             <PlayerTile className="tile is-child notification is-info">
                 <Player>
                     <p className="title">{strSummoner}</p>
