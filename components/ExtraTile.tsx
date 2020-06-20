@@ -13,7 +13,7 @@ const ExtraTile: React.FC = () => {
 
     return (
         <Tile className="tile is-child notification is-info">
-            <p className="title">...tiles</p>
+            <p className="title">...tiles</p><br />
             <p className="subtitle">Bottom tile</p>
         </Tile>
     );

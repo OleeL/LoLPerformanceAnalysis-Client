@@ -16,9 +16,8 @@ const Tiles = styled.div`
 `
 
 export const Tile = styled.article`
-    -webkit-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-    -moz-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
     box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+
 `
 
 const StringListToString = (str: string | string[]): string => {

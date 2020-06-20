@@ -3,8 +3,8 @@ import { useStore } from '../Shared/StoreContext';
 import styled from 'styled-components'
 import { Tile } from '../pages/[region]/[summoner]';
 import { TStore } from '../Shared/Store';
-import { LeagueType, getLeagueType } from '../Shared/GameInterfaces';
-import { GetSummonerIcon, GetRankData, IRank } from '../Shared/LeagueContent';
+import { LeagueType } from '../Shared/GameInterfaces';
+import { GetSummonerIcon, GetRankData } from '../Shared/LeagueContent';
 import TopBar from './TopBar';
 
 const IconSize = 64;
@@ -20,6 +20,8 @@ const SummonerIcon = styled.img`
     bottom: 0;
 
     border-radius: 12px;
+    
+    box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.5);
 `
 
 const RankedIcon = styled.img`
