@@ -1,5 +1,6 @@
+import react, { useState } from 'react';
 import styled from 'styled-components';
-import react from 'react';
+import { useRouter } from 'next/router';
 
 const Bar = styled.div`
     position: fixed;
@@ -39,22 +40,67 @@ const Input = styled.input`
     display: inline;
     overflow: hidden;
     margin: 5px 5px 5px 10px;
-    width: 50vw;
-
+    width: 40vw;
 `
 
-const TopBar = () => {
+const DropDown = styled.div`
+    margin: 10px;
+`
 
-
-    return <Bar className="primary">
-        <a href="../">
-            <BarImage src="/data/images/Olangutan.jpg" />
-        </a>
-        <Title className="title">
-            Olangutan Analytics
-        </Title>
-        <Input className="input is-rounded" type="text" placeholder="Summoner Name" />
-    </Bar>;
+interface State {
+    value: string,
+    setter: (value: string) => void
 }
 
-export default TopBar
+const TopBar = () => {
+    const [summonerName, setSummonerName] = useState("");
+    const [serverRegion, setServerRegion] = useState("EUW");
+
+    const Router = useRouter();
+    
+    const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(summonerName);
+        Router.replace("/"+serverRegion+"/"+summonerName);
+    }
+
+    const ChangeInput = (e) => {
+        setSummonerName(e.target.value);
+        console.log(e);
+        console.log(e.value);
+        console.log(summonerName);
+    }
+
+    return (
+        <Bar className="primary">
+            <a href="../"><BarImage src="/data/images/Olangutan.jpg" /></a>
+            <Title className="title">
+                Olangutan Analytics
+            </Title>
+            <form onSubmit={e => HandleForm(e)} style={{display: "inline", verticalAlign: "middle"}}>
+                <Input className="input is-rounded" type="text" placeholder="Summoner Name" onChange={ChangeInput} value={summonerName} style={{display: "inline", verticalAlign: "middle"}} />
+                <ServerList value={serverRegion} setter={setServerRegion} />
+            </form>
+        </Bar>);
+}
+
+const ServerList: React.FC<State> = ({value, setter}) =>
+    <DropDown className="column is-one-quarter" style={{display: "inline", verticalAlign: "middle", padding: "10px 0px 10px 0px"}}>
+        <div className="select" style={{display: "inline"}}>
+            <select value={value} onChange={e => setter( e.target.value )} style={{display: "inline"}}>
+                <option className="dropdown-item">EUW</option>
+                <option className="dropdown-item">EUNE</option>
+                <option className="dropdown-item">NA</option>
+                <option className="dropdown-item">BR</option>
+                <option className="dropdown-item">JA</option>
+                <option className="dropdown-item">KR</option>
+                <option className="dropdown-item">LAS</option>
+                <option className="dropdown-item">LAN</option>
+                <option className="dropdown-item">OC</option>
+                <option className="dropdown-item">TU</option>
+                <option className="dropdown-item">RU</option>
+            </select>
+        </div>
+    </DropDown>
+
+export default TopBar;

@@ -109,7 +109,7 @@ const DrawInput: React.FC<State> = ({value, setter}) =>
         <SummonerInput className="input is-rounded is-focused" value={value} onChange={e => setter(e.target.value)} type="text" placeholder="Summoner Name" />
     </div>
 
-const DrawServerList: React.FC<State> = ({value, setter}) =>
+export const DrawServerList: React.FC<State> = ({value, setter}) =>
         <div className="column is-one-quarter">
             <div className="select">
                 <select value={value} onChange={e => setter( e.target.value )}>
