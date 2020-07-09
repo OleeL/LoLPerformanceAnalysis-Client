@@ -1,8 +1,12 @@
 /node_modules
 /.next
 /.vs
+/out
 
 *.sh
 *.lock
 *.log
 *.suo
+package-lock.json
+next-env.d.ts
+tsconfig.json
