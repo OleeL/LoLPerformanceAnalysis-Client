@@ -1,17 +1,8 @@
 import { StoreProvider, useStore } from '../Shared/StoreContext';
 import { SignalRReconnect } from '../Shared/SignalR';
-import {createGlobalStyle} from "styled-components";
 import React, {useEffect} from 'react';
-import {AppProps} from 'next/app';
-
-import 'mobx-react-lite/batchingForReactDom';
-import '../sass/main.scss';
-
-const GlobalStyles = createGlobalStyle`
-    body {
-        margin: 0;
-    }
-`;
+import AppProps from 'next/app';
+import GlobalStyles from '../components/GlobalStyles';
 
 const MyApp = (props: AppProps<{}>) => {
     
@@ -34,8 +25,10 @@ const MyApp = (props: AppProps<{}>) => {
     const {Component, pageProps} = props;
     return (
         <StoreProvider>
-            <GlobalStyles/>
             <Component {...pageProps} />
+            <style jsx global>
+                {GlobalStyles}
+            </style>
         </StoreProvider>
     )
 };
