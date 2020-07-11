@@ -18,11 +18,13 @@
     "bulma-pageloader": "^0.3.0",
     "chart.js": "^2.9.3",
     "next": "^9.4.4",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-spring": "^8.0.27",
     "styled-jsx": "^3.3.0",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.6",
+    "zustand": "^2.2.3"
   },
   "devDependencies": {
     "@babel/preset-modules": "^0.1.2",
