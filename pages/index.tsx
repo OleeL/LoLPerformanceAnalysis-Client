@@ -76,12 +76,18 @@ const index = () => {
     const {connected} = store;
     return (
         <>
-            <div className="columns is-mobile is-multiline is-centered is-vcentered">
+            <div className="columns is-multiline is-centered is-vcentered">
                 <DrawTitle />
                 <DrawImage />
-                <form className="columns is-mobile is-multiline is-centered is-vcentered" onSubmit={e => HandleForm(e)}>
-                    <DrawInput value={summonerName} setter={setSummonerName}/>
-                    <DrawServerList value={serverRegion} setter={setServerRegion} />
+                <form
+                    className="columns is-multiline is-centered is-vcentered"
+                    onSubmit={e => HandleForm(e)}>
+                    <DrawInput
+                        value={summonerName}
+                        setter={setSummonerName}/>
+                    <DrawServerList
+                        value={serverRegion}
+                        setter={setServerRegion}/>
                     <DrawButtonSubmit />
                 </form>
                 <style jsx>{Page}</style>
@@ -110,7 +116,12 @@ const DrawFooter: FC = () =>
     <footer className="footer">
         <div className="content has-text-centered">
             <p>
-                <b>Olangutan Analytics</b> isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
+                <b>Olangutan Analytics</b> 
+                isn't endorsed by Riot Games and doesn't reflect the views or
+                opinions of Riot Games or anyone officially involved in
+                producing or managing Riot Games properties. Riot Games, and
+                all associated properties are trademarks or registered
+                trademarks of Riot Games, Inc.
                 <style jsx>{Footer}</style>
             </p>
         </div>
@@ -118,8 +129,14 @@ const DrawFooter: FC = () =>
 
 const DrawInput: FC<State> = ({value, setter}) =>
     <div className="column is-full">
-        <input className="input is-rounded is-focused" value={value} onChange={e => setter(e.target.value)} type="text" placeholder="Summoner Name" />
-        <style jsx>{SummonerInput}</style>
+        <input 
+            className="input is-rounded is-focused"
+            value={value}
+            onChange={e => setter(e.target.value)}
+            type="text" placeholder="Summoner Name" />
+        <style jsx>
+            {SummonerInput}
+        </style>
     </div>
 
 export const DrawServerList: FC<State> = ({value, setter}) =>
