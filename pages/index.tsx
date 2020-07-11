@@ -160,7 +160,11 @@ export const DrawServerList: FC<State> = ({value, setter}) =>
 
 const DrawButtonSubmit: FC = () => 
     <div className="column">
-        <button className="button is-primary is-fullwidth" type="submit">Submit</button>
+        <button
+            className="button is-primary is-fullwidth"
+            type="submit">
+            Submit
+        </button>
     </div>
 
 export default index;
