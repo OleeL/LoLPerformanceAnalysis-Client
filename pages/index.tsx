@@ -27,14 +27,9 @@ const Image = css`
     img {
         margin: 0 auto;
         padding: 0;
-        
         position: relative;
-
         border-radius: 400px;
-        box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.5);
-
         width: 100px;
-        
         z-index:1;
     }
 
@@ -64,37 +59,41 @@ interface State {
 }
 
 const index = () => {
-    const [summonerName, setSummonerName] = useState("");
-    const [serverRegion, setServerRegion] = useState("EUW");
-
-    const Router = useRouter();
-    const store = useStore();
-    
-    const HandleForm = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        Router.replace("/"+serverRegion+"/"+summonerName);
-    }
-    const {connected} = store;
     return (
         <>
             <div className="columns is-multiline is-centered is-vcentered">
                 <DrawTitle />
                 <DrawImage />
-                <form
-                    className="columns is-multiline is-centered is-vcentered"
-                    onSubmit={e => HandleForm(e)}>
-                    <DrawInput
-                        value={summonerName}
-                        setter={setSummonerName}/>
-                    <DrawServerList
-                        value={serverRegion}
-                        setter={setServerRegion}/>
-                    <DrawButtonSubmit />
-                </form>
+                <DrawForm />
                 <style jsx>{Page}</style>
             </div>
             <DrawFooter />
         </>
+    );
+}
+
+const DrawForm: FC = () => {
+    const [summonerName, setSummonerName] = useState("");
+    const [serverRegion, setServerRegion] = useState("EUW");
+    const Router = useRouter();
+    
+    const HandleForm = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        Router.replace("/"+serverRegion+"/"+summonerName);
+    }
+
+    return (
+        <form
+            className="columns is-multiline is-centered is-vcentered"
+            onSubmit={e => HandleForm(e)}>
+            <DrawInput
+                value={summonerName}
+                setter={setSummonerName}/>
+            <DrawServerList
+                value={serverRegion}
+                setter={setServerRegion}/>
+            <DrawButtonSubmit />
+        </form>
     );
 }
 
