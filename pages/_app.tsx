@@ -2,6 +2,7 @@ import { SignalRReconnect } from '../Shared/SignalR';
 import React, {useEffect} from 'react';
 import App from 'next/app';
 import GlobalStyles from '../components/GlobalStyles';
+import "../sass/main.scss";
 
 const MyApp = ({Component, pageProps}) => {
     

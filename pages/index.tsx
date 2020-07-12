@@ -3,26 +3,27 @@ import { useStore } from "../Shared/Store";
 import { useRouter } from 'next/router'
 import { FC, useState, FormEvent } from "react";
 import { Primary } from "../components/GlobalStyles";
+import css from 'styled-jsx/css';
 
-const Page = `
+const Page = css`
     div {
         padding: 30vh 0;
     }
 `;
 
-const Title = `
+const Title = css`
     h1 {
         text-align: center;
     }
-`
+`;
 
-const SummonerInput = `
+const SummonerInput = css`
     input {
         margin: 0px 0px 10px;
     }
-`
+`;
 
-const Image = `
+const Image = css`
     img {
         margin: 0 auto;
         padding: 0;
@@ -44,9 +45,9 @@ const Image = `
         margin: 4px 0px 10px 0px;
         padding: 4px;
     }
-`
+`;
 
-const Footer = `
+const Footer = css`
     footer {
         height: 0;
         position: absolute;
@@ -55,7 +56,7 @@ const Footer = `
         background: ${Primary};
         color: white;
     }
-`
+`;
 
 interface State {
     value: string,
@@ -105,7 +106,6 @@ const DrawTitle: FC = () =>
 
 const DrawImage: FC = () =>
     <>
-        <DrawTitle />
         <div>
             <img src={"data/images/Olangutan.jpg"} alt="Olangutan"/>
             <style jsx>{Image}</style>
@@ -116,15 +116,15 @@ const DrawFooter: FC = () =>
     <footer className="footer">
         <div className="content has-text-centered">
             <p>
-                <b>Olangutan Analytics</b> 
+                <b>Olangutan Analytics </b>
                 isn't endorsed by Riot Games and doesn't reflect the views or
                 opinions of Riot Games or anyone officially involved in
                 producing or managing Riot Games properties. Riot Games, and
                 all associated properties are trademarks or registered
                 trademarks of Riot Games, Inc.
-                <style jsx>{Footer}</style>
             </p>
         </div>
+        <style jsx>{Footer}</style>
     </footer>
 
 const DrawInput: FC<State> = ({value, setter}) =>
