@@ -1,42 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useStore } from '../Shared/StoreContext';
-import { TStore } from '../Shared/Store';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState, FC } from 'react'
 import { Tile } from '../pages/[region]/[summoner]';
 import Chartjs from 'chart.js';
+import css from 'styled-jsx/css';
 
-const Highlight = styled.div`
-    background: white;
-    margin: 15px 0px 0px 0px;
-    color: black;
-    padding: 10px;
-    box-shadow: inset 0px 0px 9px 1px rgba(0,0,0,0.47);
-    width: 600px;
-    height: 300px;
-    min-width: 600px;
-    min-height: 300px;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: flex-start;
+const Highlight = css`
+    div {
+        background: white;
+        margin: 15px 0px 0px 0px;
+        color: black;
+        padding: 10px;
+        box-shadow: inset 0px 0px 9px 1px rgba(0,0,0,0.47);
+        width: 600px;
+        height: 300px;
+        min-width: 600px;
+        min-height: 300px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 `
 
-const StatisticsTile: React.FC = () => {
+const StatisticsTile: React.FC = () => 
+    <article className="tile is-child notification is-info">
+        <style jsx>{Tile}</style>
+        <div className="content">
+            <p className="title">
+                Elo tracker
+            </p>
+            <p 
+                className="subtitle"
+                style={{margin: "-20px 0px 0px 0px"}}>
+                Solo duo
+            </p>
+            <DrawChart />
+        </div>
+    </article>
 
-    const store: TStore = useStore();
-
-    return (
-        <Tile className="tile is-child notification is-info">
-          <div className="content">
-            <p className="title">Elo tracker</p>
-            <p className="subtitle" style={{margin: "-20px 0px 0px 0px"}}>Solo duo</p>
-            <Highlight >
-                <Chart />
-            </Highlight>
-          </div>
-        </Tile>
-    )
-}
+const DrawChart: FC = () =>
+    <div >
+        <Chart />
+        <style jsx>{Highlight}</style>
+    </div>
 
 const chartConfig = {
     type: "line",
@@ -85,7 +90,8 @@ const Chart = () => {
 
     useEffect(() => {
         if (chartContainer && chartContainer.current) {
-        const newChartInstance = new Chartjs(chartContainer.current, chartConfig);
+        const newChartInstance = 
+            new Chartjs(chartContainer.current, chartConfig);
         setChartInstance(newChartInstance);
         }
     }, [chartContainer]);

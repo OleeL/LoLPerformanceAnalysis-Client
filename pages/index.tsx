@@ -104,12 +104,10 @@ const DrawTitle: FC = () =>
     </div>
 
 const DrawImage: FC = () =>
-    <>
-        <div>
-            <img src={"data/images/Olangutan.jpg"} alt="Olangutan"/>
-            <style jsx>{Image}</style>
-        </div>
-    </>
+    <div>
+        <img src={"data/images/Olangutan.jpg"} alt="Olangutan"/>
+        <style jsx>{Image}</style>
+    </div>
 
 const DrawFooter: FC = () => 
     <footer className="footer">
@@ -139,23 +137,23 @@ const DrawInput: FC<State> = ({value, setter}) =>
     </div>
 
 export const DrawServerList: FC<State> = ({value, setter}) =>
-        <div className="column is-one-quarter">
-            <div className="select">
-                <select value={value} onChange={e => setter( e.target.value )}>
-                    <option className="dropdown-item">EUW</option>
-                    <option className="dropdown-item">EUNE</option>
-                    <option className="dropdown-item">NA</option>
-                    <option className="dropdown-item">BR</option>
-                    <option className="dropdown-item">JA</option>
-                    <option className="dropdown-item">KR</option>
-                    <option className="dropdown-item">LAS</option>
-                    <option className="dropdown-item">LAN</option>
-                    <option className="dropdown-item">OC</option>
-                    <option className="dropdown-item">TU</option>
-                    <option className="dropdown-item">RU</option>
-                </select>
-            </div>
+    <div className="column is-one-quarter">
+        <div className="select">
+            <select value={value} onChange={e => setter( e.target.value )}>
+                <option className="dropdown-item">EUW</option>
+                <option className="dropdown-item">EUNE</option>
+                <option className="dropdown-item">NA</option>
+                <option className="dropdown-item">BR</option>
+                <option className="dropdown-item">JA</option>
+                <option className="dropdown-item">KR</option>
+                <option className="dropdown-item">LAS</option>
+                <option className="dropdown-item">LAN</option>
+                <option className="dropdown-item">OC</option>
+                <option className="dropdown-item">TU</option>
+                <option className="dropdown-item">RU</option>
+            </select>
         </div>
+    </div>
 
 const DrawButtonSubmit: FC = () => 
     <div className="column">

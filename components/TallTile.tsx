@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Tile } from '../pages/[region]/[summoner]';
 
-const TallTile: React.FC = () => 
-    <Tile className="tile is-child notification is-info">
+const TallTile: FC = () => 
+    <article className="tile is-child notification is-info">
         <div className="content">
             <p className="title">Tall tile</p>
             <p className="subtitle">With even more content</p>
@@ -10,5 +10,7 @@ const TallTile: React.FC = () =>
                 Content
             </div>
         </div>
-    </Tile>
+        <style jsx>{Tile}</style>
+    </article>
+
 export default TallTile

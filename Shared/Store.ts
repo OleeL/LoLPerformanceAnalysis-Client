@@ -2,17 +2,18 @@
 import create from 'zustand';
 import { ISummoner } from './GameInterfaces';
 
-export const [useStore] = create (set => ({
-    connected: false,
-    receivedData: false,
+export const [useStore, _store] = create (set => ({
+    connected: false as boolean,
+    setConnected: (status: boolean) => set(({connected: status})),
+    receivedData: false as boolean,
+    setReceivedData: (status: boolean) => set(({receivedData: status})),
     summoner: null as ISummoner,
     region: null as string,
-    setSummoner: (summoner: ISummoner, region: string) => {
-        const update = {
-            summoner: summoner,
-            region: region,
-            receivedData: true
-        }
-        Object.assign(useStore, update);
-    }
+    setSummoner: (summoner: ISummoner, region: string): void => set(() => ({
+        summoner: summoner,
+        region: region,
+        receivedData: true
+    }))
 }));
+
+export type State = ReturnType<typeof _store.getState>;

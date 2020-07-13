@@ -1,10 +1,11 @@
 import * as signalR from "@microsoft/signalr";
-import { TStore } from "./Store";
 import { OnGameUpdate } from "./SignalRListeners";
+import { useStore } from "./Store";
 
 export let connection: signalR.HubConnection | null = null;
 
-const handleConnection = async (store: TStore) => {
+const handleConnection = async (triggerListener) => {
+
     
     if (connection && connection.state === signalR.HubConnectionState.Connected) {
         return true;
@@ -21,13 +22,12 @@ const handleConnection = async (store: TStore) => {
         const startSignalRConnection = connection => connection.start()
             .then(() => {
                 console.info('Websocket Connection Established')
-                store.connected = true;
             })
             .catch(err => console.error('SignalR Connection Error: ', err));
 
         // re-establish the connection if connection dropped
-        connection.onclose(() => OnDisconnect(store));
-        CreateListeners(store);
+        connection.onclose(() => OnDisconnect(triggerListener));
+        CreateListeners();
         await startSignalRConnection(connection);
             
         return true;
@@ -37,20 +37,20 @@ const handleConnection = async (store: TStore) => {
     }
 }
 
-const CreateListeners = (store: TStore) => {
-    connection.on('PlayerInGame', update => OnGameUpdate(update, store));
+const CreateListeners = () => {
+    connection.on('PlayerInGame', update => OnGameUpdate(update));
 }
 
-const OnDisconnect = (store: TStore) => {
-    store.connected = false;
+const OnDisconnect = (triggerListener) => {
     connection = null;
-    setTimeout(() => SignalRReconnect(store), 500);
+    triggerListener(false);
+    setTimeout(() => SignalRReconnect(triggerListener), 500);
 }
 
-export const SignalRReconnect = async (store: TStore) => {
+export const SignalRReconnect = async (triggerListener) => {
     while (!connection || connection.state !== signalR.HubConnectionState.Connected) {
         console.log("Reconnecting to API");
-        await handleConnection(store);
+        triggerListener(await handleConnection(triggerListener));
         await Sleep(2000);
     }
 }

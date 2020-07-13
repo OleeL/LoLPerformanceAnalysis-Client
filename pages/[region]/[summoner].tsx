@@ -1,24 +1,26 @@
 import { useRouter } from 'next/router'
-import React, { useState, useEffect, FormEvent, Suspense } from "react";
-import styled from 'styled-components';
-import { useStore } from "../../Shared/StoreContext";
+import React, { useState, useEffect, FormEvent, Suspense, FC } from "react";
 import { SendGetSummoner } from '../../Shared/Requests';
-import { TStore } from '../../Shared/Store';
-import { useObserver } from 'mobx-react-lite';
 import SummonerDetails from '../../components/SummonerTile';
 import ExtraTile from '../../components/ExtraTile';
 import StatisticsTile from '../../components/StatisticsTile';
 import TallTile from '../../components/TallTile';
 import MatchHistory from '../../components/MatchHistory';
 import TopBar from '../../components/TopBar';
+import css from 'styled-jsx/css';
+import { useStore } from '../../Shared/Store';
+import { ISummoner } from '../../Shared/GameInterfaces';
 
-const Tiles = styled.div`
-    padding: 64px 20px 20px 20px;
+export const Tile = css`
+    article {
+        box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+    }
 `
 
-export const Tile = styled.article`
-    box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-
+const Content = css`
+    position: relative;
+    margin: 5px;
+    top: 13px;
 `
 
 const StringListToString = (str: string | string[]): string => {
@@ -29,61 +31,78 @@ const StringListToString = (str: string | string[]): string => {
     return answer;
 }
 
-const GetSummoner = async (store: TStore, summoner: string, region: string) => {
+const GetSummoner = async (
+    setReceivedData: (status: boolean) => void,
+    setSummoner: (results: ISummoner, region: string) => void,
+    summoner: string,
+    region: string) => {
     
-    store.setReceivedData(false)
+    setReceivedData(false)
     const results = await SendGetSummoner(summoner, region);
-    store.setSummoner(results, region);
-    console.log(store.summoner);
+    setSummoner(results, region);
 }
 
-const Summoner = () => {
+const SummonerData = () => {
 
-    const store = useStore();
-    const router = useRouter();
-    const { region, summoner } = router.query;
+    const { summoner,
+        connected,
+        setReceivedData,
+        setSummoner,
+        receivedData }    = useStore();
+
+    const router          = useRouter();
+    const { region }      = router.query;
+    const rSummonerName   = router.query.summoner;
     
-    const newRegion   = StringListToString(region).toUpperCase();
-    const newSummoner = StringListToString(summoner);
+    const newRegion       = StringListToString(region).toUpperCase();
+    const newSummoner     = StringListToString(rSummonerName);
+    const showPageLoader  = !connected && !receivedData;
+    const pLoaderInactive = `pageloader`;
+    const pLoaderActive   = `pageloader is-active`;
+
     
     useEffect(() => {
-        if (store.summoner || !store.connected) return;
-        GetSummoner(store, newSummoner, newRegion);
+        if (summoner || !connected) return;
+        console.log("summoner");
+        GetSummoner(setReceivedData, setSummoner, newSummoner, newRegion);
+    }, [connected]);
 
-    }, [store.connected]);
+    if (connected && !summoner && receivedData) return <>Couldn't find summoner</>
 
-    return useObserver(() => {
+    return (
+        <div className={showPageLoader ? pLoaderActive : pLoaderInactive}>
+            <span className="title">Getting Summoner Data...</span>
+        </div>
+    )
+};
 
-        const {connected, receivedData} = store;
-
-        if (connected && !store.summoner && store.receivedData) return <>Couldn't find summoner</>
-        
-        return (
-            <>
-                <div className={`pageloader ${connected && receivedData ? ``: `is-active`}`}><span className="title">Getting Summoner Data...</span></div>
-                <TopBar />
-                <Tiles className="tile is-ancestor">
-                    <div className="tile is-vertical is-8">
-                        <div className="tile">
-                            <div className="tile is-parent is-vertical">
-                                <SummonerDetails />
-                                <ExtraTile />
-                            </div>
-                            <div className="tile is-parent">
-                                <StatisticsTile />
-                            </div>
+const Summoner: FC = () => {
+    return (
+        <div>
+            <SummonerData />
+            <TopBar />
+            <div className="tile is-ancestor">
+                <div className="tile is-vertical is-8">
+                    <div className="tile">
+                        <div className="tile is-parent is-vertical">
+                            <SummonerDetails />
+                            <ExtraTile />
                         </div>
                         <div className="tile is-parent">
-                            <MatchHistory />
+                            <StatisticsTile />
                         </div>
                     </div>
                     <div className="tile is-parent">
-                        <TallTile />
+                        <MatchHistory />
                     </div>
-                </Tiles>
-            </>
-        );
-    });
-};
+                </div>
+                <div className="tile is-parent">
+                    <TallTile />
+                </div>
+            </div>
+            <style jsx>{Content}</style>
+        </div>
+    );
+}
 
 export default Summoner

@@ -1,5 +1,4 @@
-import { TStore } from "./Store";
-import { getLeagueType, LeagueType } from "./GameInterfaces";
+import { getLeagueType, LeagueType, ISummoner } from "./GameInterfaces";
 
 const capitalize = (str: string) => str?.charAt(0)?.toUpperCase() + str?.toLowerCase().slice(1);
 
@@ -21,15 +20,14 @@ export interface IRank {
     losses?: number
 }
 
-export const GetSummonerIcon = (store: TStore): string => {
-    
-    if (!store?.summoner?.profileIconId) return DEFAULTPROFILEPIC;
-    return DPPREFIX + store.summoner.profileIconId + PNG;
+export const GetSummonerIcon = (summoner: ISummoner): string => {
+    if (!summoner?.profileIconId || summoner?.profileIconId === undefined ) return DEFAULTPROFILEPIC;
+    return DPPREFIX + summoner?.profileIconId + PNG;
 }
 
-export const GetRankData = (store: TStore, lType: LeagueType): IRank => {
+export const GetRankData = (summoner: ISummoner, lType: LeagueType): IRank => {
 
-    const rank = store.summoner
+    const rank = summoner
         ?.leagueEntry
         .find(type => getLeagueType(type.queueType) === lType);
     

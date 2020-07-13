@@ -1,7 +1,6 @@
-import { TStore } from "./Store";
 import { ActiveSummonersRift } from "./GameInterfaces";
 
-export const OnGameUpdate = (update: ActiveSummonersRift, store: TStore) => {
+export const OnGameUpdate = (update: ActiveSummonersRift) => {
     console.log("There has been an update to the game ");
-    console.log(update);    
+    console.log(update);
 }

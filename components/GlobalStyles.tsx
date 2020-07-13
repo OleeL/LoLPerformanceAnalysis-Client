@@ -7,6 +7,10 @@ const GlobalStyles = css.global`
     body {
         margin: 0;
     }
+
+    html {
+        overflow-y: auto;
+    }
 `
 
 export default GlobalStyles;
