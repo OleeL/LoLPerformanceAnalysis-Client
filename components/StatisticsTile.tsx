@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState, FC } from 'react'
-import { Tile } from '../pages/[region]/[summoner]';
+import { GetTileStyle } from '../pages/[region]/[summoner]';
 import Chartjs from 'chart.js';
 import css from 'styled-jsx/css';
+import { useColorStore } from './GlobalStyles';
 
 const Highlight = css`
     div {
@@ -21,21 +22,27 @@ const Highlight = css`
     }
 `
 
-const StatisticsTile: React.FC = () => 
-    <article className="tile is-child notification is-info">
-        <style jsx>{Tile}</style>
-        <div className="content">
-            <p className="title">
-                Elo tracker
-            </p>
-            <p 
-                className="subtitle"
-                style={{margin: "-20px 0px 0px 0px"}}>
-                Solo duo
-            </p>
-            <DrawChart />
-        </div>
-    </article>
+const StatisticsTile: FC = () => {
+    const { Selected } = useColorStore();
+    const { tile, styles } = GetTileStyle(Selected);
+    
+    return (
+        <article className={tile}>
+            {styles}
+            <div className="content">
+                <p className="title">
+                    Elo tracker
+                </p>
+                <p 
+                    className="subtitle"
+                    style={{margin: "-20px 0px 0px 0px"}}>
+                    Solo duo
+                </p>
+                <DrawChart />
+            </div>
+        </article>
+    )
+}
 
 const DrawChart: FC = () =>
     <div >

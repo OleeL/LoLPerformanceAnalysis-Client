@@ -9,15 +9,26 @@ const PNG                  = ".png";
 const SPECIALRANKCASES     = ["CHALLENGER", "MASTER", "GRANDMASTER"];
 const SPECIALRANKURLPREFIX = "/data/base-icons/";
 const UNRANKEDPICTURE      = "/data/base-icons/provisional.png";
-
 const RANKURLPREFIX        = "/data/tier-icons/"
+
+export const Servers = ["EUW",
+    "EUNE",
+    "NA",
+    "BR",
+    "JA",
+    "KR",
+    "LAS",
+    "LAN",
+    "OC",
+    "TU",
+    "RU"]
 
 export interface IRank {
     imagePath: string,
     rankText: string,
-    lp?: number,
-    wins?: number,
-    losses?: number
+    lp: number,
+    wins: number,
+    losses: number
 }
 
 export const GetSummonerIcon = (summoner: ISummoner): string => {
@@ -30,20 +41,24 @@ export const GetRankData = (summoner: ISummoner, lType: LeagueType): IRank => {
     const rank = summoner
         ?.leagueEntry
         .find(type => getLeagueType(type.queueType) === lType);
-    
+
     if (!rank) return {
         imagePath: UNRANKEDPICTURE,
-        rankText: "Unranked"
+        rankText: "Unranked",
+        lp: 0,
+        wins: 0,
+        losses: 0
     };
 
-    if (SPECIALRANKCASES.includes(rank?.tier)) 
-        return {
-            imagePath: (SPECIALRANKURLPREFIX + rank.tier + PNG).toLowerCase(), 
-            rankText: capitalize(rank.tier),
-            lp: rank.leaguePoints,
-            wins: rank.wins,
-            losses: rank.losses
-        };
+    if (SPECIALRANKCASES.includes(rank?.tier)) return {
+        imagePath: (SPECIALRANKURLPREFIX + rank.tier + PNG).toLowerCase(), 
+        rankText: capitalize(rank.tier),
+        lp: rank.leaguePoints,
+        wins: rank.wins,
+        losses: rank.losses
+    };
+
+    console.log(rank);
 
     return {
         imagePath: RANKURLPREFIX 
@@ -56,4 +71,12 @@ export const GetRankData = (summoner: ISummoner, lType: LeagueType): IRank => {
         wins: rank.wins,
         losses: rank.losses
     }
+}
+
+export const BlankRankedData = {
+    imagePath: UNRANKEDPICTURE,
+    rankText: "Unranked",
+    lp: 0,
+    wins: 0,
+    losses: 0
 }

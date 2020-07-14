@@ -1,19 +1,12 @@
-import { SendGetSummoner } from "../Shared/Requests";
-import { useStore } from "../Shared/Store";
 import { useRouter } from 'next/router'
 import { FC, useState, FormEvent } from "react";
-import { Primary } from "../components/GlobalStyles";
+import { useColorStore } from "../components/GlobalStyles";
+import { Servers } from "../Shared/LeagueContent";
 import css from 'styled-jsx/css';
 
 const Page = css`
     div {
         padding: 30vh 0;
-    }
-`;
-
-const Title = css`
-    h1 {
-        text-align: center;
     }
 `;
 
@@ -42,35 +35,27 @@ const Image = css`
     }
 `;
 
-const Footer = css`
-    footer {
-        height: 0;
-        position: absolute;
-        bottom: 0; 
-        width: 100%;
-        background: ${Primary};
-        color: white;
-    }
-`;
-
 interface State {
     value: string,
     setter: (value: string) => void
 }
 
-const index = () => {
-    return (
-        <>
-            <div className="columns is-multiline is-centered is-vcentered">
-                <DrawTitle />
-                <DrawImage />
-                <DrawForm />
-                <style jsx>{Page}</style>
-            </div>
-            <DrawFooter />
-        </>
-    );
+interface IStringProps {
+    text: string,
+    index?: number
 }
+
+const index = () => 
+    <>
+        <div className="columns is-multiline is-centered is-vcentered">
+            <style jsx>{Page}</style>
+
+            <DrawTitle />
+            <DrawImage />
+            <DrawForm />
+        </div>
+        <DrawFooter />
+    </>
 
 const DrawForm: FC = () => {
     const [summonerName, setSummonerName] = useState("");
@@ -97,11 +82,24 @@ const DrawForm: FC = () => {
     );
 }
 
-const DrawTitle: FC = () => 
-    <div className="column is-full">
-        <h1 className="title">Olangutan Analytics</h1>
-        <style jsx>{Title}</style>
-    </div>
+const DrawTitle: FC = () => {
+    const { Selected } = useColorStore();
+
+    return ( 
+        <div>
+            <h1>Olangutan Analytics</h1>
+            <style jsx>{`
+                h1 {
+                    text-align: center;
+                    color: ${Selected.color};
+                    font-size: 2.2em;
+                    margin: 4px;
+                }
+            `}</style>
+        </div>
+    );
+}
+
 
 const DrawImage: FC = () =>
     <div>
@@ -109,25 +107,39 @@ const DrawImage: FC = () =>
         <style jsx>{Image}</style>
     </div>
 
-const DrawFooter: FC = () => 
-    <footer className="footer">
-        <div className="content has-text-centered">
-            <p>
-                <b>Olangutan Analytics </b>
-                isn't endorsed by Riot Games and doesn't reflect the views or
-                opinions of Riot Games or anyone officially involved in
-                producing or managing Riot Games properties. Riot Games, and
-                all associated properties are trademarks or registered
-                trademarks of Riot Games, Inc.
-            </p>
-        </div>
-        <style jsx>{Footer}</style>
-    </footer>
+const DrawFooter: FC = () => {
+    const {Selected} = useColorStore();
+
+    return (
+        <footer className="footer">
+            <div className="content has-text-centered">
+                <p>
+                    <b>Olangutan Analytics </b>
+                    isn't endorsed by Riot Games and doesn't reflect the views or
+                    opinions of Riot Games or anyone officially involved in
+                    producing or managing Riot Games properties. Riot Games, and
+                    all associated properties are trademarks or registered
+                    trademarks of Riot Games, Inc.
+                </p>
+            </div>
+            <style jsx>{`        
+            footer {
+                height: 0;
+                position: absolute;
+                bottom: 0; 
+                width: 100%;
+                background: ${Selected.primary};
+                color: white;
+            }
+        `}</style>
+        </footer>
+    );
+}
 
 const DrawInput: FC<State> = ({value, setter}) =>
     <div className="column is-full">
         <input 
-            className="input is-rounded is-focused"
+            className="input is-primary is-rounded is-focused"
             value={value}
             onChange={e => setter(e.target.value)}
             type="text" placeholder="Summoner Name" />
@@ -140,20 +152,13 @@ export const DrawServerList: FC<State> = ({value, setter}) =>
     <div className="column is-one-quarter">
         <div className="select">
             <select value={value} onChange={e => setter( e.target.value )}>
-                <option className="dropdown-item">EUW</option>
-                <option className="dropdown-item">EUNE</option>
-                <option className="dropdown-item">NA</option>
-                <option className="dropdown-item">BR</option>
-                <option className="dropdown-item">JA</option>
-                <option className="dropdown-item">KR</option>
-                <option className="dropdown-item">LAS</option>
-                <option className="dropdown-item">LAN</option>
-                <option className="dropdown-item">OC</option>
-                <option className="dropdown-item">TU</option>
-                <option className="dropdown-item">RU</option>
+                {Servers.map((server, i) => <DrawOption key={i} text={server} index={i} />)}
             </select>
         </div>
     </div>
+
+const DrawOption: FC<IStringProps> = ({text, index}) =>
+    <option key={index} className="dropdown-item">{text}</option>
 
 const DrawButtonSubmit: FC = () => 
     <div className="column">

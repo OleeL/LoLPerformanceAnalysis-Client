@@ -1,16 +1,24 @@
 import React, { FC } from 'react'
-import { Tile } from '../pages/[region]/[summoner]';
+import { GetTileStyle } from '../pages/[region]/[summoner]';
+import { useColorStore } from './GlobalStyles';
 
-const TallTile: FC = () => 
-    <article className="tile is-child notification is-info">
-        <div className="content">
-            <p className="title">Tall tile</p>
-            <p className="subtitle">With even more content</p>
+const TallTile: FC = () => {
+    
+    const { Selected } = useColorStore();
+    const { tile, styles } = GetTileStyle(Selected);
+    
+    return (
+        <article className={tile}>
             <div className="content">
-                Content
+                <p className="title">Tall tile</p>
+                <p className="subtitle">With even more content</p>
+                <div>
+                    Content
+                </div>
             </div>
-        </div>
-        <style jsx>{Tile}</style>
-    </article>
+            {styles}
+        </article>
+    )
+}
 
 export default TallTile

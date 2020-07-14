@@ -1,19 +1,12 @@
-import React, { FC, useEffect } from 'react'
-import { Tile } from '../pages/[region]/[summoner]';
-import { LeagueType, ISummoner } from '../Shared/GameInterfaces';
-import { GetSummonerIcon, GetRankData, IRank } from '../Shared/LeagueContent';
+import React, { FC, useEffect, useState } from 'react'
+import { GetTileStyle } from '../pages/[region]/[summoner]';
+import { LeagueType } from '../Shared/GameInterfaces';
+import { GetSummonerIcon, GetRankData, IRank, BlankRankedData } from '../Shared/LeagueContent';
 import { useStore } from '../Shared/Store';
 import css from 'styled-jsx/css';
+import { useColorStore } from './GlobalStyles';
 
 const IconSize = 64;
-
-const RankedIcon = css`
-    img {
-        width: ${IconSize}px;
-        height: ${IconSize}px;
-        display: flex;
-    }
-`
 
 const RankedSection = css`
     div {
@@ -26,12 +19,6 @@ const RankedSection = css`
         -webkit-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
         -moz-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
         box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
-    }
-    
-    span {
-        display: inline;
-        padding: 7px 15px 3px 10px;
-        border-radius: 15px;
     }
 `
 
@@ -62,6 +49,27 @@ const Player = css`
         -moz-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
     }
+
+    p {
+        color: white;
+    }
+`
+
+const RankContentStyle = css`
+    span {
+        display: inline;
+        border-radius: 15px;
+    }
+
+    div {
+        padding: 8px;
+    }
+
+    img {
+        width: ${IconSize}px;
+        height: ${IconSize}px;
+        display: flex;
+    }
 `
 
 interface IColoredText {
@@ -84,25 +92,28 @@ interface ILeagueType {
     type: LeagueType
 }
 
-const DrawRankSection: FC<ILeagueType> = ({type}) => {
-    const { summoner, connected } = useStore();
-    let rank: IRank;
-    useEffect(() => {
-        rank = type === LeagueType.SOLO_DUO ? 
-        GetRankData(summoner, LeagueType.SOLO_DUO)
-        : GetRankData(summoner, LeagueType.FLEX);
-    }, [connected])
+const RankedContent: FC<ILeagueType> = ({type}) => {
+    const { summoner, receivedData } = useStore();
 
-    if (!rank) return <> </>
+    const [rank, setRank] = useState({...BlankRankedData});
+    
+    useEffect(() => setRank(GetRankData(summoner, type)), [receivedData])
+
+    const text = type === LeagueType.SOLO_DUO ?
+        "Ranked Solo / Duo" : "Ranked Flex"
+
+    console.log("Re-render", text);
 
     return (
-        <div>
-            <RankedIcon src={rank.imagePath} />
+        <>
+            <style jsx>{RankContentStyle}</style>
+
+            <img src={rank.imagePath} />
             <div>
-                <b>Ranked Flex</b><br />
+                <b>{text}</b><br />
                 {rank.rankText}
                 {rank.lp !== null &&
-                    <>
+                    <span>
                         {" - "}
                         {rank.lp + " LP"}
                         {" - "}
@@ -113,15 +124,20 @@ const DrawRankSection: FC<ILeagueType> = ({type}) => {
                         <ColouredText
                             text = {`${rank?.losses}L`}
                             color = "red"/>
-                    </>
+                    </span>
                 }
             </div>
-            <style jsx>{RankedSection}</style>
-        </div>
+        </>
     )
 }
 
-const Content: React.FC = () => {
+const DrawRankSection: FC<ILeagueType> = (props) => 
+    <div>
+        <RankedContent type={props.type}/>
+        <style jsx>{RankedSection}</style>
+    </div>
+
+const Content: FC = () => {
 
     const {region, summoner } = useStore();
     
@@ -131,7 +147,7 @@ const Content: React.FC = () => {
     const profileIconId = GetSummonerIcon(summoner);
 
     return (
-        <div>
+        <div className="content">
             <p className="title">
                 {strSummoner}
             </p>
@@ -146,10 +162,15 @@ const Content: React.FC = () => {
     );
 }
 
-const SummonerTile = () => 
-    <article className="tile is-child notification is-info">
-        <Content />
-        <style jsx>{Tile}</style>
-    </article>
+const SummonerTile = () => {
+    const { Selected } = useColorStore();
+    const { tile, styles } = GetTileStyle(Selected);
+    return (
+        <article className={tile}>
+            <Content />
+            {styles}
+        </article>
+    )
+}
 
 export default SummonerTile

@@ -1,6 +1,9 @@
 import { useRouter } from 'next/router'
-import React, { useState, useEffect, FormEvent, Suspense, FC } from "react";
+import React, { useEffect, FC } from "react";
 import { SendGetSummoner } from '../../Shared/Requests';
+import { useStore } from '../../Shared/Store';
+import { ISummoner } from '../../Shared/GameInterfaces';
+import { useColorStore, IColorScheme } from '../../components/GlobalStyles';
 import SummonerDetails from '../../components/SummonerTile';
 import ExtraTile from '../../components/ExtraTile';
 import StatisticsTile from '../../components/StatisticsTile';
@@ -8,19 +11,29 @@ import TallTile from '../../components/TallTile';
 import MatchHistory from '../../components/MatchHistory';
 import TopBar from '../../components/TopBar';
 import css from 'styled-jsx/css';
-import { useStore } from '../../Shared/Store';
-import { ISummoner } from '../../Shared/GameInterfaces';
 
-export const Tile = css`
+export const GetTileStyle = (p: IColorScheme) => css.resolve`
     article {
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+        margin: 10px 5px 10px 5px;
+        border-radius: 5px;
+        background-color: ${p.primary}};
+        padding: 20px;
+        color: white;
+    }
+
+    p {
+        color: white;
+        display: block;
     }
 `
 
 const Content = css`
-    position: relative;
-    margin: 5px;
-    top: 13px;
+    div {
+        position: relative;
+        padding: 5px;
+        top: 70px;
+    }
 `
 
 const StringListToString = (str: string | string[]): string => {
@@ -81,25 +94,11 @@ const Summoner: FC = () => {
         <div>
             <SummonerData />
             <TopBar />
-            <div className="tile is-ancestor">
-                <div className="tile is-vertical is-8">
-                    <div className="tile">
-                        <div className="tile is-parent is-vertical">
-                            <SummonerDetails />
-                            <ExtraTile />
-                        </div>
-                        <div className="tile is-parent">
-                            <StatisticsTile />
-                        </div>
-                    </div>
-                    <div className="tile is-parent">
-                        <MatchHistory />
-                    </div>
-                </div>
-                <div className="tile is-parent">
-                    <TallTile />
-                </div>
-            </div>
+            <SummonerDetails />
+            <ExtraTile />
+            <StatisticsTile />
+            <MatchHistory />
+            <TallTile />
             <style jsx>{Content}</style>
         </div>
     );

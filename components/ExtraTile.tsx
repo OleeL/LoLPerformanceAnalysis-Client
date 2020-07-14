@@ -1,13 +1,17 @@
-import React from 'react'
-import { Tile } from '../pages/[region]/[summoner]';
+import React, { FC } from 'react'
+import { GetTileStyle } from '../pages/[region]/[summoner]';
+import { useColorStore } from './GlobalStyles';
 
-const ExtraTile: React.FC = () => {
-
+const ExtraTile: FC = () => {
+    const { Selected } = useColorStore();
+    const { tile, styles } = GetTileStyle(Selected);
     return (
-        <article className="tile is-child notification is-info">
-            <p className="title">...tiles</p><br />
-            <p className="subtitle">Bottom tile</p>
-            <style jsx>{Tile}</style>
+        <article className={tile}>
+            <div className="content">
+                <p className="title">...tiles</p><br />
+                <p className="subtitle">Bottom tile</p>
+            </div>
+            {styles}
         </article>
     );
 }
