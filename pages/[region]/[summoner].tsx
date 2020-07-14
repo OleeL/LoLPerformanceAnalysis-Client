@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, FC } from "react";
 import { SendGetSummoner } from '../../Shared/Requests';
 import { useStore } from '../../Shared/Store';
 import { ISummoner } from '../../Shared/GameInterfaces';
-import { useColorStore, IColorScheme } from '../../components/GlobalStyles';
+import { IColorScheme } from '../../components/GlobalStyles';
+import React, { useEffect, FC } from "react";
 import SummonerDetails from '../../components/SummonerTile';
 import ExtraTile from '../../components/ExtraTile';
 import StatisticsTile from '../../components/StatisticsTile';
@@ -17,7 +17,7 @@ export const GetTileStyle = (p: IColorScheme) => css.resolve`
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
         margin: 10px 5px 10px 5px;
         border-radius: 5px;
-        background-color: ${p.primary}};
+        background-color: ${p.primary};
         padding: 20px;
         color: white;
     }

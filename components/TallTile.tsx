@@ -5,13 +5,13 @@ import { useColorStore } from './GlobalStyles';
 const TallTile: FC = () => {
     
     const { Selected } = useColorStore();
-    const { tile, styles } = GetTileStyle(Selected);
+    const { className, styles } = GetTileStyle(Selected);
     
     return (
-        <article className={tile}>
+        <article className={className}>
             <div className="content">
-                <p className="title">Tall tile</p>
-                <p className="subtitle">With even more content</p>
+                <p className={className+" title"}>Tall tile</p>
+                <p className={className+" subtitle"}>With even more content</p>
                 <div>
                     Content
                 </div>

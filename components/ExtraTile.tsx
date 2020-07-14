@@ -4,14 +4,14 @@ import { useColorStore } from './GlobalStyles';
 
 const ExtraTile: FC = () => {
     const { Selected } = useColorStore();
-    const { tile, styles } = GetTileStyle(Selected);
+    const { className, styles } = GetTileStyle(Selected);
     return (
-        <article className={tile}>
-            <div className="content">
-                <p className="title">...tiles</p><br />
-                <p className="subtitle">Bottom tile</p>
+        <article className={className}>
+            <div className={"content"}>
+                {styles}
+                <p className={className+" title"}>...tiles</p><br />
+                <p className={className+" subtitle"}>Bottom tile</p>
             </div>
-            {styles}
         </article>
     );
 }

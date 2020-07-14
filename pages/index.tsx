@@ -123,14 +123,14 @@ const DrawFooter: FC = () => {
                 </p>
             </div>
             <style jsx>{`        
-            footer {
-                height: 0;
-                position: absolute;
-                bottom: 0; 
-                width: 100%;
-                background: ${Selected.primary};
-                color: white;
-            }
+                footer {
+                    height: 0;
+                    position: absolute;
+                    bottom: 0; 
+                    width: 100%;
+                    background: ${Selected.primary};
+                    color: white;
+                }
         `}</style>
         </footer>
     );

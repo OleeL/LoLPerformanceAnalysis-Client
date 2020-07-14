@@ -4,15 +4,15 @@ import { useColorStore } from './GlobalStyles';
 
 const MatchHistory: FC = () => {
     const { Selected } = useColorStore();
-    const { tile, styles } = GetTileStyle(Selected);
+    const { className, styles } = GetTileStyle(Selected);
     
     return (
-        <article className={tile}>
+        <article className={className}>
             {styles}
             <div className="content">
-                <p className="title">Match History</p>
-                <p className="subtitle">Aligned with the right tile</p>
-                <div className="content">
+                <p className={className+" title"}>Match History</p>
+                <p className={className+" subtitle"}>Aligned with the right tile</p>
+                <div className={className+" content"}>
                     Content
                 </div>
             </div>

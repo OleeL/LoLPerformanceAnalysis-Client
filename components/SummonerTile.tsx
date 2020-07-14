@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { GetTileStyle } from '../pages/[region]/[summoner]';
 import { LeagueType } from '../Shared/GameInterfaces';
-import { GetSummonerIcon, GetRankData, IRank, BlankRankedData } from '../Shared/LeagueContent';
+import { GetSummonerIcon, GetRankData, BlankRankedData } from '../Shared/LeagueContent';
 import { useStore } from '../Shared/Store';
 import css from 'styled-jsx/css';
 import { useColorStore } from './GlobalStyles';
@@ -102,8 +102,6 @@ const RankedContent: FC<ILeagueType> = ({type}) => {
     const text = type === LeagueType.SOLO_DUO ?
         "Ranked Solo / Duo" : "Ranked Flex"
 
-    console.log("Re-render", text);
-
     return (
         <>
             <style jsx>{RankContentStyle}</style>
@@ -148,9 +146,7 @@ const Content: FC = () => {
 
     return (
         <div className="content">
-            <p className="title">
-                {strSummoner}
-            </p>
+            <p className="title">{strSummoner}</p>
             <p className="subtitle">
                 {strRegion} Level: {summonerLevel}
             </p>
@@ -164,12 +160,14 @@ const Content: FC = () => {
 
 const SummonerTile = () => {
     const { Selected } = useColorStore();
-    const { tile, styles } = GetTileStyle(Selected);
+    const { className, styles } = GetTileStyle(Selected);
     return (
-        <article className={tile}>
-            <Content />
+        <div>
+            <article className={className}>
+                <Content />
+            </article>
             {styles}
-        </article>
+        </div>
     )
 }
 

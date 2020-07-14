@@ -1,8 +1,8 @@
 import { SignalRReconnect } from '../Shared/SignalR';
-import React, {useEffect} from 'react';
-import "../sass/main.scss";
 import { useStore } from '../Shared/Store';
+import React, {useEffect} from 'react';
 import GlobalStyles from '../components/GlobalStyles';
+import "../sass/main.scss";
 
 const MyApp = ({Component, pageProps}) => {
 
