@@ -21,7 +21,7 @@ const handleConnection = async (triggerListener) => {
 
         const startSignalRConnection = connection => connection.start()
             .then(() => {
-                console.info('Websocket Connection Established')
+                console.info('%cConnected to Olangutan Analytics API', "color: green")
             })
             .catch(err => console.error('SignalR Connection Error: ', err));
 

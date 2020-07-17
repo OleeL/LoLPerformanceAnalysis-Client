@@ -9,7 +9,7 @@ const TallTile: FC = () => {
     
     return (
         <article className={className}>
-            <div className="content">
+            <div className="content" style={{width:"450px"}}>
                 <p className={className+" title"}>Tall tile</p>
                 <p className={className+" subtitle"}>With even more content</p>
                 <div>

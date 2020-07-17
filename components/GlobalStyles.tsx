@@ -21,7 +21,7 @@ const Light: IColorScheme = {
 const Dark: IColorScheme = {
     primary:         "#00485c",
     primaryInverted: "#DDDDDD",
-    secondary:       "#38545c",
+    secondary:       "#303030",
     backgroundColor: "#373a3e",
     color:           "#ffffff"  //white
 }
@@ -37,6 +37,12 @@ const GlobalStyles = css.global`
         margin: 0;
         width: 100%;
         height: 100%;
+        font-family: 'rimini', sans-serif;
+    }
+
+    @font-face {
+        font-family: "rimini";
+        src: url("rimini.otf") format("opentype");
     }
 
     html {

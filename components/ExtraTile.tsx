@@ -7,7 +7,7 @@ const ExtraTile: FC = () => {
     const { className, styles } = GetTileStyle(Selected);
     return (
         <article className={className}>
-            <div className={"content"}>
+            <div className={"content"} style={{width:"450px"}} >
                 {styles}
                 <p className={className+" title"}>...tiles</p><br />
                 <p className={className+" subtitle"}>Bottom tile</p>

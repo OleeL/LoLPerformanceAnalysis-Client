@@ -162,12 +162,10 @@ const SummonerTile = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetTileStyle(Selected);
     return (
-        <div>
-            <article className={className}>
-                <Content />
-            </article>
+        <article className={className}>
+            <Content />
             {styles}
-        </div>
+        </article>
     )
 }
 

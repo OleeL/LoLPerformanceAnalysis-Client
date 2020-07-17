@@ -1,7 +1,8 @@
 import { useRouter } from 'next/router'
-import { FC, useState, FormEvent } from "react";
+import { FC, useState, FormEvent, useRef } from "react";
 import { useColorStore } from "../components/GlobalStyles";
 import { Servers } from "../Shared/LeagueContent";
+import { useSpring, animated } from "react-spring";
 import css from 'styled-jsx/css';
 
 const Page = css`
@@ -17,32 +18,49 @@ const Page = css`
     }
 `;
 
-const ContentStyle = css`
+const GetContentStyle = (Selected) => css.resolve`
     div {
         position: absolute;
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 50vw;
+        width: 450px;
+        height: 450px;
+        vertical-align: middle;
+        background-color: ${Selected.primary};
+        border-radius: 5px;
+        padding: 20px;
+        z-index: 10;
+        background-size: cover;
+        background-position: center center;
+
+        transition: box-shadow 0.5s;
+        box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
     }
 `;
+
+const CenterContent = css`
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        top: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+`
 
 
 const Image = css`
     img {
-        margin: 0;
-        padding: 0;
+        margin: 10px;
         position: relative;
         border-radius: 400px;
         width: 100px;
-    }
-
-    div {
-        text-align: center;
-        width: 100vw;
-        overflow: hidden;
-        margin: 4px 0px 10px 0px;
-        padding: 4px;
+        pointer-events: none;
     }
 `;
 
@@ -51,7 +69,11 @@ const FlexStyle = css`
         display: inline-flex;
         flex-direction: row;
         flex-wrap: wrap;
-        width: 25vw;
+        width: 100%;
+    }
+
+    form {
+        width: 80%;
     }
 `
 
@@ -65,6 +87,9 @@ interface IStringProps {
     index?: number
 }
 
+const calc = (ref, x: number, y: number) => 
+    [-(y-(window.innerHeight / 2)) / 40, (x-(window.innerWidth / 2)) / 40, 1.1]
+
 const index: FC = () => 
     <>
         <div>
@@ -74,13 +99,40 @@ const index: FC = () =>
         <style jsx>{Page}</style>
     </>
 
-const Content: FC = () =>
+const rotate = (x,y): string => 
+    `perspective(600px) rotateX(${x}deg) rotateY(${y}deg)`
+    
+
+const Content: FC = () => {
+    const {Selected} = useColorStore();
+    const {className, styles} = GetContentStyle(Selected);
+    const [props, set] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 500, friction: 50 } }))
+    const ref = useRef();
+
+    return (
+        <>
+            <animated.div
+                className={className}
+                ref={ref}
+                //@ts-ignore
+                style={{transform: props.xy.interpolate(rotate) }}
+                onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(ref, x, y) })}
+                onMouseLeave={() => set({ xy: [0, 0] })}>
+                <DrawComponents />
+                {styles}
+
+            </animated.div>
+        </>
+    )
+}
+
+const DrawComponents = () =>
     <div>
         <DrawTitle />
         <DrawImage />
         <DrawForm />
-        <style jsx>{ContentStyle}</style>
-    </div>    
+        <style jsx>{CenterContent}</style>
+    </div>
 
 const DrawTitle: FC = () => {
     const { Selected } = useColorStore();
@@ -94,6 +146,7 @@ const DrawTitle: FC = () => {
                     color: ${Selected.primaryInverted};
                     font-size: 2.2em;
                     margin: 4px;
+
                 }
             `}</style>
         </>
@@ -101,10 +154,10 @@ const DrawTitle: FC = () => {
 }
 
 const DrawImage: FC = () =>
-    <div>
+    <>
         <img src={"data/images/Olangutan.jpg"} alt="Olangutan"/>
         <style jsx>{Image}</style>
-    </div>
+    </>
 
 const DrawForm: FC = () => {
     const [summonerName, setSummonerName] = useState("");
@@ -118,6 +171,7 @@ const DrawForm: FC = () => {
 
     return (
         <form
+        
             onSubmit={e => HandleForm(e)}>
             <DrawInput
                 value={summonerName}
@@ -127,8 +181,9 @@ const DrawForm: FC = () => {
                     value={serverRegion}
                     setter={setServerRegion}/>
                 <DrawButtonSubmit />
-                <style jsx>{FlexStyle}</style>
             </div>
+            <style jsx>{FlexStyle}</style>
+
         </form>
     );
 }
@@ -144,13 +199,16 @@ const DrawInput: FC<State> = ({value, setter}) => {
                     width: 100%;
                 }
 
-                div { width: 100% }
+                div {
+                    width: 100%;
+                }
 
                 .is-focused.input {
                     border-color: ${Selected.primary};
                     -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
                     -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
                     box-shadow: 0px 0px 5px 2px ${Selected.primary};
+                    width: 100%;
                 }
             `}</style>
             <input 

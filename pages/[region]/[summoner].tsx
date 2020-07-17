@@ -30,9 +30,13 @@ export const GetTileStyle = (p: IColorScheme) => css.resolve`
 
 const Content = css`
     div {
+        display: flex;
+        flex-direction: row;
         position: relative;
         padding: 5px;
         top: 70px;
+        width: 100%;
+        flex-wrap: wrap;
     }
 `
 
@@ -91,16 +95,18 @@ const SummonerData = () => {
 
 const Summoner: FC = () => {
     return (
-        <div>
+        <>
             <SummonerData />
             <TopBar />
-            <SummonerDetails />
-            <ExtraTile />
-            <StatisticsTile />
-            <MatchHistory />
-            <TallTile />
-            <style jsx>{Content}</style>
-        </div>
+            <div>
+                <SummonerDetails />
+                <ExtraTile />
+                <StatisticsTile />
+                <MatchHistory />
+                <TallTile />
+                <style jsx>{Content}</style>
+            </div>
+        </>
     );
 }
 
