@@ -1,39 +1,35 @@
 import * as signalR from "@microsoft/signalr";
 import { OnGameUpdate } from "./SignalRListeners";
-import { useStore } from "./Store";
 
 export let connection: signalR.HubConnection | null = null;
 
+const isConnected = () =>
+    (connection && connection.state === signalR.HubConnectionState.Connected)
+
 const handleConnection = async (triggerListener) => {
 
-    
-    if (connection && connection.state === signalR.HubConnectionState.Connected) {
-        return true;
-    }
+    if (isConnected()) return true;
     
     try {
-
         connection = new signalR.HubConnectionBuilder()
             .withUrl(`https://${window?.location?.hostname}:5001/ClientHub`)
             .build();
         
-        connection.serverTimeoutInMilliseconds = 100000; // 100 second
+        connection.serverTimeoutInMilliseconds = 60000; // 60 seconds
 
         const startSignalRConnection = connection => connection.start()
             .then(() => {
                 console.info('%cConnected to Olangutan Analytics API', "color: green")
             })
-            .catch(err => console.error('SignalR Connection Error: ', err));
 
         // re-establish the connection if connection dropped
         connection.onclose(() => OnDisconnect(triggerListener));
         CreateListeners();
         await startSignalRConnection(connection);
-            
         return true;
     }
-    catch {
-        return false
+    catch(err) {
+        return false;
     }
 }
 
@@ -41,17 +37,23 @@ const CreateListeners = () => {
     connection.on('PlayerInGame', update => OnGameUpdate(update));
 }
 
+const retryRate: number = 5000;
+
 const OnDisconnect = (triggerListener) => {
     connection = null;
     triggerListener(false);
-    setTimeout(() => SignalRReconnect(triggerListener), 500);
+    setTimeout(() => SignalRReconnect(triggerListener), 1000);
 }
 
 export const SignalRReconnect = async (triggerListener) => {
-    while (!connection || connection.state !== signalR.HubConnectionState.Connected) {
-        console.log("Reconnecting to API");
-        triggerListener(await handleConnection(triggerListener));
-        await Sleep(2000);
+    console.log("%cConnecting to API", "color: green");
+    while (!isConnected()) {
+        const results = await handleConnection(triggerListener);
+        triggerListener(results);
+        if (!results) {
+            await Sleep(retryRate);
+            console.log("%cTrying to reconnect to API", "color: yellow");
+        }
     }
 }
 

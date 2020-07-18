@@ -4,6 +4,8 @@ import { useColorStore } from "../components/GlobalStyles";
 import { Servers } from "../Shared/LeagueContent";
 import { useSpring, animated } from "react-spring";
 import css from 'styled-jsx/css';
+import { DrawServerList } from '../components/ServerList';
+import { State } from '../Shared/StructuralInterfaces';
 
 const Page = css`
     div {
@@ -30,7 +32,6 @@ const GetContentStyle = (Selected) => css.resolve`
         background-color: ${Selected.primary};
         border-radius: 5px;
         padding: 20px;
-        z-index: 10;
         background-size: cover;
         background-position: center center;
 
@@ -76,11 +77,6 @@ const FlexStyle = css`
         width: 80%;
     }
 `
-
-interface State {
-    value: string,
-    setter: (value: string) => void
-}
 
 interface IStringProps {
     text: string,
@@ -219,52 +215,6 @@ const DrawInput: FC<State> = ({value, setter}) => {
 
     </div>)
 }
-
-export const DrawServerList: FC<State> = ({value, setter}) => {
-    const {Selected} = useColorStore();
-    return (
-        <div className="select">
-            <select value={value} onChange={e => setter( e.target.value )}>
-                {Servers.map((s, i) => <DrawOption key={i} text={s}/>)}
-            </select>
-            
-            <style jsx>{`
-                    select { background-color: ${Selected.primaryInverted} }
-
-                    div { margin: 0px 5px 0px 0px }
-
-                    .select:not(.is-multiple):not(.is-loading)::after {
-                        border-bottom-color: ${Selected.primary};
-                        border-left-color:   ${Selected.primary};
-                        border-right-color:  ${Selected.primary};
-                        border-top-color:    ${Selected.primary};
-                        border-color:        ${Selected.primary};
-                    }
-
-                    .select:not(.is-multiple):not(.is-loading)::after {
-                        border-color:        ${Selected.primary};
-                    }
-
-                    select:hover {
-                        border-color: ${Selected.primary};
-                        -webkit-box-shadow: 0px 0px 5px 0px ${Selected.primary};
-                        -moz-box-shadow: 0px 0px 5px 0px ${Selected.primary};
-                        box-shadow: 0px 0px 5px 0px ${Selected.primary};
-                    }
-
-                    select:focus {
-                        border-color: ${Selected.primary};
-                        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-                        -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-                        box-shadow: 0px 0px 5px 2px ${Selected.primary};
-                    }
-                `}</style>
-        </div>
-    );
-}
-
-const DrawOption: FC<IStringProps> = ({text, index}) =>
-    <option key={index} className="dropdown-item">{text}</option>
 
 const DrawButtonSubmit: FC = () => {
     const {Selected} = useColorStore();

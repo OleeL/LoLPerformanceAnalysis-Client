@@ -41,8 +41,8 @@ const GlobalStyles = css.global`
     }
 
     @font-face {
-        font-family: "rimini";
-        src: url("rimini.otf") format("opentype");
+        font-family: 'rimini';
+        src: url('data/fonts/rimini.otf') format('opentype');
     }
 
     html {

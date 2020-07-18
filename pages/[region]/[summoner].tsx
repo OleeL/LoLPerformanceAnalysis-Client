@@ -4,11 +4,11 @@ import { useStore } from '../../Shared/Store';
 import { ISummoner } from '../../Shared/GameInterfaces';
 import { IColorScheme } from '../../components/GlobalStyles';
 import React, { useEffect, FC } from "react";
-import SummonerDetails from '../../components/SummonerTile';
-import ExtraTile from '../../components/ExtraTile';
-import StatisticsTile from '../../components/StatisticsTile';
-import TallTile from '../../components/TallTile';
-import MatchHistory from '../../components/MatchHistory';
+import SummonerDetails from '../../components/tiles/SummonerTile';
+import ExtraTile from '../../components/tiles/ExtraTile';
+import StatisticsTile from '../../components/tiles/StatisticsTile';
+import TallTile from '../../components/tiles/TallTile';
+import MatchHistory from '../../components/tiles/MatchHistory';
 import TopBar from '../../components/TopBar';
 import css from 'styled-jsx/css';
 
@@ -73,14 +73,13 @@ const SummonerData = () => {
     
     const newRegion       = StringListToString(region).toUpperCase();
     const newSummoner     = StringListToString(rSummonerName);
-    const showPageLoader  = !connected && !receivedData;
+    const showPageLoader  = !connected || !receivedData;
     const pLoaderInactive = `pageloader`;
     const pLoaderActive   = `pageloader is-active`;
 
-    
+    console.log(connected, receivedData);
     useEffect(() => {
         if (summoner || !connected) return;
-        console.log("summoner");
         GetSummoner(setReceivedData, setSummoner, newSummoner, newRegion);
     }, [connected]);
 
