@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-@font-face {
-    font-family: 'rimini';
-    src: url('../public/data/fonts/rimini.otf') format('opentype');
-}
-
 // Colours
 $red: #920000;
 $blue: #00b0e0;
@@ -26,7 +21,8 @@ $title-color: $grey;
 $input-icon-color: $grey;
 
 $column-gap: 0.75rem;
-$family-sans-serif: "rimini" sans-serif;
+$size-normal: 1rem;
+$family-primary: 'IstokWeb';
 
 // Import Extensions
 @import 'bulma/sass/utilities/_all.sass';

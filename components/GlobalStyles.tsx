@@ -33,22 +33,44 @@ export const [useColorStore, _colorStore] = create (set => ({
 export type State = ReturnType<typeof _colorStore.getState>;
 
 const GlobalStyles = css.global`
-    body {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        font-family: 'rimini', sans-serif;
+
+    @font-face {
+        font-family: 'IstokWeb';
+        src: url('/data/fonts/IstokWeb-Regular.ttf') format('truetype');
     }
 
     @font-face {
-        font-family: 'rimini';
-        src: url('data/fonts/rimini.otf') format('opentype');
+        font-family: 'IstokWeb';
+        src: url('/data/fonts/IstokWeb-Italic.ttf') format('truetype')
+        font-style: italic;
     }
+
+    @font-face {
+        font-family: 'IstokWeb';
+        src: url('/data/fonts/IstokWeb-Bold.ttf') format('truetype')
+        font-weight: bold;
+    }
+
+    @font-face {
+        font-family: 'IstokWeb';
+        src: url('/data/fonts/IstokWeb-BoldItalic.ttf') format('truetype');
+        font-style: italic;
+        font-weight: bold;
+    }  
 
     html {
         overflow-y: auto;
         background-color: ${Dark.backgroundColor};
         min-width: 0px;
+        
+        font-family: 'IstokWeb';
+        font-style: normal;
+    }
+
+    body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
     }
 `
 

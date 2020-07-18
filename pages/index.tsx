@@ -141,8 +141,8 @@ const DrawTitle: FC = () => {
                     text-align: center;
                     color: ${Selected.primaryInverted};
                     font-size: 2.2em;
+                    font-weight: bold;
                     margin: 4px;
-
                 }
             `}</style>
         </>
