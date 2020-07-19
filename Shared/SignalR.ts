@@ -46,13 +46,13 @@ const OnDisconnect = (triggerListener) => {
 }
 
 export const SignalRReconnect = async (triggerListener) => {
-    console.log("%cConnecting to API", "color: green");
+    console.info("%cConnecting to API", "color: green");
     while (!isConnected()) {
         const results = await handleConnection(triggerListener);
         triggerListener(results);
         if (!results) {
             await Sleep(retryRate);
-            console.log("%cTrying to reconnect to API", "color: yellow");
+            console.info("%cTrying to reconnect to API", "color: yellow");
         }
     }
 }

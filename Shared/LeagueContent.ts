@@ -58,8 +58,6 @@ export const GetRankData = (summoner: ISummoner, lType: LeagueType): IRank => {
         losses: rank.losses
     };
 
-    console.log(rank);
-
     return {
         imagePath: RANKURLPREFIX 
             + rank.tier
