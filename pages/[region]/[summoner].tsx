@@ -20,6 +20,7 @@ export const GetTileStyle = (p: IColorScheme) => css.resolve`
         background-color: ${p.primary};
         padding: 20px;
         color: white;
+        flex-grow: 1;
     }
 
     p {
@@ -77,7 +78,6 @@ const SummonerData = () => {
     const pLoaderInactive = `pageloader`;
     const pLoaderActive   = `pageloader is-active`;
 
-    console.log(connected, receivedData);
     useEffect(() => {
         if (summoner || !connected) return;
         GetSummoner(setReceivedData, setSummoner, newSummoner, newRegion);
