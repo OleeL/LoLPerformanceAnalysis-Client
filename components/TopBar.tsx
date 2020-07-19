@@ -91,11 +91,15 @@ const TopBar = () => {
     
     const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(summonerName);
         Router.replace("/"+serverRegion+"/"+summonerName);
     }
 
     const ChangeInput = (e) => {
         setSummonerName(e.target.value);
+        console.log(e);
+        console.log(e.value);
+        console.log(summonerName);
     }
 
     return (
