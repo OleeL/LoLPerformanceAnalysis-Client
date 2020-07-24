@@ -241,7 +241,7 @@ const DrawButtonSubmit: FC = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetButtonStyles(Selected);
     return (
-        <div>
+        <div className={className}>
             <button
                 className={"button is-primary is-fullwidth "+className}
                 type="submit">
