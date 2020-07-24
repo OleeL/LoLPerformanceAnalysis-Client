@@ -115,6 +115,7 @@ const TopBar = () => {
                     type="text"
                     placeholder="Summoner Name"
                     onChange={ChangeInput}
+                    maxLength={32}
                     value={summonerName}/>
                 <ServerList
                     value={serverRegion}

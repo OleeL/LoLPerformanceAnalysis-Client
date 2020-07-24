@@ -235,6 +235,7 @@ const DrawInput: FC<State> = ({ value, setter }) => {
             <input
                 className={"input is-rounded is-focused " + className}
                 value={value}
+                maxLength={32}
                 onChange={e => setter(e.target.value)}
                 type="text" placeholder="Summoner Name" />
             {styles}
