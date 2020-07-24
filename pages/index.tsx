@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router'
-import { FC, useState, FormEvent, useRef } from "react";
-import { useColorStore } from "../components/GlobalStyles";
-import { Servers } from "../Shared/LeagueContent";
-import { useSpring, animated } from "react-spring";
+import { FC, useState, FormEvent } from "react";
+import { useColorStore, IColorScheme } from "../components/GlobalStyles";
 import css from 'styled-jsx/css';
 import { DrawServerList } from '../components/ServerList';
 import { State } from '../Shared/StructuralInterfaces';
@@ -17,10 +15,53 @@ const Page = css`
         justify-content: center;
         align-items: center;
         margin: 0px;
+
+        -webkit-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        -moz-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
     }
 `;
 
-const GetContentStyle = (Selected) => css.resolve`
+const GetButtonStyles = (Selected: IColorScheme) => css.resolve`
+    button {
+        display: inline-flex;
+        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+        -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+        box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+    }
+
+    div { 
+        flex-grow: 10;
+    }
+`
+
+const GetFooterStyle = (Selected: IColorScheme) => css.resolve`        
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: auto;
+        width: 100vw;
+        vertical-align: top;
+
+        bottom: 0;
+        background: ${Selected.primary};
+        color: white;
+        font-size: 1em;
+        padding: 2vw;
+
+        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+        -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+        box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+    }
+
+    p {
+        text-align: center;
+        vertical-align: middle;
+    }
+`
+
+const GetContentStyle = (Selected: IColorScheme) => css.resolve`
     div {
         position: absolute;
         display: flex;
@@ -39,6 +80,36 @@ const GetContentStyle = (Selected) => css.resolve`
         box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
     }
 `;
+
+const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
+    h1 {
+        text-align: center;
+        color: ${Selected.primaryInverted};
+        font-size: 2.2em;
+        font-weight: bold;
+        margin: 4px;
+    }
+`
+
+const GetInputStyle = (Selected: IColorScheme) => css.resolve`
+    input {
+        margin: 0px 0px 10px;
+        background-color: ${Selected.primaryInverted};
+        width: 100%;
+    }
+
+    div {
+        width: 100%;
+    }
+
+    .is-focused.input {
+        border-color: ${Selected.primary};
+        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
+        -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
+        box-shadow: 0px 0px 5px 2px ${Selected.primary};
+        width: 100%;
+    }
+`
 
 const CenterContent = css`
     div {
@@ -78,47 +149,25 @@ const FlexStyle = css`
     }
 `
 
-interface IStringProps {
-    text: string,
-    index?: number
-}
-
-const calc = (ref, x: number, y: number) => 
-    [-(y-(window.innerHeight / 2)) / 40, (x-(window.innerWidth / 2)) / 40, 1.1]
-
-const index: FC = () => 
+const index: FC = () =>
     <>
         <div>
             <Content />
-        </div> 
+        </div>
         <DrawFooter />
         <style jsx>{Page}</style>
     </>
 
-const rotate = (x,y): string => 
-    `perspective(600px) rotateX(${x}deg) rotateY(${y}deg)`
-    
 
 const Content: FC = () => {
-    const {Selected} = useColorStore();
-    const {className, styles} = GetContentStyle(Selected);
-    const [props, set] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 500, friction: 50 } }))
-    const ref = useRef();
+    const { Selected } = useColorStore();
+    const { className, styles } = GetContentStyle(Selected);
 
     return (
-        <>
-            <animated.div
-                className={className}
-                ref={ref}
-                //@ts-ignore
-                style={{transform: props.xy.interpolate(rotate) }}
-                onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(ref, x, y) })}
-                onMouseLeave={() => set({ xy: [0, 0] })}>
-                <DrawComponents />
-                {styles}
-
-            </animated.div>
-        </>
+        <div className={className}>
+            <DrawComponents />
+            {styles}
+        </div>
     )
 }
 
@@ -132,26 +181,18 @@ const DrawComponents = () =>
 
 const DrawTitle: FC = () => {
     const { Selected } = useColorStore();
-
-    return ( 
-        <>
-            <h1>Olangutan Analytics</h1>
-            <style jsx>{`
-                h1 {
-                    text-align: center;
-                    color: ${Selected.primaryInverted};
-                    font-size: 2.2em;
-                    font-weight: bold;
-                    margin: 4px;
-                }
-            `}</style>
-        </>
+    const { className, styles } = GetHeadingStyle(Selected);
+    return (
+        <div>
+            <h1 className={className}>Olangutan Analytics</h1>
+            {styles}
+        </div>
     );
 }
 
 const DrawImage: FC = () =>
     <>
-        <img src={"data/images/Olangutan.jpg"} alt="Olangutan"/>
+        <img src={"data/images/Olangutan.jpg"} alt="Olangutan" />
         <style jsx>{Image}</style>
     </>
 
@@ -159,23 +200,21 @@ const DrawForm: FC = () => {
     const [summonerName, setSummonerName] = useState("");
     const [serverRegion, setServerRegion] = useState("EUW");
     const Router = useRouter();
-    
+
     const HandleForm = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        Router.replace("/"+serverRegion+"/"+summonerName);
+        Router.replace("/" + serverRegion + "/" + summonerName);
     }
 
     return (
-        <form
-        
-            onSubmit={e => HandleForm(e)}>
+        <form onSubmit={e => HandleForm(e)}>
             <DrawInput
                 value={summonerName}
-                setter={setSummonerName}/>
+                setter={setSummonerName} />
             <div>
                 <DrawServerList
                     value={serverRegion}
-                    setter={setServerRegion}/>
+                    setter={setServerRegion} />
                 <DrawButtonSubmit />
             </div>
             <style jsx>{FlexStyle}</style>
@@ -184,105 +223,51 @@ const DrawForm: FC = () => {
     );
 }
 
-const DrawInput: FC<State> = ({value, setter}) => {
+const DrawInput: FC<State> = ({ value, setter }) => {
     const { Selected } = useColorStore();
+    const { className, styles } = GetInputStyle(Selected)
     return (
-        <div>
-            <style jsx>{`
-                input {
-                    margin: 0px 0px 10px;
-                    background-color: ${Selected.primaryInverted};
-                    width: 100%;
-                }
-
-                div {
-                    width: 100%;
-                }
-
-                .is-focused.input {
-                    border-color: ${Selected.primary};
-                    -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-                    -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-                    box-shadow: 0px 0px 5px 2px ${Selected.primary};
-                    width: 100%;
-                }
-            `}</style>
-            <input 
-                className="input is-rounded is-focused"
+        <div className={className}>
+            <input
+                className={"input is-rounded is-focused " + className}
                 value={value}
                 onChange={e => setter(e.target.value)}
-                type="text" placeholder="Summoner Name"/>
-
-    </div>)
+                type="text" placeholder="Summoner Name" />
+            {styles}
+        </div>)
 }
 
 const DrawButtonSubmit: FC = () => {
-    const {Selected} = useColorStore();
+    const { Selected } = useColorStore();
+    const { className, styles } = GetButtonStyles(Selected);
     return (
-    <div>
-        <button
-            className="button is-primary is-fullwidth"
-            type="submit">
-            Submit
-        </button>
-        
-        <style jsx>{`
-                button {
-                    display: inline-flex;
-                    -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-                    -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-                    box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-                }
-
-                div { 
-                    flex-grow: 10;
-                }
-            `}
-        </style>
-    </div>);
+        <div>
+            <button
+                className={"button is-primary is-fullwidth "+className}
+                type="submit">
+                Submit
+            </button>
+            {styles}
+        </div>);
 }
 
 const DrawFooter: FC = () => {
-    const {Selected} = useColorStore();
-
+    const { Selected } = useColorStore();
+    const { className, styles } = GetFooterStyle(Selected);
     return (
         <>
-            <footer>
-                    <p>
-                        <b>Olangutan Analytics </b>
-                        {`isn't endorsed by Riot Games and doesn't reflect the views
+            <footer className={className}>
+                <p className={className}>
+                    {styles}
+                    <b>Olangutan Analytics </b>
+                    {`isn't endorsed by Riot Games and doesn't reflect the views
                         or opinions of Riot Games or anyone officially involved in
                         producing or managing Riot Games properties. Riot Games, and
                         all associated properties are trademarks or registered
                         trademarks of Riot Games, Inc.`}
-                    </p>
 
+                </p>
             </footer>
-            <style jsx>{`        
-                footer {
-                    position: fixed;
-                    bottom: 0;
-                    left: 0;
-                    height: auto;
-                    width: 100vw;
-                    vertical-align: top;
-
-                    bottom: 0;
-                    background: ${Selected.primary};
-                    color: white;
-                    font-size: 1em;
-                    padding: 2vw;
-
-                    -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-                    -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-                    box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-                }
-
-                p {
-                    text-align: center;
-                    vertical-align: middle;
-                }
-        `}</style>
         </>
     );
 }
