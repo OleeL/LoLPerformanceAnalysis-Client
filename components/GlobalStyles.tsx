@@ -2,15 +2,6 @@
 import css from 'styled-jsx/css'
 import create from 'zustand';
 
-export interface IColorScheme {
-    name?: string,
-    primary?: string,
-    primaryInverted?: string,
-    secondary?: string,
-    backgroundColor?: string,
-    color?: string
-}
-
 const Themes = [
     {
         name: "Light",
@@ -29,6 +20,15 @@ const Themes = [
         color: "#ffffff"
     } as IColorScheme
 ]
+
+export interface IColorScheme {
+    name?: string,
+    primary?: string,
+    primaryInverted?: string,
+    secondary?: string,
+    backgroundColor?: string,
+    color?: string
+}
 
 const GetTheme = (theme: string) => Themes.find(t => t.name === theme);
 

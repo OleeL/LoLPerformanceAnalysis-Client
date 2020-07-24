@@ -13,8 +13,8 @@ const GetButtonStyle = (Selected: IColorScheme, bulb: string) => css.resolve`
         position: absolute;
         width: 50px;
         height: 50px;
-        left: 5px;
-        top: 5px;
+        left: 15px;
+        top: 15px;
         border-radius: 5px;
         padding: 10px;
         background-color: ${Selected.primary};

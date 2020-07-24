@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import { FC, useState, FormEvent } from "react";
 import { useColorStore, IColorScheme } from "../components/GlobalStyles";
-import { DrawServerList } from '../components/summoner/ServerList';
 import { State } from '../Shared/StructuralInterfaces';
 import css from 'styled-jsx/css';
 import DrawLightBulb from '../components/LightBulb';
+import DrawServerList from '../components/summoner/ServerList';
 
 const Page = css`
     div {

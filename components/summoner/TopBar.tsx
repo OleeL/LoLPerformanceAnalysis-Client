@@ -1,14 +1,16 @@
-import react, { useState, FC } from 'react';
+import { useState, FC } from 'react';
 import { useRouter } from 'next/router';
 import css from 'styled-jsx/css';
+import DrawServerList from './ServerList';
+import { State } from '../../Shared/StructuralInterfaces';
 
 const Bar = css`
     div {
+        display: inline-flex;
+        flex-wrap: wrap;
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
         background-color: #00485c;
         overflow: hidden;
-        display: inline;
-        padding: 5px;
         position: fixed;
         font-size: 6px;
         z-index: 9999;
@@ -16,20 +18,24 @@ const Bar = css`
         width: 100%;
         left: 0;
         top: 0;
+        align-items: center; 
+        justify-content: center;
+        vertical-align: middle;
+        padding: 5px;
     }
     
     input {
         margin: 5px 5px 5px 10px;
         vertical-align: middle;
         overflow: hidden;
-        display: inline;
-        display: inline;
-        width: 40vw;
+        flex-grow: 1;
     }
 
     form {
-        verticalAlign: middle;
-        display: inline;
+        vertical-align: middle;
+        display: inline-flex;
+        flex-grow: 1;
+        padding: 1px;
     }
 `
 
@@ -50,26 +56,26 @@ const Title = css`
     span {
         vertical-align: middle;
         display: inline;
-        margin: 10px;
+        margin: 3px 10px 3px 10px;
         color: white;
         left: 0px;
         top: 0px;
+        font-size: 32px;
     }
 `
 
 const ServerListStyles = css`
     div {
         vertical-align: middle;
-        display: inline-block;
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: wrap;
         font-size: 13px;
         margin: 0px 0px 0px 5px;
+  align-items: center; 
+  justify-content: center;
     }
 `
-
-interface State {
-    value: string,
-    setter: (value: string) => void
-}
 
 const DrawIcon: FC = () => 
     <a href="../">
@@ -78,8 +84,8 @@ const DrawIcon: FC = () =>
     </a>
 
 const DrawTitle: FC = () => 
-    <span className="title">
-        Olangutan Analytics
+    <span>
+        <b>Olangutan Analytics</b>
         <style jsx>{Title}</style>
     </span>
 
@@ -101,7 +107,6 @@ const TopBar = () => {
     return (
         <div>
             <style jsx>{Bar}</style>
-
             <DrawIcon />
             <DrawTitle />
             <form onSubmit={e => HandleForm(e)}>
@@ -111,30 +116,20 @@ const TopBar = () => {
                     placeholder="Summoner Name"
                     onChange={ChangeInput}
                     value={summonerName}/>
-                <ServerList value={serverRegion} setter={setServerRegion} />
+                <ServerList
+                    value={serverRegion}
+                    setter={setServerRegion}/>
             </form>
         </div>
     );
 }
 
-const ServerList: FC<State> = ({value, setter}) =>
-    <div className="select">
-        <style jsx>{ServerListStyles}</style>
-        <select 
+const ServerList: FC<State> = ({ value, setter }) => 
+    <div>
+        <DrawServerList
             value={value}
-            onChange={e => setter( e.target.value )}>
-            <option className="dropdown-item">EUW</option>
-            <option className="dropdown-item">EUNE</option>
-            <option className="dropdown-item">NA</option>
-            <option className="dropdown-item">BR</option>
-            <option className="dropdown-item">JA</option>
-            <option className="dropdown-item">KR</option>
-            <option className="dropdown-item">LAS</option>
-            <option className="dropdown-item">LAN</option>
-            <option className="dropdown-item">OC</option>
-            <option className="dropdown-item">TU</option>
-            <option className="dropdown-item">RU</option>
-        </select>
+            setter={setter}/>
+        <style jsx>{ServerListStyles}</style>
     </div>
 
 export default TopBar;
