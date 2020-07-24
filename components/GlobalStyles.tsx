@@ -36,11 +36,8 @@ const mod = (n: number, m: number): number => ((n % m) + m) % m;
 
 const Cycle = (n: number, max: number) => mod(n + 1, max);
 
-const CycleStyle = (theme: IColorScheme): IColorScheme => {
-    console.log(Cycle(Themes.findIndex(t => t.name === theme), Themes.length));
-    console.log("switching from", Themes[Themes.findIndex(t => t === theme)]?.name)
-    return Themes[Cycle(Themes.findIndex(t => t === theme), Themes.length)];
-}
+const CycleStyle = (theme: IColorScheme): IColorScheme => 
+    Themes[Cycle(Themes.findIndex(t => t === theme), Themes.length)];
 
 export const [useColorStore, _colorStore] = create((set, get) => ({
     Selected: GetTheme("Dark") as IColorScheme,
