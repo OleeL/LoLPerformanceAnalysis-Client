@@ -12,6 +12,7 @@ const MyApp = ({Component, pageProps}) => {
     
     useEffect(() => {
         const html = document.getElementsByTagName('html');
+        document.title = "Olangutan Analytics"
         if (html && html.length > 0) {
             html[0].setAttribute('lang', 'en');
         }
