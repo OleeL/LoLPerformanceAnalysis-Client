@@ -2,7 +2,7 @@
 import create from 'zustand';
 import { ISummoner } from './GameInterfaces';
 
-export const [useStore, _store] = create (set => ({
+export const [useStore, _store] = create ((set, get) => ({
     connected: false as boolean,
     setConnected: (status: boolean) => set(({connected: status})),
     receivedData: false as boolean,

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, FC } from 'react'
-import { GetTileStyle } from '../../pages/[region]/[summoner]';
+import { GetTileStyle } from '../../../pages/[region]/[summoner]';
 import Chartjs from 'chart.js';
 import css from 'styled-jsx/css';
-import { useColorStore } from '../GlobalStyles';
+import { useColorStore } from '../../GlobalStyles';
 
 const Highlight = css`
     div {

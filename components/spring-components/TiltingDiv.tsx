@@ -4,7 +4,7 @@ import { useSpring, animated } from "react-spring";
 
 const Spring = { xy: [0, 0], config: { mass: 10, tension: 500, friction: 50 } };
 
-const calc = (ref, x: number, y: number) => 
+const calc = (x: number, y: number) => 
     [-(y-(window.innerHeight / 2)) / 40, (x-(window.innerWidth / 2)) / 40, 1.1]
 
 const rotate = (x,y): string => 
@@ -14,15 +14,13 @@ interface IInteractive { className?: string }
 
 export const TiltingDiv: FC<IInteractive> = ({children, className}) => {
     const [spring, set] = useSpring(() => Spring);
-    const ref = useRef();
 
     return (
         <animated.div
-            ref={ref}
             className={className}
             //@ts-ignore
             style={{transform: spring.xy.interpolate(rotate) }}
-            onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(ref, x, y) })}
+            onMouseMove={({ clientX: x, clientY: y }) => set({ xy: calc(x, y) })}
             onMouseLeave={() => set({ xy: [0, 0] })}>
                 {children}
         </animated.div>

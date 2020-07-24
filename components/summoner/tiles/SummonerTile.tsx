@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
-import { GetTileStyle } from '../../pages/[region]/[summoner]';
-import { LeagueType } from '../../Shared/GameInterfaces';
-import { GetSummonerIcon, GetRankData, BlankRankedData } from '../../Shared/LeagueContent';
-import { useStore } from '../../Shared/Store';
+import { GetTileStyle } from '../../../pages/[region]/[summoner]';
+import { LeagueType } from '../../../Shared/GameInterfaces';
+import { GetSummonerIcon, GetRankData, BlankRankedData } from '../../../Shared/LeagueContent';
+import { useStore } from '../../../Shared/Store';
 import css from 'styled-jsx/css';
-import { useColorStore } from './../GlobalStyles';
+import { useColorStore } from '../../GlobalStyles';
 
 const IconSize = 64;
 

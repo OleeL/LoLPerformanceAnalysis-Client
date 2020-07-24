@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { GetTileStyle } from '../../pages/[region]/[summoner]';
-import { useColorStore } from './../GlobalStyles';
+import { GetTileStyle } from '../../../pages/[region]/[summoner]';
+import { useColorStore } from '../../GlobalStyles';
 
 const MatchHistory: FC = () => {
     const { Selected } = useColorStore();

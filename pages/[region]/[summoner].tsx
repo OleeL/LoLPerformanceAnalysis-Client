@@ -4,12 +4,12 @@ import { useStore } from '../../Shared/Store';
 import { ISummoner } from '../../Shared/GameInterfaces';
 import { IColorScheme } from '../../components/GlobalStyles';
 import React, { useEffect, FC } from "react";
-import SummonerDetails from '../../components/tiles/SummonerTile';
-import ExtraTile from '../../components/tiles/ExtraTile';
-import StatisticsTile from '../../components/tiles/StatisticsTile';
-import TallTile from '../../components/tiles/TallTile';
-import MatchHistory from '../../components/tiles/MatchHistory';
-import TopBar from '../../components/TopBar';
+import SummonerDetails from '../../components/summoner/tiles/SummonerTile';
+import ExtraTile from '../../components/summoner/tiles/ExtraTile';
+import StatisticsTile from '../../components/summoner/tiles/StatisticsTile';
+import TallTile from '../../components/summoner/tiles/TallTile';
+import MatchHistory from '../../components/summoner/tiles/MatchHistory';
+import TopBar from '../../components/summoner/TopBar';
 import css from 'styled-jsx/css';
 
 export const GetTileStyle = (p: IColorScheme) => css.resolve`

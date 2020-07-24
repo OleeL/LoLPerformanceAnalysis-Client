@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
 import { FC, useState, FormEvent } from "react";
 import { useColorStore, IColorScheme } from "../components/GlobalStyles";
-import css from 'styled-jsx/css';
-import { DrawServerList } from '../components/ServerList';
+import { DrawServerList } from '../components/summoner/ServerList';
 import { State } from '../Shared/StructuralInterfaces';
+import css from 'styled-jsx/css';
+import DrawLightBulb from '../components/LightBulb';
 
 const Page = css`
     div {
@@ -15,6 +16,7 @@ const Page = css`
         justify-content: center;
         align-items: center;
         margin: 0px;
+        z-index: -1;
 
         -webkit-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
         -moz-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
@@ -155,6 +157,8 @@ const index: FC = () =>
             <Content />
         </div>
         <DrawFooter />
+        <DrawLightBulb />
+
         <style jsx>{Page}</style>
     </>
 

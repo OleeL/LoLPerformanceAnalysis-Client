@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { useColorStore } from "./GlobalStyles";
-import { Servers } from "../Shared/LeagueContent";
-import { State } from "../Shared/StructuralInterfaces";
+import { useColorStore } from "../GlobalStyles";
+import { Servers } from "../../Shared/LeagueContent";
+import { State } from "../../Shared/StructuralInterfaces";
 
 export const DrawServerList: FC<State> = ({value, setter}) => {
     const {Selected} = useColorStore();
