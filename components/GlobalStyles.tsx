@@ -36,12 +36,12 @@ const mod = (n: number, m: number): number => ((n % m) + m) % m;
 
 const Cycle = (n: number, max: number) => mod(n + 1, max);
 
-const CycleStyle = (theme: IColorScheme): IColorScheme => 
+const CycleStyle = (theme: IColorScheme): IColorScheme =>
     Themes[Cycle(Themes.findIndex(t => t === theme), Themes.length)];
 
 export const [useColorStore, _colorStore] = create((set, get) => ({
     Selected: GetTheme("Dark") as IColorScheme,
-    Toggle: () => set(s => ({Selected: CycleStyle(s.Selected)}))
+    Toggle: () => set(s => ({ Selected: CycleStyle(s.Selected) }))
 }));
 
 export type State = ReturnType<typeof _colorStore.getState>;
@@ -87,6 +87,19 @@ const GlobalStyles = css.global`
         height: 100%;
     }
 `
+
+export const ChangeGlobalStyles = () => {
+    const { Selected } = useColorStore();
+    return (
+        <style jsx>
+        {`
+            :root {
+                background-color: ${Selected.backgroundColor};
+            }
+        `}
+        </style>
+    )
+}
 
 
 export default GlobalStyles;

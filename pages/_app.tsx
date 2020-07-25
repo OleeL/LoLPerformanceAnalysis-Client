@@ -1,7 +1,7 @@
 import { SignalRReconnect } from '../Shared/SignalR';
 import { useStore } from '../Shared/Store';
 import React, {useEffect} from 'react';
-import GlobalStyles from '../components/GlobalStyles';
+import GlobalStyles, { ChangeGlobalStyles } from '../components/GlobalStyles';
 import "../sass/main.scss";
 
 const MyApp = ({Component, pageProps, router}) => {
@@ -29,6 +29,7 @@ const MyApp = ({Component, pageProps, router}) => {
     return (
         <>
             <Component {...pageProps} />
+            <ChangeGlobalStyles />
             <style jsx>{GlobalStyles}</style>
         </>
     )
