@@ -30,7 +30,7 @@ export interface IColorScheme {
     color?: string
 }
 
-const GetTheme = (theme: string) => Themes.find(t => t.name === theme);
+export const GetTheme = (theme: string) => Themes.find(t => t.name === theme);
 
 const mod = (n: number, m: number): number => ((n % m) + m) % m;
 
@@ -41,7 +41,12 @@ const CycleStyle = (theme: IColorScheme): IColorScheme =>
 
 export const [useColorStore, _colorStore] = create((set, get) => ({
     Selected: GetTheme("Dark") as IColorScheme,
-    Toggle: () => set(s => ({ Selected: CycleStyle(s.Selected) }))
+    SetSelected: (theme: string) => set({ Selected: GetTheme(theme) }),
+    Toggle: () => set(s => {
+        const theme = CycleStyle(s.Selected);
+        document.cookie = theme.name;
+        return ({ Selected: theme })
+    }),
 }));
 
 export type State = ReturnType<typeof _colorStore.getState>;
@@ -91,12 +96,9 @@ const GlobalStyles = css.global`
 export const ChangeGlobalStyles = () => {
     const { Selected } = useColorStore();
     return (
-        <style jsx>
-        {`
-            :root {
-                background-color: ${Selected.backgroundColor};
-            }
-        `}
+        //@ts-ignore
+        <style jsx={"GlobalStyles"}>
+        {`:root {background-color: ${Selected.backgroundColor}}`}
         </style>
     )
 }
