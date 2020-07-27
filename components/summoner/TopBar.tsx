@@ -30,6 +30,16 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
         vertical-align: middle;
         overflow: hidden;
         flex-grow: 1;
+        background-color: ${Selected.primaryInverted};
+        border: none;
+    }
+
+    .is-focused.input {
+        border-color: ${Selected.primary};
+        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
+        -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
+        box-shadow: 0px 0px 5px 2px ${Selected.primary};
+        width: 100%;
     }
 
     form {
