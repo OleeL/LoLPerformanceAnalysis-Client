@@ -41,7 +41,7 @@ const DrawServerList: FC<State> = ({ value, setter }, props) => {
     const { className, styles } = GetHeadingStyle(Selected);
     return (
         <div className={"select " + props.className + " " + className} >
-            <RawServerList />
+            <RawServerList value={value} setter={setter} />
             {styles}
         </div>
     );
