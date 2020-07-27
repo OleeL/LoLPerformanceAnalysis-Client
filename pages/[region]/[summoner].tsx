@@ -41,13 +41,8 @@ const Content = css`
     }
 `
 
-const StringListToString = (str: string | string[]): string => {
-    let answer = "";
-    if (typeof(str) === "string") {
-        answer = str;
-    }
-    return answer;
-}
+const StringListToString = (str: string | string[]): string =>
+    typeof(str) === "string" ? str : "";
 
 const GetSummoner = async (
     setReceivedData: (status: boolean) => void,
@@ -56,8 +51,11 @@ const GetSummoner = async (
     region: string) => {
     
     setReceivedData(false)
-    const results = await SendGetSummoner(summoner, region);
-    setSummoner(results, region);
+    const summonerResults: ISummoner = await SendGetSummoner(summoner, region);
+    if (summonerResults) {
+        setSummoner(summonerResults, region);
+    }
+    window.location.href = "/"
 }
 
 const SummonerData = () => {

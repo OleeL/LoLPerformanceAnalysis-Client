@@ -38,9 +38,7 @@ export const GetSummonerIcon = (summoner: ISummoner): string => {
 
 export const GetRankData = (summoner: ISummoner, lType: LeagueType): IRank => {
 
-    const rank = summoner
-        ?.leagueEntry
-        .find(type => getLeagueType(type.queueType) === lType);
+    const rank = summoner?.leagueEntry?.find(type => getLeagueType(type?.queueType) === lType);
 
     if (!rank) return {
         imagePath: UNRANKEDPICTURE,

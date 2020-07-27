@@ -97,7 +97,7 @@ const RankedContent: FC<ILeagueType> = ({type}) => {
 
     const [rank, setRank] = useState({...BlankRankedData});
     
-    useEffect(() => setRank(GetRankData(summoner, type)), [receivedData])
+    useEffect(() => setRank(GetRankData(summoner, type)), [receivedData]);
 
     const text = type === LeagueType.SOLO_DUO ?
         "Ranked Solo / Duo" : "Ranked Flex"
@@ -129,9 +129,9 @@ const RankedContent: FC<ILeagueType> = ({type}) => {
     )
 }
 
-const DrawRankSection: FC<ILeagueType> = (props) => 
+const DrawRankSection: FC<ILeagueType> = ({type}) => 
     <div>
-        <RankedContent type={props.type}/>
+        <RankedContent type={type}/>
         <style jsx>{RankedSection}</style>
     </div>
 
