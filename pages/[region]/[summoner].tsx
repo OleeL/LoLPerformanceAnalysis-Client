@@ -54,7 +54,9 @@ const GetSummoner = async (
     const summonerResults: ISummoner = await SendGetSummoner(summoner, region);
     if (summonerResults) {
         setSummoner(summonerResults, region);
+        return;
     }
+
     window.location.href = "/"
 }
 
