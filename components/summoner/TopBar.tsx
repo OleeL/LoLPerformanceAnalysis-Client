@@ -3,13 +3,14 @@ import { useRouter } from 'next/router';
 import css from 'styled-jsx/css';
 import DrawServerList from './ServerList';
 import { State } from '../../Shared/StructuralInterfaces';
+import { IColorScheme, useColorStore } from '../GlobalStyles';
 
-const Bar = css`
+const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
         display: inline-flex;
         flex-wrap: wrap;
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-        background-color: #00485c;
+        background-color: ${Selected.primary};
         overflow: hidden;
         position: fixed;
         font-size: 6px;
@@ -72,8 +73,8 @@ const ServerListStyles = css`
         flex-wrap: wrap;
         font-size: 13px;
         margin: 0px 0px 0px 5px;
-  align-items: center; 
-  justify-content: center;
+        align-items: center; 
+        justify-content: center;
     }
 `
 
@@ -94,6 +95,8 @@ const TopBar = () => {
     const [serverRegion, setServerRegion] = useState("EUW");
 
     const Router = useRouter();
+    const { Selected } = useColorStore();
+    const { styles, className } = GetBarStyle(Selected);
     
     const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -105,13 +108,14 @@ const TopBar = () => {
     }
 
     return (
-        <div>
-            <style jsx>{Bar}</style>
+        <div className={className}>
             <DrawIcon />
             <DrawTitle />
-            <form onSubmit={e => HandleForm(e)}>
+            <form 
+                onSubmit={e => HandleForm(e)}
+                className={className}>
                 <input
-                    className="input is-rounded"
+                    className={"input is-rounded "+className}
                     type="text"
                     placeholder="Summoner Name"
                     onChange={ChangeInput}
@@ -121,6 +125,7 @@ const TopBar = () => {
                     value={serverRegion}
                     setter={setServerRegion}/>
             </form>
+            {styles}
         </div>
     );
 }
