@@ -58,9 +58,9 @@ export const GetRankData = (summoner: ISummoner, lType: LeagueType): IRank => {
 
     return {
         imagePath: RANKURLPREFIX 
-            + rank.tier
+            + rank.tier.toLowerCase()
             + "_"
-            + rank.rank
+            + rank.rank.toLowerCase()
             + PNG,
         rankText: capitalize(rank.tier) + " " + rank.rank,
         lp: rank.leaguePoints,
