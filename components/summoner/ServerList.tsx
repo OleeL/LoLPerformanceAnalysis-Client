@@ -5,9 +5,21 @@ import { State } from "../../Shared/StructuralInterfaces";
 import css from 'styled-jsx/css';
 
 const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
-    select { 
-        background-color: ${Selected.primaryInverted};
+    div {
+        margin-right: 5px;
         height: 100%;
+    }
+    
+    select {
+        font-size: 15px;
+        font-family: sans-serif;
+        background-color: ${Selected.primaryInverted};
+    }
+    
+    option {
+        font-size: 15px;
+        font-family: sans-serif;
+        background-color: ${Selected.primaryInverted};
     }
 
     .select:not(.is-multiple):not(.is-loading)::after {
@@ -20,11 +32,6 @@ const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
 
     .select:not(.is-multiple):not(.is-loading)::after {
         border-color: ${Selected.primary};
-    }
-
-    div {
-        margin-right: 5px;
-        height: 100%;
     }
 
     .select:not(.is-multiple) {
@@ -62,7 +69,7 @@ const DrawServerList: FC<State> = ({ value, setter }, props) => {
 export const RawServerList: FC<State> = ({ value, setter }, props) => {
     const { Selected } = useColorStore();
     const { className, styles } = GetHeadingStyle(Selected);
-    const cName = "dropdown-item " + className + props.className
+    const cName = "dropdown-item " + className + " " + props.className
     return (
         <select
             value={value}

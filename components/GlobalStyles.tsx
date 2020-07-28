@@ -14,7 +14,7 @@ const Themes = [
     {
         name: "Dark",
         primary: "#00485c",
-        primaryInverted: "#DDDDDD",
+        primaryInverted: "#dddddd",
         secondary: "#303030",
         backgroundColor: "#373a3e",
         color: "#ffffff"
@@ -60,13 +60,13 @@ const GlobalStyles = css.global`
 
     @font-face {
         font-family: 'IstokWeb';
-        src: url('/data/fonts/IstokWeb-Italic.ttf') format('truetype')
+        src: url('/data/fonts/IstokWeb-Italic.ttf') format('truetype');
         font-style: italic;
     }
 
     @font-face {
         font-family: 'IstokWeb';
-        src: url('/data/fonts/IstokWeb-Bold.ttf') format('truetype')
+        src: url('/data/fonts/IstokWeb-Bold.ttf') format('truetype');
         font-weight: bold;
     }
 
@@ -75,7 +75,7 @@ const GlobalStyles = css.global`
         src: url('/data/fonts/IstokWeb-BoldItalic.ttf') format('truetype');
         font-style: italic;
         font-weight: bold;
-    }  
+    }
 
     html {
         overflow-y: auto;
