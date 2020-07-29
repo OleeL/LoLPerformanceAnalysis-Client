@@ -4,6 +4,7 @@
   "main": "pages/index.tsx",
   "scripts": {
     "dev": "next",
+    "dev_alt": "next -p 3001",
     "build": "next build",
     "start": "next start",
     "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/mystyles.css",

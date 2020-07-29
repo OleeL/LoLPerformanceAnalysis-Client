@@ -61,7 +61,7 @@ const DrawServerList: FC<State> = ({ value, setter }, props) => {
         <div
             className={cName}>
             <RawServerList value={value} setter={setter}/>
-            <style jsx>{styles}</style>
+            {styles}
         </div>
     );
 }

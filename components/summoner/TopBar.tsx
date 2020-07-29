@@ -53,13 +53,20 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
 const BarImage = css`
     img {
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-        margin: 2px 1px 1px 25px;
         vertical-align: middle;
         border-radius: 100%;
         display: inline;
         height: 50px;
         width: 50px;
-        left: 0;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+`
+
+const GetBurgerStyle = (Selected: IColorScheme) => css.resolve`
+    img {
+        margin-left: 5px;
+        margin-right: 5px;
     }
 `
 
@@ -88,13 +95,32 @@ const ServerListStyles = css`
     }
 `
 
-const DrawIcon: FC = () => 
+const DrawBurger: FC = () => {
+    const { Selected } = useColorStore();
+    const { className, styles } = GetBurgerStyle(Selected);
+    const [ clicked, setClicked ] = useState(false);
+
+    const onClick = () => setClicked(!clicked);
+
+    return (
+        <>
+            <img
+                className={className}
+                src="/data/images/svgs/burger.svg"
+                onClick={onClick}
+                />
+            {styles}
+        </>
+    )
+}
+
+const DrawIcon: FC = () =>
     <a href="../">
         <img src="/data/images/Olangutan.jpg" />
         <style jsx>{BarImage}</style>
     </a>
 
-const DrawTitle: FC = () => 
+const DrawTitle: FC = () =>
     <span>
         <b>Olangutan Analytics</b>
         <style jsx>{Title}</style>
@@ -107,10 +133,10 @@ const TopBar = () => {
     const Router = useRouter();
     const { Selected } = useColorStore();
     const { styles, className } = GetBarStyle(Selected);
-    
+
     const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        Router.replace("/"+serverRegion+"/"+summonerName);
+        Router.replace("/" + serverRegion + "/" + summonerName);
     }
 
     const ChangeInput = (e) => {
@@ -119,32 +145,33 @@ const TopBar = () => {
 
     return (
         <div className={className}>
+            <DrawBurger />
             <DrawIcon />
             <DrawTitle />
-            <form 
+            <form
                 onSubmit={e => HandleForm(e)}
                 className={className}>
                 <input
-                    className={"input is-rounded "+className}
+                    className={"input is-rounded " + className}
                     type="text"
                     placeholder="Summoner Name"
                     onChange={ChangeInput}
                     maxLength={32}
-                    value={summonerName}/>
+                    value={summonerName} />
                 <ServerList
                     value={serverRegion}
-                    setter={setServerRegion}/>
+                    setter={setServerRegion} />
             </form>
             {styles}
         </div>
     );
 }
 
-const ServerList: FC<State> = ({ value, setter }) => 
+const ServerList: FC<State> = ({ value, setter }) =>
     <div>
         <DrawServerList
             value={value}
-            setter={setter}/>
+            setter={setter} />
         <style jsx>{ServerListStyles}</style>
     </div>
 
