@@ -2,14 +2,19 @@ import { FC } from "react";
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, SpringConfig } from 'react-spring';
 
-const [getStore] = create(set => ({
+export const [getStore] = create(set => ({
     pressed: false,
     hovered: false,
     togglePressed: () => set(s => ({ pressed: !s.pressed })),
     setHovered: (state: boolean) => set(({ hovered: state })),
 }));
+
+const springConfig: SpringConfig = {
+    tension: 400,
+    friction: 50
+}
 
 const margin = {
     small: "3px 0px 3px 0px",
@@ -54,18 +59,31 @@ const BurgerButton: FC = () => {
     );
 }
 
+const GetRotRight = (hovered: boolean): string => hovered ? `45deg` : `0deg`;
+const GetRotLeft = (hovered: boolean): string => hovered ? `-45deg` : `0deg`;
+const GetTranslationLeftBottom = (hovered: boolean): string =>
+    hovered ? `18px,-5.5px,0px` : `0px,0px,0px`
+const GetTranslationRightBottom = (hovered: boolean): string =>
+    hovered ? `-2px,-5.5px,0px` : `0px,0px,0px`
+const GetTranslationLeftTop = (hovered: boolean): string =>
+    hovered ? `-2px,5.5px,0px` : `0px,0px,0px`
+const GetTranslationRightTop = (hovered: boolean): string =>
+    hovered ? `18px,5.5px,0px` : `0px,0px,0px`
+
 const Top = () => {
     const { Selected } = useColorStore();
-    const { hovered } = getStore();
+    const { hovered, pressed } = getStore();
     const { className, styles } = GetLineStyle();
-    const rotation    = hovered ? `45deg` : `0deg`;
-    const translation = hovered ? `18px,5px,0px` : `0px,0px,0px`
+    const rotation    = pressed ? GetRotLeft(hovered) : GetRotRight(hovered);
+    const translation = pressed ? GetTranslationLeftTop(hovered)
+        : GetTranslationRightTop(hovered);
     const width       = hovered ? `16px` : `32px`;
     const spring = useSpring(
         {
             backgroundColor: hovered ? Selected.hover : Selected.primaryInverted,
             transform: `translate3d(${translation}) rotate(${rotation})`,
-            width: width
+            width: width,
+            config: springConfig
         }
     );
 
@@ -94,15 +112,17 @@ const Middle = () => {
 
 const Bottom = () => {
     const { Selected } = useColorStore();
-    const { hovered } = getStore();
+    const { hovered, pressed } = getStore();
     const { className, styles } = GetLineStyle();
-    const rotation = hovered ? `-45deg` : `0deg`;
-    const translation = hovered ? `18px,-5px,0px` : `0px,0px,0px`
+    const rotation = pressed ? GetRotRight(hovered) : GetRotLeft(hovered);
+    const translation = pressed ? GetTranslationRightBottom(hovered)
+        : GetTranslationLeftBottom(hovered);
     const width       = hovered ? `16px` : `32px`;
     const spring = useSpring({
         backgroundColor: hovered ? Selected.hover : Selected.primaryInverted,
         transform: `translate3d(${translation}) rotate(${rotation})`,
-        width: width
+        width: width,
+        config: springConfig
     });
 
     return (
