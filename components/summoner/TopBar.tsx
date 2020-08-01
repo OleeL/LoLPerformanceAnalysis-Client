@@ -4,7 +4,8 @@ import css from 'styled-jsx/css';
 import DrawServerList from './ServerList';
 import { State } from '../../Shared/StructuralInterfaces';
 import { IColorScheme, useColorStore } from '../GlobalStyles';
-import BurgerButton from '../spring-components/BurgerButton';
+import BurgerButton, { useBurgerStore } from '../spring-components/BurgerButton';
+import { useSpring, animated } from 'react-spring';
 
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
@@ -12,12 +13,12 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
         flex-wrap: wrap;
         box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
         background-color: ${Selected.primary};
+        clip:rect(0px, 20000px, 20000px, 0px);
         overflow: hidden;
         position: fixed;
         font-size: 6px;
-        z-index: 9999;
+        z-index: 99999;
         color: white;
-        width: 100%;
         left: 0;
         top: 0;
         align-items: center; 
@@ -108,13 +109,28 @@ const DrawTitle: FC = () =>
         <style jsx>{Title}</style>
     </span>
 
-const TopBar = () => {
-    const [summonerName, setSummonerName] = useState("");
-    const [serverRegion, setServerRegion] = useState("EUW");
+const ServerList: FC<State> = ({ value, setter }) =>
+    <div>
+        <DrawServerList
+            value={value}
+            setter={setter} />
+        <style jsx>{ServerListStyles}</style>
+    </div>
 
+const TopBar = () => {
     const Router = useRouter();
     const { Selected } = useColorStore();
     const { styles, className } = GetBarStyle(Selected);
+
+    // Spring stuff
+    const { pressed } = useBurgerStore();
+    const left  = pressed ? `20%` : `0%`;
+    const width = pressed ? `80%` : `100%`;
+    const spring = useSpring({left: left, width: width});
+
+    const [summonerName, setSummonerName] = useState("");
+    const [serverRegion, setServerRegion] = useState("EUW");
+
 
     const HandleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -126,7 +142,9 @@ const TopBar = () => {
     }
 
     return (
-        <div className={className}>
+        <animated.div
+            className={className}
+            style={spring}>
             <BurgerButton />
             <DrawIcon />
             <DrawTitle />
@@ -145,16 +163,8 @@ const TopBar = () => {
                     setter={setServerRegion} />
             </form>
             {styles}
-        </div>
+        </animated.div>
     );
 }
-
-const ServerList: FC<State> = ({ value, setter }) =>
-    <div>
-        <DrawServerList
-            value={value}
-            setter={setter} />
-        <style jsx>{ServerListStyles}</style>
-    </div>
 
 export default TopBar;

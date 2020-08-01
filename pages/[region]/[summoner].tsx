@@ -11,6 +11,9 @@ import TallTile from '../../components/summoner/tiles/TallTile';
 import MatchHistory from '../../components/summoner/tiles/MatchHistory';
 import TopBar from '../../components/summoner/TopBar';
 import css from 'styled-jsx/css';
+import LeftBar from '../../components/summoner/LeftBar';
+import { useSpring, animated } from 'react-spring';
+import { useBurgerStore } from '../../components/spring-components/BurgerButton';
 
 export const GetTileStyle = (p: IColorScheme) => css.resolve`
     article {
@@ -38,6 +41,12 @@ const Content = css`
         top: 70px;
         width: 100%;
         flex-wrap: wrap;
+    }
+`
+
+const Screen = css`
+    div {
+        position: relative;
     }
 `
 
@@ -92,19 +101,29 @@ const SummonerData = () => {
     )
 };
 
+const CenterContent = () =>
+    <div>
+        <TopBar />
+        <SummonerDetails />
+        <ExtraTile />
+        <StatisticsTile />
+        <MatchHistory />
+        <TallTile />
+        <style jsx>{Content}</style>
+    </div>
+
 const Summoner: FC = () => {
+    const { pressed } = useBurgerStore();
+    const left = pressed ? `20%` : `0%`;
+    const spring = useSpring({paddingLeft: left});
     return (
         <>
             <SummonerData />
-            <TopBar />
-            <div>
-                <SummonerDetails />
-                <ExtraTile />
-                <StatisticsTile />
-                <MatchHistory />
-                <TallTile />
-                <style jsx>{Content}</style>
-            </div>
+            <LeftBar />
+            <animated.div style={spring}>
+                <CenterContent />
+                <style jsx>{Screen}</style>
+            </animated.div>
         </>
     );
 }
