@@ -4,6 +4,7 @@ import css from 'styled-jsx/css';
 import DrawServerList from './ServerList';
 import { State } from '../../Shared/StructuralInterfaces';
 import { IColorScheme, useColorStore } from '../GlobalStyles';
+import BurgerButton from '../spring-components/BurgerButton';
 
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
@@ -95,25 +96,6 @@ const ServerListStyles = css`
     }
 `
 
-const DrawBurger: FC = () => {
-    const { Selected } = useColorStore();
-    const { className, styles } = GetBurgerStyle(Selected);
-    const [ clicked, setClicked ] = useState(false);
-
-    const onClick = () => setClicked(!clicked);
-
-    return (
-        <>
-            <img
-                className={className}
-                src="/data/images/svgs/burger.svg"
-                onClick={onClick}
-                />
-            {styles}
-        </>
-    )
-}
-
 const DrawIcon: FC = () =>
     <a href="../">
         <img src="/data/images/Olangutan.jpg" />
@@ -145,7 +127,7 @@ const TopBar = () => {
 
     return (
         <div className={className}>
-            <DrawBurger />
+            <BurgerButton />
             <DrawIcon />
             <DrawTitle />
             <form

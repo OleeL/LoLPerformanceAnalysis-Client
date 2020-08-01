@@ -7,6 +7,7 @@ const Themes = [
         name: "Light",
         primary: "#00b0e0",
         primaryInverted: "#ffffff",
+        hover: "#000000",
         secondary: "#38545c",
         backgroundColor: "#d1e0eb",
         color: "#000000"
@@ -15,6 +16,7 @@ const Themes = [
         name: "Dark",
         primary: "#00485c",
         primaryInverted: "#dddddd",
+        hover: "#000000",
         secondary: "#303030",
         backgroundColor: "#373a3e",
         color: "#ffffff"
@@ -22,12 +24,13 @@ const Themes = [
 ]
 
 export interface IColorScheme {
-    name?: string,
-    primary?: string,
-    primaryInverted?: string,
-    secondary?: string,
-    backgroundColor?: string,
-    color?: string
+    name?: string;
+    primary?: string;
+    primaryInverted?: string;
+    secondary?: string;
+    backgroundColor?: string;
+    color?: string;
+    hover?: string;
 }
 
 export const GetTheme = (theme: string) => Themes.find(t => t.name === theme);
