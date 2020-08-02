@@ -1,4 +1,4 @@
-import { useState, FC } from 'react';
+import { useState, FC, useRef } from 'react';
 import { useRouter } from 'next/router';
 import css from 'styled-jsx/css';
 import DrawServerList from './ServerList';
@@ -17,7 +17,8 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
         overflow: hidden;
         position: fixed;
         font-size: 6px;
-        z-index: 99999;
+        z-index: 99;
+        width: 100%;
         color: white;
         left: 0;
         top: 0;
@@ -60,15 +61,8 @@ const BarImage = css`
         display: inline;
         height: 50px;
         width: 50px;
-        margin-left: 5px;
-        margin-right: 5px;
-    }
-`
-
-const GetBurgerStyle = (Selected: IColorScheme) => css.resolve`
-    img {
-        margin-left: 5px;
-        margin-right: 5px;
+        margin-left: 10px;
+        margin-right: 6px;
     }
 `
 
@@ -124,9 +118,8 @@ const TopBar = () => {
 
     // Spring stuff
     const { pressed } = useBurgerStore();
-    const left  = pressed ? `20%` : `0%`;
-    const width = pressed ? `80%` : `100%`;
-    const spring = useSpring({left: left, width: width});
+    const left  = pressed ? `20%` : `0.5%`;
+    const spring = useSpring({paddingLeft: left});
 
     const [summonerName, setSummonerName] = useState("");
     const [serverRegion, setServerRegion] = useState("EUW");

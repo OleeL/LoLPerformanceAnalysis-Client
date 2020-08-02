@@ -103,7 +103,6 @@ const SummonerData = () => {
 
 const CenterContent = () =>
     <div>
-        <TopBar />
         <SummonerDetails />
         <ExtraTile />
         <StatisticsTile />
@@ -120,6 +119,7 @@ const Summoner: FC = () => {
         <>
             <SummonerData />
             <LeftBar />
+            <TopBar />
             <animated.div style={spring}>
                 <CenterContent />
                 <style jsx>{Screen}</style>
