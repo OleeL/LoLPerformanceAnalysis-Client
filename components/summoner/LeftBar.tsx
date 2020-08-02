@@ -7,7 +7,7 @@ import React, { useState, FC } from 'react';
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
         display: flex;
-        position: absolute;
+        position: fixed;
         background-color: ${Selected.primary};
         height: 100%;
         width: 20%;
@@ -22,7 +22,7 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
 const GetShadow = () => css.resolve`
     div {
         display: flex;
-        position: absolute;
+        position: fixed;
         background-color: rgba(0,0,0,0);
         height: 100%;
         width: 20%;
@@ -43,13 +43,11 @@ const LeftBar = () => {
     const spring = useSpring({ transform: translate });
 
     return (
-        <div>
-            <animated.div
-                style={spring}
-                className={className}>
-                {styles}
-            </animated.div>
-        </div>
+        <animated.div
+            style={spring}
+            className={className}>
+            {styles}
+        </animated.div>
     );
 }
 
@@ -72,10 +70,10 @@ const ShadowBox: FC = () => {
 }
 
 const index = () =>
-    <> 
+    <div>
         <LeftBar />
         <ShadowBox />
-    </>
+    </div>
 
 
 export default index;
