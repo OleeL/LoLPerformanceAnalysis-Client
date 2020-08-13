@@ -13,7 +13,7 @@ import TopBar from '../../components/summoner/TopBar';
 import css from 'styled-jsx/css';
 import LeftBar from '../../components/summoner/LeftBar';
 import { useSpring, animated } from 'react-spring';
-import { useBurgerStore } from '../../components/spring-components/BurgerButton';
+import { useBurgerStore } from '../../components/Buttons/BurgerButton';
 
 export const GetTileStyle = (p: IColorScheme) => css.resolve`
     article {

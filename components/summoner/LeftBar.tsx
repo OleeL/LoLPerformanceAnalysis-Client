@@ -1,7 +1,7 @@
 import css from 'styled-jsx/css';
 import { IColorScheme, useColorStore } from '../GlobalStyles';
 import { useSpring, animated, AnimatedValue } from 'react-spring';
-import { useBurgerStore } from '../spring-components/BurgerButton';
+import { useBurgerStore } from '../Buttons/BurgerButton';
 import React, { useState, FC } from 'react';
 
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
@@ -23,13 +23,11 @@ const GetShadow = () => css.resolve`
     div {
         display: flex;
         position: fixed;
-        background-color: rgba(0,0,0,0);
         height: 100%;
         width: 20%;
         left: 0;
         top: 0;
         bottom: 0;
-        padding: 5px;
         z-index: -1;
     }
 `

@@ -4,7 +4,7 @@ import css from 'styled-jsx/css';
 import DrawServerList from './ServerList';
 import { State } from '../../Shared/StructuralInterfaces';
 import { IColorScheme, useColorStore } from '../GlobalStyles';
-import BurgerButton, { useBurgerStore } from '../spring-components/BurgerButton';
+import BurgerButton, { useBurgerStore } from '../Buttons/BurgerButton';
 import { useSpring, animated } from 'react-spring';
 
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
