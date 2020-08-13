@@ -9,6 +9,7 @@ const Themes = [
         primaryInverted: "#ffffff",
         hover: "#000000",
         secondary: "#38545c",
+        input: { color: "#303030", backgroundColor: "#ffffff", hoverColor: "#dfdfdf", borderColor: "#00b0e0", focusColor: "#00485c" } as IInputColors,
         backgroundColor: "#d1e0eb",
         color: "#000000"
     } as IColorScheme,
@@ -18,19 +19,29 @@ const Themes = [
         primaryInverted: "#dddddd",
         hover: "#000000",
         secondary: "#303030",
+        input: { color: "#ffffff", backgroundColor: "#303030", hoverColor: "#525252", borderColor: "#00485c", focusColor: "#00b0e0" } as IInputColors,
         backgroundColor: "#373a3e",
         color: "#ffffff"
     } as IColorScheme
 ]
 
+export interface IInputColors {
+    color: string;
+    backgroundColor: string;
+    hoverColor: string;
+    borderColor: string;
+    focusColor: string;
+}
+
 export interface IColorScheme {
-    name?: string;
-    primary?: string;
-    primaryInverted?: string;
-    secondary?: string;
-    backgroundColor?: string;
-    color?: string;
-    hover?: string;
+    name: string;
+    primary: string;
+    primaryInverted: string;
+    secondary: string;
+    backgroundColor: string;
+    input: IInputColors;
+    color: string;
+    hover: string;
 }
 
 export const GetTheme = (theme: string) => Themes.find(t => t.name === theme);
@@ -101,7 +112,7 @@ export const ChangeGlobalStyles = () => {
     return (
         //@ts-ignore
         <style jsx={"GlobalStyles"}>
-        {`:root {background-color: ${Selected.backgroundColor}}`}
+            {`:root {background-color: ${Selected.backgroundColor}}`}
         </style>
     )
 }
