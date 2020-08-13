@@ -5,6 +5,7 @@ import { State } from '../Shared/StructuralInterfaces';
 import css from 'styled-jsx/css';
 import DrawLightBulb from '../components/LightBulb';
 import DrawServerList from '../components/summoner/ServerList';
+import SummonerInput from '../components/spring-components/SummonerInput';
 
 const Page = css`
     div {
@@ -92,26 +93,6 @@ const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
         font-size: 2.2em;
         font-weight: bold;
         margin: 4px;
-    }
-`
-
-const GetInputStyle = (Selected: IColorScheme) => css.resolve`
-    input {
-        margin: 0px 0px 10px;
-        background-color: ${Selected.primaryInverted};
-        width: 100%;
-    }
-
-    div {
-        width: 100%;
-    }
-
-    .is-focused.input {
-        border-color: ${Selected.primary};
-        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-        -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-        box-shadow: 0px 0px 5px 2px ${Selected.primary};
-        width: 100%;
     }
 `
 
@@ -229,20 +210,15 @@ const DrawForm: FC = () => {
     );
 }
 
-const DrawInput: FC<State> = ({ value, setter }) => {
-    const { Selected } = useColorStore();
-    const { className, styles } = GetInputStyle(Selected)
-    return (
-        <div className={className}>
-            <input
-                className={"input is-rounded is-focused " + className}
-                value={value}
-                maxLength={32}
-                onChange={e => setter(e.target.value)}
-                type="text" placeholder="Summoner Name" />
-            {styles}
-        </div>)
-}
+const DrawInput: FC<State> = ({ value, setter }) =>
+    <div style={{width: '100%'}}>
+        <SummonerInput
+            value={value}
+            maxLength={32}
+            onChange={e => setter(e.target.value)}
+            type="text"
+            placeholder="Summoner Name" />
+    </div>
 
 const DrawButtonSubmit: FC = () => {
     const { Selected } = useColorStore();
@@ -250,7 +226,7 @@ const DrawButtonSubmit: FC = () => {
     return (
         <div className={className}>
             <button
-                className={"button is-primary is-fullwidth "+className}
+                className={"button is-primary is-fullwidth " + className}
                 type="submit">
                 Submit
             </button>
@@ -262,20 +238,18 @@ const DrawFooter: FC = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetFooterStyle(Selected);
     return (
-        <>
-            <footer className={className}>
-                <p className={className}>
-                    {styles}
-                    <b>Olangutan Analytics </b>
-                    {`isn't endorsed by Riot Games and doesn't reflect the views
-                        or opinions of Riot Games or anyone officially involved in
-                        producing or managing Riot Games properties. Riot Games, and
-                        all associated properties are trademarks or registered
-                        trademarks of Riot Games, Inc.`}
+        <footer className={className}>
+            <p className={className}>
+                {styles}
+                <b>Olangutan Analytics </b>
+                {`isn't endorsed by Riot Games and doesn't reflect the views
+                    or opinions of Riot Games or anyone officially involved in
+                    producing or managing Riot Games properties. Riot Games, and
+                    all associated properties are trademarks or registered
+                    trademarks of Riot Games, Inc.`}
 
-                </p>
-            </footer>
-        </>
+            </p>
+        </footer>
     );
 }
 
