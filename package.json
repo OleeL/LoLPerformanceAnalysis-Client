@@ -11,16 +11,18 @@
     "css-watch": "npm run css-build -- --watch"
   },
   "license": "MIT",
+  "resolutions": {
+    "webpack": "^5.0.0-beta.22"
+  },
   "dependencies": {
     "@microsoft/signalr": "^3.1.5",
     "@types/chartjs": "^0.0.31",
     "@types/react-dom": "^16.9.8",
     "chart.js": "^2.9.3",
-    "next": "^9.5.0",
+    "next": "^9.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-spring": "^8.0.27",
-    "styled-jsx": "^3.3.0",
     "typescript": "^3.9.6",
     "zustand": "^2.2.3"
   },
