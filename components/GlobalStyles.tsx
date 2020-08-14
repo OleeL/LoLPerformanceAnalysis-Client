@@ -11,7 +11,8 @@ const Themes = [
         secondary: "#38545c",
         input: { color: "#303030", backgroundColor: "#ffffff", hoverColor: "#dfdfdf", borderColor: "#00b0e0", focusColor: "#00485c" } as IInputColors,
         backgroundColor: "#d1e0eb",
-        color: "#000000"
+        color: "#ffffff",
+        shadows: true
     } as IColorScheme,
     {
         name: "Dark",
@@ -21,7 +22,19 @@ const Themes = [
         secondary: "#303030",
         input: { color: "#ffffff", backgroundColor: "#303030", hoverColor: "#525252", borderColor: "#00485c", focusColor: "#00b0e0" } as IInputColors,
         backgroundColor: "#373a3e",
-        color: "#ffffff"
+        color: "#ffffff",
+        shadows: true
+    } as IColorScheme,
+    {
+        name: "Darker",
+        primary: "#3b3b3b",
+        primaryInverted: "#dddddd",
+        hover: "#000000",
+        secondary: "#303030",
+        input: { color: "#a49ea3", backgroundColor: "#303030", hoverColor: "#525252", borderColor: "#545454", focusColor: "#00b0e0" } as IInputColors,
+        backgroundColor: "#303030",
+        color: "#a49ea3",
+        shadows: false
     } as IColorScheme
 ]
 
@@ -42,6 +55,7 @@ export interface IColorScheme {
     input: IInputColors;
     color: string;
     hover: string;
+    shadows: boolean;
 }
 
 export const GetTheme = (theme: string) => Themes.find(t => t.name === theme);
@@ -54,7 +68,7 @@ const CycleStyle = (theme: IColorScheme): IColorScheme =>
     Themes[Cycle(Themes.findIndex(t => t === theme), Themes.length)];
 
 export const [useColorStore, _colorStore] = create((set, get) => ({
-    Selected: GetTheme("Dark") as IColorScheme,
+    Selected: GetTheme("Darker") as IColorScheme,
     SetSelected: (theme: string) => set({ Selected: GetTheme(theme) }),
     Toggle: () => set(s => {
         const theme = CycleStyle(s.Selected);
@@ -106,16 +120,6 @@ const GlobalStyles = css.global`
         height: 100%;
     }
 `
-
-export const ChangeGlobalStyles = () => {
-    const { Selected } = useColorStore();
-    return (
-        //@ts-ignore
-        <style jsx={"GlobalStyles"}>
-            {`:root {background-color: ${Selected.backgroundColor}}`}
-        </style>
-    )
-}
 
 
 export default GlobalStyles;
