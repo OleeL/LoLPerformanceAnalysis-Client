@@ -36,7 +36,8 @@ export const SummonerInput: FC<IInteractive> = (props) => {
     const spring = useSpring({
         backgroundColor: focussed || hovered ? Selected.input.hoverColor : Selected.input.backgroundColor,
         borderColor: focussed ? Selected.input.focusColor : Selected.input.borderColor,
-        boxShadow: focussed ? Selected.input.focusColor : Selected.input.borderColor
+        color: Selected.input.color,
+        config: springConfig
     });
 
     const onMouseEnter = () => setHovered(true);

@@ -3,17 +3,19 @@ import { useColorStore, IColorScheme } from "../GlobalStyles";
 import { Servers } from "../../Shared/LeagueContent";
 import { State } from "../../Shared/StructuralInterfaces";
 import css from 'styled-jsx/css';
+import { animated, useSpring } from "react-spring";
 
 const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
     div {
-        margin-right: 5px;
-        height: 100%;
+        margin: 0px 5px 0px 0px;
     }
     
     select {
         font-size: 15px;
         font-family: sans-serif;
         background-color: ${Selected.primaryInverted};
+        margin: 0px;
+        height: 40px;
     }
     
     option {
@@ -35,18 +37,18 @@ const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
     }
 
     .select:not(.is-multiple) {
-        height: 80%;
+        height: 100%;
     }
 
     select:hover {
-        border-color: ${Selected.primary};
+        border-color: ${Selected.input.hoverColor};
         -webkit-box-shadow: 0px 0px 5px 0px ${Selected.primary};
         -moz-box-shadow: 0px 0px 5px 0px ${Selected.primary};
         box-shadow: 0px 0px 5px 0px ${Selected.primary};
     }
 
     select:focus {
-        border-color: ${Selected.primary};
+        border-color: ${Selected.input.focusColor};
         -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
         -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
         box-shadow: 0px 0px 5px 2px ${Selected.primary};
@@ -56,7 +58,7 @@ const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
 const DrawServerList: FC<State> = ({ value, setter }, props) => {
     const { Selected } = useColorStore();
     const { className, styles } = GetHeadingStyle(Selected);
-    const cName = "select " + className + " " + props.className;
+    const cName = "select " + (props.className ?? "") + " " + className;
     return (
         <div
             className={cName}>
@@ -70,10 +72,16 @@ export const RawServerList: FC<State> = ({ value, setter }, props) => {
     const { Selected } = useColorStore();
     const { className, styles } = GetHeadingStyle(Selected);
     const cName = "dropdown-item " + className + " " + props.className
+    const spring = useSpring({
+        backgroundColor: Selected.secondary,
+        color: Selected.input.color
+    });
+    
     return (
-        <select
+        <animated.select
             value={value}
             className={className}
+            style={spring}
             onChange={e => setter(e.target.value)}>
             {Servers.map((server, i) =>
                 <option
@@ -83,7 +91,7 @@ export const RawServerList: FC<State> = ({ value, setter }, props) => {
                 </option>)
             }
             {styles}
-        </select>
+        </animated.select>
     );
 }
 

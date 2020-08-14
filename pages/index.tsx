@@ -6,8 +6,9 @@ import css from 'styled-jsx/css';
 import DrawLightBulb from '../components/LightBulb';
 import DrawServerList from '../components/summoner/ServerList';
 import SummonerInput from '../components/spring-components/SummonerInput';
+import { useSpring, animated } from 'react-spring';
 
-const Page = css`
+const GetPageStyles = (Selected: IColorScheme) => css.resolve`
     div {
         width: 100vw;
         height: 100vh;
@@ -19,18 +20,27 @@ const Page = css`
         margin: 0px;
         z-index: -1;
 
-        -webkit-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        ${Selected.shadows &&
+        `-webkit-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
         -moz-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
         box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        `}
     }
 `;
 
 const GetButtonStyles = (Selected: IColorScheme) => css.resolve`
     button {
         display: inline-flex;
+
+        ${Selected.shadows && ` 
         -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
         -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
         box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+        `}
+    }
+
+    button:hover{
+        border: 1px solid ${Selected.input.borderColor};
     }
 
     div { 
@@ -48,14 +58,15 @@ const GetFooterStyle = (Selected: IColorScheme) => css.resolve`
         vertical-align: top;
 
         bottom: 0;
-        background: ${Selected.primary};
-        color: white;
         font-size: 1em;
         padding: 2vw;
 
+
+        ${Selected.shadows && ` 
         -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
         -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
         box-shadow: 0px 0px 5px 2px ${Selected.secondary};
+        `}
     }
 
     p {
@@ -73,16 +84,18 @@ const GetContentStyle = (Selected: IColorScheme) => css.resolve`
         width: 450px;
         height: 450px;
         vertical-align: middle;
-        background-color: ${Selected.primary};
         border-radius: 5px;
         padding: 20px;
         background-size: cover;
         background-position: center center;
-        box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+
         
+
+        ${Selected.shadows && ` 
         -webkit-box-shadow: 0px 0px 21px 5px rgba(0,0,0,0.58);
         -moz-box-shadow: 0px 0px 21px 5px rgba(0,0,0,0.58);
         box-shadow: 0px 0px 21px 5px rgba(0,0,0,0.58);
+        `}
     }
 `;
 
@@ -134,27 +147,39 @@ const FlexStyle = css`
     }
 `
 
-const index: FC = () =>
-    <>
-        <div>
-            <Content />
-        </div>
-        <DrawFooter />
-        <DrawLightBulb />
+const index: FC = () => {
+    const { Selected } = useColorStore();
+    const spring = useSpring({
+        backgroundColor: Selected.backgroundColor,
+        color: Selected.color
+    });
+    const {className, styles} = GetPageStyles(Selected);
 
-        <style jsx>{Page}</style>
-    </>
+    return (
+        <>
+            <animated.div className={className} style={spring}>
+                <Content />
+                {styles}
+            </animated.div>
+            <DrawFooter />
+            <DrawLightBulb />
+        </>
+    );
+}
 
 
 const Content: FC = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetContentStyle(Selected);
+    const spring = useSpring({
+        backgroundColor: Selected.primary,
+    });
 
     return (
-        <div className={className}>
+        <animated.div className={className} style={spring}>
             <DrawComponents />
             {styles}
-        </div>
+        </animated.div>
     )
 }
 
@@ -169,9 +194,18 @@ const DrawComponents = () =>
 const DrawTitle: FC = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetHeadingStyle(Selected);
+
+    const spring = useSpring({
+        color: Selected.color
+    });
+
     return (
         <div>
-            <h1 className={className}>Olangutan Analytics</h1>
+            <animated.h1
+                style={spring}
+                className={className}>
+                    Olangutan Analytics
+            </animated.h1>
             {styles}
         </div>
     );
@@ -223,13 +257,19 @@ const DrawInput: FC<State> = ({ value, setter }) =>
 const DrawButtonSubmit: FC = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetButtonStyles(Selected);
+    const spring = useSpring({
+        backgroundColor: Selected.secondary,
+        color: Selected.color
+    });
+
     return (
         <div className={className}>
-            <button
-                className={"button is-primary is-fullwidth " + className}
+            <animated.button
+                className={"button is-fullwidth " + className}
+                style={spring}
                 type="submit">
                 Submit
-            </button>
+            </animated.button>
             {styles}
         </div>);
 }
@@ -237,19 +277,23 @@ const DrawButtonSubmit: FC = () => {
 const DrawFooter: FC = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetFooterStyle(Selected);
+    const spring = useSpring({
+        backgroundColor: Selected.primary,
+        color: Selected.color
+    });
+
     return (
-        <footer className={className}>
-            <p className={className}>
-                {styles}
+        <animated.footer className={className} style={spring}>
+            <p className={className} style={spring}>
                 <b>Olangutan Analytics </b>
                 {`isn't endorsed by Riot Games and doesn't reflect the views
                     or opinions of Riot Games or anyone officially involved in
                     producing or managing Riot Games properties. Riot Games, and
                     all associated properties are trademarks or registered
                     trademarks of Riot Games, Inc.`}
-
+                {styles}
             </p>
-        </footer>
+        </animated.footer>
     );
 }
 
