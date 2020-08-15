@@ -1,13 +1,9 @@
 import { SignalRReconnect } from '../Shared/SignalR';
-import { useStore } from '../Shared/Store';
 import React, {useEffect} from 'react';
 import GlobalStyles, { useColorStore, GetTheme } from '../components/GlobalStyles';
 import "../sass/main.scss";
 
 const MyApp = ({Component, pageProps, router}) => {
-
-    const {setConnected} = useStore();
-    const triggerConnected = (connected: boolean) => setConnected(connected);
     const { SetSelected } = useColorStore();
     
     useEffect(() => {
@@ -20,7 +16,7 @@ const MyApp = ({Component, pageProps, router}) => {
             html[0].setAttribute('lang', 'en');
         }
         const timer = setTimeout(async () => {
-            await SignalRReconnect(triggerConnected);
+            await SignalRReconnect();
         });
         if (GetTheme(document.cookie)) SetSelected(document.cookie);
 
@@ -31,7 +27,7 @@ const MyApp = ({Component, pageProps, router}) => {
     return (
         <>
             <Component {...pageProps} />
-            <style jsx>{GlobalStyles}</style>
+            <style jsx global>{GlobalStyles}</style>
         </>
     )
 };
