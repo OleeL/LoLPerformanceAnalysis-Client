@@ -10,12 +10,12 @@ const isConnected = () =>
 const handleConnection = async () => {
 
     if (isConnected()) return true;
-    
+
     try {
         connection = new signalR.HubConnectionBuilder()
             .withUrl(`https://${window?.location?.hostname}:5001/ClientHub`)
             .build();
-        
+
         connection.serverTimeoutInMilliseconds = 60000; // 60 seconds
 
         const startSignalRConnection = connection => connection.start()
@@ -29,7 +29,7 @@ const handleConnection = async () => {
         await startSignalRConnection(connection);
         return true;
     }
-    catch(err) {
+    catch (err) {
         return false;
     }
 }
@@ -42,16 +42,17 @@ const retryRate: number = 5000;
 
 const OnDisconnect = () => {
     connection = null;
-    _store.getState().setConnected(false);
+    const { setConnected } = _store.getState();
+    setConnected(false);
     setTimeout(() => SignalRReconnect(), 1000);
 }
 
 export const SignalRReconnect = async () => {
     console.log("%cConnecting to API", "color: green");
-    _store.getState.set
+    const { setConnected } = _store.getState()
     while (!isConnected()) {
         const results = await handleConnection();
-        _store.getState().setConnected(results);
+        setConnected(results);
         if (!results) {
             await Sleep(retryRate);
             console.log("%cTrying to reconnect to API", "color: yellow");
@@ -65,7 +66,7 @@ const Sleep = (durationMs: number) =>
 export const SendRequest = async (funcName: string, parameters: any): Promise<any> => {
     try {
         if (!connection) {
-            throw('Could not connect to API');
+            throw ('Could not connect to API');
         }
         if (connection.state !== signalR.HubConnectionState.Connected) {
             return;
