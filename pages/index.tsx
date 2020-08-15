@@ -28,19 +28,9 @@ const GetPageStyles = (Selected: IColorScheme) => css.resolve`
     }
 `;
 
-const GetButtonStyles = (Selected: IColorScheme) => css.resolve`
+const GetButtonStyles = () => css.resolve`
     button {
         display: inline-flex;
-
-        ${Selected.shadows && ` 
-        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-        -moz-box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-        box-shadow: 0px 0px 5px 2px ${Selected.secondary};
-        `}
-    }
-
-    button:hover{
-        border: 1px solid ${Selected.input.borderColor};
     }
 
     div { 
@@ -256,10 +246,13 @@ const DrawInput: FC<State> = ({ value, setter }) =>
 
 const DrawButtonSubmit: FC = () => {
     const { Selected } = useColorStore();
-    const { className, styles } = GetButtonStyles(Selected);
+    const { className, styles } = GetButtonStyles();
+    const [hover, setHover] = useState(false);
+    
     const spring = useSpring({
         backgroundColor: Selected.secondary,
-        color: Selected.color
+        color: Selected.color,
+        border: `1px solid ${hover ? Selected.input.borderColor : Selected.secondary}`
     });
 
     return (
@@ -267,6 +260,8 @@ const DrawButtonSubmit: FC = () => {
             <animated.button
                 className={"button is-fullwidth " + className}
                 style={spring}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
                 type="submit">
                 Submit
             </animated.button>

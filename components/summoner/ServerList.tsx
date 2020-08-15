@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import { Servers } from "../../Shared/LeagueContent";
 import { State } from "../../Shared/StructuralInterfaces";
@@ -71,10 +71,13 @@ const DrawServerList: FC<State> = ({ value, setter }, props) => {
 export const RawServerList: FC<State> = ({ value, setter }, props) => {
     const { Selected } = useColorStore();
     const { className, styles } = GetHeadingStyle(Selected);
+
+    const [hovered, setHover] = useState(false);
     const cName = "dropdown-item " + className + " " + props.className
     const spring = useSpring({
         backgroundColor: Selected.secondary,
-        color: Selected.input.color
+        color: Selected.input.color,
+        border: `1px solid ${hovered ? Selected.input.borderColor : Selected.secondary}`
     });
     
     return (
@@ -82,6 +85,8 @@ export const RawServerList: FC<State> = ({ value, setter }, props) => {
             value={value}
             className={className}
             style={spring}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
             onChange={e => setter(e.target.value)}>
             {Servers.map((server, i) =>
                 <option
