@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { SendGetSummoner } from '../../Shared/Requests';
 import { useStore } from '../../Shared/Store';
 import { ISummoner } from '../../Shared/GameInterfaces';
-import { IColorScheme } from '../../components/GlobalStyles';
+import { IColorScheme, useColorStore } from '../../components/GlobalStyles';
 import React, { useEffect, FC } from "react";
 import SummonerDetails from '../../components/summoner/tiles/SummonerTile';
 import ExtraTile from '../../components/summoner/tiles/ExtraTile';
@@ -17,7 +17,7 @@ import { useBurgerStore } from '../../components/Buttons/BurgerButton';
 
 export const GetTileStyle = (p: IColorScheme) => css.resolve`
     article {
-        box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+        ${p.shadows && `box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5)`};
         margin: 10px 5px 10px 5px;
         border-radius: 5px;
         background-color: ${p.primary};
@@ -32,7 +32,23 @@ export const GetTileStyle = (p: IColorScheme) => css.resolve`
     }
 `
 
-const Content = css`
+const GetPageStyles = (Selected: IColorScheme) => css.resolve`
+    div {
+        width: 100vw;
+        height: 100vh;
+        left: 0;
+        top: 0;
+
+        ${Selected.shadows &&
+        `-webkit-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        -moz-box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        box-shadow: inset 0px 0px 235px 8px rgba(0,0,0,0.69);
+        `}
+    }
+`;
+
+
+const ContentStyle = css`
     div {
         display: flex;
         flex-direction: row;
@@ -108,11 +124,11 @@ const CenterContent = () =>
         <StatisticsTile />
         <MatchHistory />
         <TallTile />
-        <style jsx>{Content}</style>
+        <style jsx>{ContentStyle}</style>
     </div>
 
-const Summoner: FC = () => {
-    const { pressed } = useBurgerStore();
+const Content: FC = () => {
+    const pressed = useBurgerStore(state => state.pressed);
     const left = pressed ? `20%` : `0%`;
     const spring = useSpring({paddingLeft: left});
     return (
@@ -126,6 +142,23 @@ const Summoner: FC = () => {
             </animated.div>
         </>
     );
+}
+
+const Summoner = () => {
+    const { Selected } = useColorStore();
+    const {styles, className} = GetPageStyles(Selected) ;
+
+    const spring = useSpring({
+        backgroundColor: Selected.backgroundColor,
+        color: Selected.color
+    });
+
+    return (
+        <animated.div style={spring} className={className}>
+            <Content />
+            {styles}
+        </animated.div>
+    )
 }
 
 export default Summoner
