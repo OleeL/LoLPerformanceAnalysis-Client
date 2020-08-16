@@ -19,9 +19,11 @@ const GetButtonStyle = (Selected: IColorScheme, bulb: string) => css.resolve`
         padding: 10px;
         user-select: none;
 
-        -webkit-box-shadow: 0px 0px 20px 3px rgba(0,0,0,0.66);
+        ${Selected.shadows && 
+        `-webkit-box-shadow: 0px 0px 20px 3px rgba(0,0,0,0.66);
         -moz-box-shadow: 0px 0px 20px 3px rgba(0,0,0,0.66);
         box-shadow: 0px 0px 20px 3px rgba(0,0,0,0.66);
+        `}
     }
 
     div:hover {
