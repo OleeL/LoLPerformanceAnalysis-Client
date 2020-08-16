@@ -11,7 +11,7 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
         display: inline-flex;
         flex-wrap: wrap;
-        box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+        ${Selected.shadows && `box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5)`};
         background-color: ${Selected.primary};
         clip:rect(0px, 20000px, 20000px, 0px);
         overflow: hidden;
@@ -117,7 +117,7 @@ const TopBar = () => {
     const { styles, className } = GetBarStyle(Selected);
 
     // Spring stuff
-    const { pressed } = useBurgerStore();
+    const pressed = useBurgerStore(state => state.pressed);
     const left  = pressed ? `20%` : `0.5%`;
     const spring = useSpring({paddingLeft: left});
 

@@ -34,7 +34,7 @@ const GetShadow = () => css.resolve`
 
 const LeftBar = () => {
     const { Selected } = useColorStore();
-    const { pressed } = useBurgerStore();
+    const pressed = useBurgerStore(state => state.pressed);
     const { styles, className } = GetBarStyle(Selected);
     const width = pressed ? `0vw` : `-20vw`;
     const translate = `translate3d(${width},0px,0px)`
@@ -50,7 +50,7 @@ const LeftBar = () => {
 }
 
 const ShadowBox: FC = () => {
-    const { pressed } = useBurgerStore();
+    const pressed = useBurgerStore(state => state.pressed);
     const width = pressed ? `0vw` : `-20vw`;
     const translate = `translate3d(${width},0px,0px)`
     const shadow = pressed ? `0px 0px 15px -1px rgba(0,0,0,0.5)`
