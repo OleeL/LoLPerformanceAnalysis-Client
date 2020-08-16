@@ -97,7 +97,8 @@ interface ILeagueType {
 }
 
 const RankedContent: FC<ILeagueType> = ({type}) => {
-    const { summoner, receivedData } = useStore();
+    const summoner = useStore(state => state.summoner);
+    const receivedData = useStore(state => state.receivedData);
 
     const [rank, setRank] = useState({...BlankRankedData});
     
@@ -148,7 +149,8 @@ const DrawRankSection: FC<ILeagueType> = ({type}) => {
 
 const Content: FC = () => {
 
-    const {region, summoner } = useStore();
+    const region = useStore(state => state.region);
+    const summoner = useStore(state => state.summoner);
     
     const strRegion     = region;
     const strSummoner   = summoner?.name;

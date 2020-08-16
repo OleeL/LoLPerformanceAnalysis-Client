@@ -87,11 +87,11 @@ const GetSummoner = async (
 
 const SummonerData = () => {
 
-    const { summoner,
-        connected,
-        setReceivedData,
-        setSummoner,
-        receivedData }    = useStore();
+    const summoner = useStore(state => state.summoner);
+    const connected = useStore(state => state.connected);
+    const setReceivedData = useStore(state => state.setReceivedData);
+    const setSummoner = useStore(state => state.setSummoner);
+    const receivedData = useStore(state => state.receivedData);
 
     const router          = useRouter();
     const { region }      = router.query;
