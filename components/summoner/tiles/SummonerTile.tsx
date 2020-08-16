@@ -4,21 +4,25 @@ import { LeagueType } from '../../../Shared/GameInterfaces';
 import { GetSummonerIcon, GetRankData, BlankRankedData } from '../../../Shared/LeagueContent';
 import { useStore } from '../../../Shared/Store';
 import css from 'styled-jsx/css';
-import { useColorStore } from '../../GlobalStyles';
+import { useColorStore, IColorScheme } from '../../GlobalStyles';
+import { useSpring, animated } from 'react-spring';
 
 const IconSize = 64;
 
-const RankedSection = css`
+const GetRankedSection = (Selected: IColorScheme) => css.resolve`
     div {
         width: 330px;
         display: flex;
         margin: 0px 0px 5px 0px;
         padding: 0px 0px 0px 4px;
         border-radius: 15px;
-    
-        -webkit-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
-        -moz-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
-        box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
+        
+
+        ${Selected.shadows && `
+            -webkit-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
+            -moz-box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
+            box-shadow: inset 0px 0px 15px -1px rgba(0,0,0,0.5);
+        `}
     }
 `
 
@@ -129,11 +133,18 @@ const RankedContent: FC<ILeagueType> = ({type}) => {
     )
 }
 
-const DrawRankSection: FC<ILeagueType> = ({type}) => 
-    <div>
-        <RankedContent type={type}/>
-        <style jsx>{RankedSection}</style>
-    </div>
+const DrawRankSection: FC<ILeagueType> = ({type}) => {
+    const { Selected } = useColorStore();
+    const { className, styles } = GetRankedSection(Selected);
+    const spring = useSpring({border: `1px solid ${Selected.input.borderColor}`})
+
+    return (
+        <animated.div className={className} style={spring}>
+            <RankedContent type={type}/>
+            {styles}
+        </animated.div>
+    )
+}
 
 const Content: FC = () => {
 
