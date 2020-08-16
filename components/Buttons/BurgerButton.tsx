@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
@@ -16,11 +15,6 @@ const springConfig: SpringConfig = {
     friction: 50
 }
 
-const margin = {
-    small: "3px 0px 3px 0px",
-    large: "6px 0px 6px 0px"
-}
-
 const GetCollectionStyle = (Selected: IColorScheme) => css.resolve`
     a {
         margin: 5px;
@@ -36,21 +30,17 @@ const GetLineStyle = () => css.resolve`
     }
 `;
 
-const BurgerButton: FC = () => {
+const BurgerButton = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetCollectionStyle(Selected);
     const { togglePressed, setHovered } = useBurgerStore();
 
-    const Click = () => togglePressed();
-    const Hover = (e) => setHovered(true);
-    const Unhover = (e) => setHovered(false);
-
     return (
         <a
-            onClick={Click}
+            onClick={togglePressed}
             className={className}
-            onMouseEnter={Hover}
-            onMouseLeave={Unhover}>
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}>
             <Top />
             <Middle />
             <Bottom />
@@ -74,6 +64,7 @@ const Top = () => {
     const { Selected } = useColorStore();
     const { hovered, pressed } = useBurgerStore();
     const { className, styles } = GetLineStyle();
+
     const rotation    = pressed ? GetRotLeft(hovered) : GetRotRight(hovered);
     const translation = pressed ? GetTranslationLeftTop(hovered)
         : GetTranslationRightTop(hovered);
