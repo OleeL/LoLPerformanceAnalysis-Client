@@ -229,7 +229,6 @@ const DrawForm: FC = () => {
                 <DrawButtonSubmit />
             </div>
             <style jsx>{FlexStyle}</style>
-
         </form>
     );
 }
