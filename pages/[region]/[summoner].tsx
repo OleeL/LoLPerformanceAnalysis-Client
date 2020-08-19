@@ -92,7 +92,7 @@ const SummonerData = () => {
     const setReceivedData = useStore(state => state.setReceivedData);
     const setSummoner = useStore(state => state.setSummoner);
     const receivedData = useStore(state => state.receivedData);
-    const Selected = useColorStore(state => state.selected);
+    const Selected = useColorStore(state => state.Selected);
 
     const router          = useRouter();
     const { region }      = router.query;
@@ -146,7 +146,7 @@ const Content = () => {
 }
 
 const Summoner = () => {
-    const Selected = useColorStore(state => state.selected);
+    const Selected = useColorStore(state => state.Selected);
     const {styles, className} = GetPageStyles(Selected) ;
 
     const spring = useSpring({
