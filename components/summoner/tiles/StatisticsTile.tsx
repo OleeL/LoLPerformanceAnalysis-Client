@@ -2,25 +2,7 @@ import React, { useEffect, useRef, useState, FC } from 'react'
 import { GetTileStyle } from '../../../pages/[region]/[summoner]';
 import Chartjs from 'chart.js';
 import css from 'styled-jsx/css';
-import { useColorStore } from '../../GlobalStyles';
-
-const Highlight = css`
-    div {
-        background: white;
-        margin: 15px 0px 0px 0px;
-        color: black;
-        padding: 10px;
-        box-shadow: inset 0px 0px 9px 1px rgba(0,0,0,0.47);
-        width: 600px;
-        height: 300px;
-        min-width: 600px;
-        min-height: 300px;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
-`
+import { IColorScheme, useColorStore } from '../../GlobalStyles';
 
 const StatisticsTile: FC = () => {
     const Selected = useColorStore(state => state.Selected);
@@ -28,7 +10,6 @@ const StatisticsTile: FC = () => {
 
     return (
         <article className={className}>
-            {styles}
             <div className="content">
                 <p className={className + " title"}>
                     Elo tracker
@@ -40,18 +21,16 @@ const StatisticsTile: FC = () => {
                 </p>
                 <DrawChart />
             </div>
+            {styles}
         </article>
     )
 }
 
-const DrawChart: FC = () =>
-    <div >
-        <Chart />
-        <style jsx>{Highlight}</style>
-    </div>
+const DrawChart: FC = () => <Chart />
 
 const chartConfig = {
     type: "line",
+    scaleFontColor: "#FFFFFF",
     data: {
         labels: ["12/03/20", "13/03/20", "14/03/20", "15/03/20", "17/03/20", "16/03/20"],
         datasets: [
@@ -59,20 +38,20 @@ const chartConfig = {
                 label: "Solo Duo (LP)",
                 data: [12, 19, 3, 5, 2, 3],
                 backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 0, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)"
+                    "rgba(128, 32, 64, 0.4)",
+                    "rgba(128, 32, 64, 0.4)",
+                    "rgba(128, 32, 64, 0.4)",
+                    "rgba(128, 32, 64, 0.4)",
+                    "rgba(128, 32, 64, 0.4)",
+                    "rgba(128, 32, 64, 0.4)"
                 ],
                 borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 0, 255, 1)",
-                    "rgba(255, 159, 64, 1)"
+                    "rgba(128, 32, 64, 1)",
+                    "rgba(128, 32, 64, 1)",
+                    "rgba(128, 32, 64, 1)",
+                    "rgba(128, 32, 64, 1)",
+                    "rgba(128, 32, 64, 1)",
+                    "rgba(128, 32, 64, 1)"
                 ],
                 borderWidth: 1
             },
@@ -80,37 +59,70 @@ const chartConfig = {
                 label: "Ranked Flex (LP)",
                 data: [3, 4, 7, 8, 7, 9],
                 backgroundColor: [
-                    "rgba(255, 99, 132, 0.2)",
-                    "rgba(54, 162, 235, 0.2)",
-                    "rgba(255, 206, 86, 0.2)",
-                    "rgba(75, 192, 192, 0.2)",
-                    "rgba(153, 0, 255, 0.2)",
-                    "rgba(255, 159, 64, 0.2)"
+                    "rgba(32, 64, 128, 0.4)",
+                    "rgba(32, 64, 128, 0.4)",
+                    "rgba(32, 64, 128, 0.4)",
+                    "rgba(32, 64, 128, 0.4)",
+                    "rgba(32, 64, 128, 0.4)",
+                    "rgba(32, 64, 128, 0.4)"
                 ],
                 borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 0, 255, 1)",
-                    "rgba(255, 159, 64, 1)"
+                    "rgba(32, 64, 128, 1)",
+                    "rgba(32, 64, 128, 1)",
+                    "rgba(32, 64, 128, 1)",
+                    "rgba(32, 64, 128, 1)",
+                    "rgba(32, 64, 128, 1)",
+                    "rgba(32, 64, 128, 1)"
                 ],
                 borderWidth: 1
             }
         ]
     },
     options: {
+        legend: {
+            labels: {
+                fontColor: '#AAAAAA'
+            },
+        },
         scales: {
             yAxes: [
                 {
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontColor: '#AAAAAA'
+                    }
+                }
+            ],
+            xAxes: [
+                {
+                    ticks: {
+                        fontColor: '#AAAAAA'
                     }
                 }
             ]
         }
     }
 };
+
+const GetStatsStyles = (Selected: IColorScheme) => css.resolve`
+    div {
+        background-color: ${Selected.secondary};
+        color: ${Selected.color};
+        
+        margin: 15px 0px 0px 0px;
+        padding: 10px;
+        box-shadow: inset 0px 0px 9px 1px rgba(0,0,0,0.47);
+        width: 600px;
+        height: 300px;
+        min-width: 600px;
+        min-height: 300px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: flex-start;
+
+    }
+`
 
 const Chart = () => {
     const chartContainer = useRef(null);
@@ -133,10 +145,14 @@ const Chart = () => {
         const data = [1, 2, 3, 4, 5, 6];
         updateDataset(0, data);
     };
+    
+    const Selected = useColorStore(state => state.Selected);
+    const { className, styles } = GetStatsStyles(Selected);
 
     return (
-        <div>
+        <div className={className}>
             <canvas ref={chartContainer} />
+            {styles}
         </div>
     );
 };
