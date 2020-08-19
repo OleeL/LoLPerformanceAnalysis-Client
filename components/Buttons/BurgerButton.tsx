@@ -4,7 +4,7 @@ import create from "zustand";
 import shallow from 'zustand/shallow';
 import { useSpring, animated, SpringConfig } from 'react-spring';
 
-export const [useBurgerStore] = create(set => ({
+export const [useBurgerStore, _burgerStore] = create(set => ({
     pressed: false,
     hovered: false,
     togglePressed: () => set(s => ({ pressed: !s.pressed })),
@@ -34,10 +34,7 @@ const GetLineStyle = () => css.resolve`
 const BurgerButton = () => {
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetCollectionStyle(Selected);
-    const { togglePressed, setHovered } = useBurgerStore(state => ({
-        togglePressed: state.togglePressed,
-        setHovered: state.togglePressed
-    }), shallow);
+    const { togglePressed, setHovered } = _burgerStore.getState();
 
     return (
         <a

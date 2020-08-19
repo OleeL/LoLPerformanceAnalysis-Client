@@ -3,7 +3,7 @@ import { SendGetSummoner } from '../../Shared/Requests';
 import { useStore } from '../../Shared/Store';
 import { ISummoner } from '../../Shared/GameInterfaces';
 import { IColorScheme, useColorStore } from '../../components/GlobalStyles';
-import React, { useEffect, FC } from "react";
+import React, { useEffect } from "react";
 import SummonerDetails from '../../components/summoner/tiles/SummonerTile';
 import ExtraTile from '../../components/summoner/tiles/ExtraTile';
 import StatisticsTile from '../../components/summoner/tiles/StatisticsTile';
@@ -14,6 +14,7 @@ import css from 'styled-jsx/css';
 import LeftBar from '../../components/summoner/LeftBar';
 import { useSpring, animated } from 'react-spring';
 import { useBurgerStore } from '../../components/Buttons/BurgerButton';
+import shallow from "zustand/shallow";
 
 export const GetTileStyle = (p: IColorScheme) => css.resolve`
     article {
@@ -87,11 +88,19 @@ const GetSummoner = async (
 
 const SummonerData = () => {
 
-    const summoner = useStore(state => state.summoner);
-    const connected = useStore(state => state.connected);
-    const setReceivedData = useStore(state => state.setReceivedData);
-    const setSummoner = useStore(state => state.setSummoner);
-    const receivedData = useStore(state => state.receivedData);
+    const {
+        summoner,
+        connected,
+        setReceivedData,
+        setSummoner,
+        receivedData } = useStore(state => ({
+            summoner: state.summoner,
+            connected: state.connected,
+            setReceivedData: state.setReceivedData,
+            setSummoner: state.setSummoner,
+            receivedData: state.receivedData
+    }), shallow);
+
     const Selected = useColorStore(state => state.Selected);
 
     const router          = useRouter();

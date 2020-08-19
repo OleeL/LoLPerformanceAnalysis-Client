@@ -1,6 +1,6 @@
 import { useState, FC } from "react";
 import { animated, useSpring } from "react-spring";
-import { useColorStore, IColorScheme, Themes } from "./GlobalStyles";
+import { useColorStore, IColorScheme, Themes, _colorStore } from "./GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
 import shallow from "zustand/shallow";
@@ -73,7 +73,8 @@ const GetDialStyle = (Selected: IColorScheme) => css.resolve`
 
 const DrawButton: FC<IPress> = ({ onClick, cName }) => {
     const [active, setActive] = useState(false);
-    const { Selected, Toggle } = useColorStore(state => ({Selected: state.Selected, Toggle: state.Toggle}), shallow);
+    const Selected = useColorStore(state => state.Selected);
+    const Toggle = _colorStore.getState().Toggle;
     const { className, styles } = GetButtonStyle(Selected);
     const setDialRotation = _colorDialStore.getState().setDialRotation;
 
