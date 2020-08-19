@@ -41,7 +41,7 @@ const GetHeadingStyle = (Selected: IColorScheme) => css.resolve`
 `
 
 const DrawServerList: FC<State> = ({ value, setter }, props) => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetHeadingStyle(Selected);
     const cName = "select " + (props.className ?? "") + " " + className;
     const [hovered, setHover] = useState(false);
@@ -64,7 +64,7 @@ const DrawServerList: FC<State> = ({ value, setter }, props) => {
 }
 
 export const RawServerList: FC<State> = ({ value, setter }, props) => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetHeadingStyle(Selected);
     const cName = className + " " + props.className;
 

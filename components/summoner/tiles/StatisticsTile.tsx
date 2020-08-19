@@ -23,7 +23,7 @@ const Highlight = css`
 `
 
 const StatisticsTile: FC = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetTileStyle(Selected);
 
     return (

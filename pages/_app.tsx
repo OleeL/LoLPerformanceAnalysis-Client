@@ -4,7 +4,7 @@ import GlobalStyles, { useColorStore, GetTheme } from '../components/GlobalStyle
 import "../sass/main.scss";
 
 const MyApp = ({Component, pageProps, router}) => {
-    const { SetSelected } = useColorStore();
+    const SetSelected = useColorStore(state => state.SetSelected);
     
     useEffect(() => {
         const html = document.getElementsByTagName('html');

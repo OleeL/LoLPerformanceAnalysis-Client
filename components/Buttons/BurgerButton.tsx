@@ -1,6 +1,7 @@
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
+import shallow from 'zustand/shallow';
 import { useSpring, animated, SpringConfig } from 'react-spring';
 
 export const [useBurgerStore] = create(set => ({
@@ -31,9 +32,12 @@ const GetLineStyle = () => css.resolve`
 `;
 
 const BurgerButton = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetCollectionStyle(Selected);
-    const { togglePressed, setHovered } = useBurgerStore();
+    const { togglePressed, setHovered } = useBurgerStore(state => ({
+        togglePressed: state.togglePressed,
+        setHovered: state.togglePressed
+    }), shallow);
 
     return (
         <a
@@ -61,8 +65,12 @@ const GetTranslationRightTop = (hovered: boolean): string =>
     hovered ? `18px,5.5px,0px` : `0px,0px,0px`
 
 const Top = () => {
-    const { Selected } = useColorStore();
-    const { hovered, pressed } = useBurgerStore();
+    const Selected = useColorStore(state => state.Selected);
+    const { hovered, pressed } = useBurgerStore(state => ({
+        hovered: state.hovered,
+        pressed: state.pressed
+    }), shallow);
+
     const { className, styles } = GetLineStyle();
 
     const rotation    = pressed ? GetRotLeft(hovered) : GetRotRight(hovered);
@@ -86,8 +94,8 @@ const Top = () => {
 }
 
 const Middle = () => {
-    const { Selected } = useColorStore();
-    const { hovered } = useBurgerStore();
+    const Selected = useColorStore(state => state.Selected);
+    const hovered = useBurgerStore(state => state.hovered);
     const { className, styles } = GetLineStyle();
     const spring = useSpring({ backgroundColor: hovered ? Selected.hover : Selected.primaryInverted });
     return (
@@ -100,8 +108,11 @@ const Middle = () => {
 }
 
 const Bottom = () => {
-    const { Selected } = useColorStore();
-    const { hovered, pressed } = useBurgerStore();
+    const Selected = useColorStore(state => state.Selected);
+    const { hovered, pressed } = useBurgerStore(state => ({
+        hovered: state.hovered,
+        pressed: state.pressed
+    }), shallow);
     const { className, styles } = GetLineStyle();
     const rotation = pressed ? GetRotRight(hovered) : GetRotLeft(hovered);
     const translation = pressed ? GetTranslationRightBottom(hovered)

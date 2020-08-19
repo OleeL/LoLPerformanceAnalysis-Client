@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
+import shallow from "zustand/shallow";
 
 export const [useBurgerStore] = create(set => ({
     pressed: false,
@@ -41,15 +42,14 @@ const TorchStyle = css`
     }
 `
 
-const Torch = () => 
-    <div>
-        <style jsx>{TorchStyle}</style>
-    </div>
-
 const SidePanelButton: FC = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetCollectionStyle(Selected);
-    const { togglePressed, setHovered } = useBurgerStore();
+    const { togglePressed, setHovered } = useBurgerStore(state => ({
+        togglePressed: state.togglePressed,
+        setHovered: state.togglePressed
+    }), shallow);
+
 
     const Click = () => togglePressed();
     const Hover = (e) => setHovered(true);

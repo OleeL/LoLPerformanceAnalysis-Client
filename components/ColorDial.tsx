@@ -3,6 +3,7 @@ import { animated, useSpring } from "react-spring";
 import { useColorStore, IColorScheme, Themes } from "./GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
+import shallow from "zustand/shallow";
 
 const [useColorDialStore, _colorDialStore] = create(set => ({
     pressed: false,
@@ -72,7 +73,7 @@ const GetDialStyle = (Selected: IColorScheme) => css.resolve`
 
 const DrawButton: FC<IPress> = ({ onClick, cName }) => {
     const [active, setActive] = useState(false);
-    const { Selected, Toggle } = useColorStore();
+    const { Selected, Toggle } = useColorStore(state => ({Selected: state.Selected, Toggle: state.Toggle}), shallow);
     const { className, styles } = GetButtonStyle(Selected);
     const setDialRotation = _colorDialStore.getState().setDialRotation;
 
@@ -105,7 +106,7 @@ const Icon = () =>
     </>
 
 const DrawDial = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetDialStyle(Selected);
     const rotation = useColorDialStore(state => state.rotation);
     const spring = useSpring({
@@ -121,7 +122,7 @@ return (
 }
 
 const DrawDot = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetDotStyle(Selected);
     const spring = useSpring({backgroundColor: Selected.secondary});
 

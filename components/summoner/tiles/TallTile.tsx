@@ -4,7 +4,7 @@ import { useColorStore } from '../../GlobalStyles';
 
 const TallTile: FC = () => {
     
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetTileStyle(Selected);
     
     return (

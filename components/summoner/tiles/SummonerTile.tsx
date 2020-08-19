@@ -135,7 +135,7 @@ const RankedContent: FC<ILeagueType> = ({type}) => {
 }
 
 const DrawRankSection: FC<ILeagueType> = ({type}) => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetRankedSection(Selected);
     const spring = useSpring({border: `1px solid ${Selected.input.borderColor}`})
 
@@ -172,7 +172,7 @@ const Content: FC = () => {
 }
 
 const SummonerTile = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetTileStyle(Selected);
     return (
         <article className={className}>

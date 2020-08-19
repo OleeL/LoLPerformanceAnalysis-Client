@@ -33,7 +33,7 @@ const GetShadow = () => css.resolve`
 `
 
 const LeftBar = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const pressed = useBurgerStore(state => state.pressed);
     const { styles, className } = GetBarStyle(Selected);
     const width = pressed ? `0vw` : `-20vw`;

@@ -137,7 +137,7 @@ const FlexStyle = css`
 `
 
 const index = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const spring = useSpring({
         backgroundColor: Selected.backgroundColor,
         color: Selected.color
@@ -158,7 +158,7 @@ const index = () => {
 
 
 const Content = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetContentStyle(Selected);
     const spring = useSpring({
         backgroundColor: Selected.primary,
@@ -181,7 +181,7 @@ const DrawComponents = () =>
     </div>
 
 const DrawTitle = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetHeadingStyle(Selected);
 
     const spring = useSpring({
@@ -236,7 +236,7 @@ const DrawForm = () => {
 }
 
 const DrawButtonSubmit = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetButtonStyles();
     const [hover, setHover] = useState(false);
     
@@ -261,7 +261,7 @@ const DrawButtonSubmit = () => {
 }
 
 const DrawFooter = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetFooterStyle(Selected);
     const spring = useSpring({
         backgroundColor: Selected.primary,

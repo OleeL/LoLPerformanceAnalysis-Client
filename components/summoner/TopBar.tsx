@@ -113,7 +113,7 @@ const ServerList: FC<State> = ({ value, setter }) =>
 
 const TopBar = () => {
     const Router = useRouter();
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.Selected);
     const { styles, className } = GetBarStyle(Selected);
 
     // Spring stuff

@@ -92,6 +92,7 @@ const SummonerData = () => {
     const setReceivedData = useStore(state => state.setReceivedData);
     const setSummoner = useStore(state => state.setSummoner);
     const receivedData = useStore(state => state.receivedData);
+    const Selected = useColorStore(state => state.selected);
 
     const router          = useRouter();
     const { region }      = router.query;
@@ -111,7 +112,7 @@ const SummonerData = () => {
     if (connected && !summoner && receivedData) return <>Couldn't find summoner</>
 
     return (
-        <div className={showPageLoader ? pLoaderActive : pLoaderInactive}>
+        <div style={{backgroundColor: Selected.primary}} className={showPageLoader ? pLoaderActive : pLoaderInactive}>
             <span className="title">Getting Summoner Data...</span>
         </div>
     )
@@ -127,7 +128,7 @@ const CenterContent = () =>
         <style jsx>{ContentStyle}</style>
     </div>
 
-const Content: FC = () => {
+const Content = () => {
     const pressed = useBurgerStore(state => state.pressed);
     const left = pressed ? `20%` : `0%`;
     const spring = useSpring({paddingLeft: left});
@@ -145,7 +146,7 @@ const Content: FC = () => {
 }
 
 const Summoner = () => {
-    const { Selected } = useColorStore();
+    const Selected = useColorStore(state => state.selected);
     const {styles, className} = GetPageStyles(Selected) ;
 
     const spring = useSpring({
