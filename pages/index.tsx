@@ -3,7 +3,7 @@ import { FC, useState, FormEvent } from "react";
 import { useColorStore, IColorScheme } from "../components/GlobalStyles";
 import { State } from '../Shared/StructuralInterfaces';
 import css from 'styled-jsx/css';
-import DrawLightBulb from '../components/LightBulb';
+import DrawColorDial from '../components/ColorDial';
 import DrawServerList from '../components/summoner/ServerList';
 import SummonerInput from '../components/spring-components/SummonerInput';
 import { useSpring, animated } from 'react-spring';
@@ -152,7 +152,7 @@ const index: FC = () => {
                 {styles}
             </animated.div>
             <DrawFooter />
-            <DrawLightBulb />
+            <DrawColorDial />
         </>
     );
 }

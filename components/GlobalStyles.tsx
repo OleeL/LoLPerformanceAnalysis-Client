@@ -2,7 +2,7 @@
 import css from 'styled-jsx/css'
 import create from 'zustand';
 
-const Themes = [
+export const Themes = [
     {
         name: "Light",
         primary: "#00b0e0",
