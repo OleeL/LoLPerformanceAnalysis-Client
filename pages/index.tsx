@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import { FC, useState, FormEvent } from "react";
 import { useColorStore, IColorScheme } from "../components/GlobalStyles";
-import { State } from '../Shared/StructuralInterfaces';
 import css from 'styled-jsx/css';
 import DrawColorDial from '../components/ColorDial';
 import DrawServerList from '../components/summoner/ServerList';
@@ -137,7 +136,7 @@ const FlexStyle = css`
     }
 `
 
-const index: FC = () => {
+const index = () => {
     const { Selected } = useColorStore();
     const spring = useSpring({
         backgroundColor: Selected.backgroundColor,
@@ -158,7 +157,7 @@ const index: FC = () => {
 }
 
 
-const Content: FC = () => {
+const Content = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetContentStyle(Selected);
     const spring = useSpring({
@@ -181,7 +180,7 @@ const DrawComponents = () =>
         <style jsx>{CenterContent}</style>
     </div>
 
-const DrawTitle: FC = () => {
+const DrawTitle = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetHeadingStyle(Selected);
 
@@ -201,13 +200,13 @@ const DrawTitle: FC = () => {
     );
 }
 
-const DrawImage: FC = () =>
+const DrawImage = () =>
     <>
         <img src={"data/images/Olangutan.jpg"} alt="Olangutan" />
         <style jsx>{Image}</style>
     </>
 
-const DrawForm: FC = () => {
+const DrawForm = () => {
     const [summonerName, setSummonerName] = useState("");
     const [serverRegion, setServerRegion] = useState("EUW");
     const Router = useRouter();
@@ -236,7 +235,7 @@ const DrawForm: FC = () => {
     );
 }
 
-const DrawButtonSubmit: FC = () => {
+const DrawButtonSubmit = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetButtonStyles();
     const [hover, setHover] = useState(false);
@@ -261,7 +260,7 @@ const DrawButtonSubmit: FC = () => {
         </div>);
 }
 
-const DrawFooter: FC = () => {
+const DrawFooter = () => {
     const { Selected } = useColorStore();
     const { className, styles } = GetFooterStyle(Selected);
     const spring = useSpring({
