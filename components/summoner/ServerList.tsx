@@ -48,7 +48,6 @@ const DrawServerList: FC<State> = ({ value, setter }, props) => {
     
     const spring = useSpring({
         backgroundColor: Selected.secondary,
-        color: Selected.input.color,
         border: `1px solid ${hovered ? Selected.input.borderColor : Selected.secondary}`
     });
 
@@ -71,7 +70,7 @@ export const RawServerList: FC<State> = ({ value, setter }, props) => {
 
     const spring = useSpring({
         backgroundColor: Selected.secondary,
-        color: Selected.input.color
+        color: Selected.color
     });
     
     return (

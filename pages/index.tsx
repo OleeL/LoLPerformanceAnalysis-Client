@@ -219,9 +219,12 @@ const DrawForm: FC = () => {
 
     return (
         <form onSubmit={e => HandleForm(e)}>
-            <DrawInput
+            <SummonerInput
                 value={summonerName}
-                setter={setSummonerName} />
+                maxLength={32}
+                onChange={e => setSummonerName(e.target.value)}
+                type="text"
+                placeholder="Summoner Name" />
             <div>
                 <DrawServerList
                     value={serverRegion}
@@ -232,16 +235,6 @@ const DrawForm: FC = () => {
         </form>
     );
 }
-
-const DrawInput: FC<State> = ({ value, setter }) =>
-    <div style={{width: '100%'}}>
-        <SummonerInput
-            value={value}
-            maxLength={32}
-            onChange={e => setter(e.target.value)}
-            type="text"
-            placeholder="Summoner Name" />
-    </div>
 
 const DrawButtonSubmit: FC = () => {
     const { Selected } = useColorStore();
