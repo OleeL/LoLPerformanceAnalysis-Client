@@ -1,8 +1,8 @@
 import css from 'styled-jsx/css';
 import { IColorScheme, useColorStore } from '../GlobalStyles';
-import { useSpring, animated, AnimatedValue } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { useBurgerStore } from '../Buttons/BurgerButton';
-import React, { useState, FC } from 'react';
+import React from 'react';
 
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
@@ -49,7 +49,7 @@ const LeftBar = () => {
     );
 }
 
-const ShadowBox: FC = () => {
+const ShadowBox = () => {
     const pressed = useBurgerStore(state => state.pressed);
     const width = pressed ? `0vw` : `-20vw`;
     const translate = `translate3d(${width},0px,0px)`

@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { GetTileStyle } from '../../../pages/[region]/[summoner]';
 import { useColorStore } from '../../GlobalStyles';
 
-const ExtraTile: FC = () => {
+const ExtraTile = () => {
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetTileStyle(Selected);
     return (

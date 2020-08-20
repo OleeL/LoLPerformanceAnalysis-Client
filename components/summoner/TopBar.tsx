@@ -1,4 +1,4 @@
-import { useState, FC, useRef } from 'react';
+import { useState, FC } from 'react';
 import { useRouter } from 'next/router';
 import css from 'styled-jsx/css';
 import DrawServerList from './ServerList';

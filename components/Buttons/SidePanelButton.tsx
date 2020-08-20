@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
@@ -42,7 +41,7 @@ const TorchStyle = css`
     }
 `
 
-const SidePanelButton: FC = () => {
+const SidePanelButton = () => {
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetCollectionStyle(Selected);
     const { togglePressed, setHovered } = useBurgerStore(state => ({

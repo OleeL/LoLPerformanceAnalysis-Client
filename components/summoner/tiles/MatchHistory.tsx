@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { GetTileStyle } from '../../../pages/[region]/[summoner]';
 import { useColorStore } from '../../GlobalStyles';
 
-const MatchHistory: FC = () => {
+const MatchHistory = () => {
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetTileStyle(Selected);
     

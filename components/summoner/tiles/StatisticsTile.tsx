@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, FC } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { GetTileStyle } from '../../../pages/[region]/[summoner]';
 import Chartjs from 'chart.js';
 import css from 'styled-jsx/css';
 import { IColorScheme, useColorStore } from '../../GlobalStyles';
 
-const StatisticsTile: FC = () => {
+const StatisticsTile = () => {
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetTileStyle(Selected);
 
@@ -26,7 +26,7 @@ const StatisticsTile: FC = () => {
     )
 }
 
-const DrawChart: FC = () => <Chart />
+const DrawChart = () => <Chart />
 
 const chartConfig = {
     type: "line",
@@ -136,15 +136,15 @@ const Chart = () => {
         }
     }, [chartContainer]);
 
-    const updateDataset = (datasetIndex, newData) => {
-        chartInstance.data.datasets[datasetIndex].data = newData;
-        chartInstance.update();
-    };
+    // const updateDataset = (datasetIndex, newData) => {
+    //     chartInstance.data.datasets[datasetIndex].data = newData;
+    //     chartInstance.update();
+    // };
 
-    const onButtonClick = () => {
-        const data = [1, 2, 3, 4, 5, 6];
-        updateDataset(0, data);
-    };
+    // const onButtonClick = () => {
+    //     const data = [1, 2, 3, 4, 5, 6];
+    //     updateDataset(0, data);
+    // };
     
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetStatsStyles(Selected);

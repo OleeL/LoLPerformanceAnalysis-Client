@@ -1,5 +1,4 @@
-import { FC, useRef } from "react";
-import { useColorStore } from "../GlobalStyles";
+import { FC } from "react";
 import { useSpring, animated } from "react-spring";
 
 const Spring = { xy: [0, 0], config: { mass: 10, tension: 500, friction: 50 } };

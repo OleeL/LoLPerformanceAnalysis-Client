@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useState } from "react";
 import { useColorStore, IColorScheme } from "../GlobalStyles";
 import { useSpring, animated, SpringConfig } from "react-spring";
 import css from 'styled-jsx/css';
@@ -20,8 +20,15 @@ const GetInputStyle = (Selected: IColorScheme) => css.resolve`
         border: 1px solid ${Selected.input.borderColor};
         border-radius: 5px;
         font-size: 16px;
-        color: ${Selected.input.color};
+        height: 40px;
+        outline: none;
+        font-family: Helvetica, sans-serif;
     }
+    
+    /* Fix to pass Lighthouse: */
+    label {
+        position: absolute; top:-1000px; left:-1000px;
+        }
 `
 
 const springConfig: SpringConfig = { mass: 1, tension: 170, friction: 26 };
@@ -48,6 +55,9 @@ export const SummonerInput: FC<IInteractive> = (props) => {
     return (
         <>
             <animated.input
+                role="searchbox"
+                aria-label="Summoner Input"
+                aria-haspopup={false}
                 className={className}
                 {...props}
                 style={spring}
@@ -55,7 +65,8 @@ export const SummonerInput: FC<IInteractive> = (props) => {
                 onMouseLeave={onMouseLeave}
                 onFocus={onFocusEnter}
                 onBlur={onFocusLeave}/>
-            {styles}
+                {styles}
+
         </>
     )
 }

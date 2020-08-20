@@ -33,7 +33,7 @@ export const Themes = [
         secondary: "#303030",
         input: { color: "#a49ea3", backgroundColor: "#303030", hoverColor: "#525252", borderColor: "#545454", focusColor: "#00b0e0" } as IInputColors,
         backgroundColor: "#303030",
-        color: "#a49ea3",
+        color: "#d1d1d1",
         shadows: false
     } as IColorScheme
 ]
@@ -84,23 +84,27 @@ const GlobalStyles = css.global`
     @font-face {
         font-family: 'IstokWeb';
         src: url('/data/fonts/IstokWeb-Regular.ttf') format('truetype');
+        font-display: swap;
     }
 
     @font-face {
         font-family: 'IstokWeb';
         src: url('/data/fonts/IstokWeb-Italic.ttf') format('truetype');
+        font-display: swap;
         font-style: italic;
     }
 
     @font-face {
         font-family: 'IstokWeb';
         src: url('/data/fonts/IstokWeb-Bold.ttf') format('truetype');
+        font-display: swap;
         font-weight: bold;
     }
 
     @font-face {
         font-family: 'IstokWeb';
         src: url('/data/fonts/IstokWeb-BoldItalic.ttf') format('truetype');
+        font-display: swap;
         font-style: italic;
         font-weight: bold;
     }
@@ -110,7 +114,7 @@ const GlobalStyles = css.global`
         background-color: ${GetTheme("Dark").backgroundColor};
         min-width: 0px;
         
-        font-family: 'IstokWeb';
+        font-family: 'IstokWeb', Arial;
         font-style: normal;
     }
 

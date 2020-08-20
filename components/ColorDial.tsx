@@ -3,7 +3,6 @@ import { animated, useSpring } from "react-spring";
 import { useColorStore, IColorScheme, Themes, _colorStore } from "./GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
-import shallow from "zustand/shallow";
 
 const [useColorDialStore, _colorDialStore] = create(set => ({
     pressed: false,

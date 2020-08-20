@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { FC, useState, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { useColorStore, IColorScheme } from "../components/GlobalStyles";
 import css from 'styled-jsx/css';
 import DrawColorDial from '../components/ColorDial';
@@ -270,7 +270,7 @@ const DrawFooter = () => {
 
     return (
         <animated.footer className={className} style={spring}>
-            <p className={className} style={spring}>
+            <p className={className}>
                 <b>Olangutan Analytics </b>
                 {`isn't endorsed by Riot Games and doesn't reflect the views
                     or opinions of Riot Games or anyone officially involved in

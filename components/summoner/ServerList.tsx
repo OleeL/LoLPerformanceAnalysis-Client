@@ -75,6 +75,7 @@ export const RawServerList: FC<State> = ({ value, setter }, props) => {
     
     return (
         <animated.select
+            aria-label="Summoner Server Select"
             value={value}
             className={className}
             style={spring}

@@ -147,7 +147,7 @@ const DrawRankSection: FC<ILeagueType> = ({type}) => {
     )
 }
 
-const Content: FC = () => {
+const Content = () => {
 
     const region = useStore(state => state.region);
     const summoner = useStore(state => state.summoner);
