@@ -4,7 +4,7 @@ A tool to analyse data Riot's League of legends API. This isn't endorsed by Riot
 # Requirements
 
 * [Node JS + NPM](https://nodejs.org/en/)
-
+* [LolPerformanceAnalysisAPI](https://github.com/OleeL/LoLPerformanceAnalysis-API)
 
 ## Download packages
 ```
