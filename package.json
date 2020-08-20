@@ -7,6 +7,7 @@
     "dev_alt": "next -p 3001",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
     "css-build": "node-sass --omit-source-map-url sass/mystyles.scss css/mystyles.css",
     "css-watch": "npm run css-build -- --watch"
   },
