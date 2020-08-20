@@ -27,6 +27,7 @@ class MyDocument extends Document {
                 <meta name="msapplication-TileColor" content="#ffffff" />
                 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
                 <meta name="theme-color" content="#ffffff" />
+                <meta name="description" content="LoL Analysis and Statistics. Track your progress, check your summoner - live or recorded"/>
                 </Head>
                 <body>
                     <Main />
