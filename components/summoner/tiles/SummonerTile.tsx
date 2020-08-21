@@ -26,7 +26,7 @@ const GetRankedSection = (Selected: IColorScheme) => css.resolve`
     }
 `
 
-const Player = css`
+const GetPlayerStyles = (Selected: IColorScheme) => css.resolve`
     div {
         padding: 0px ${IconSize+10}px 0px 0px;
         position: relative;
@@ -44,18 +44,22 @@ const Player = css`
     
         border-radius: 12px;
         
-        box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.5);
-    }
-    
-    article {
-        padding: 20px;
-        -webkit-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-        -moz-box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
-        box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+        ${Selected.shadows && `box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.5)`};
     }
 
-    p {
+    h1, h2 {
         color: white;
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 36px;
+        margin-bottom: 32px;
+    }
+
+    h2 {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 25px;
+        margin-bottom: 16px;
     }
 `
 
@@ -157,16 +161,20 @@ const Content = () => {
     const summonerLevel = summoner?.summonerLevel;
     const profileIconId = GetSummonerIcon(summoner);
 
+    const Selected = useColorStore(state => state.Selected);
+
+    const { className, styles } = GetPlayerStyles(Selected);
+
     return (
-        <div className="content">
-            <p className="title">{strSummoner}</p>
-            <p className="subtitle">
+        <div className={className}>
+            <h1 className={className}>{strSummoner}</h1>
+            <h2 className={className}>
                 {strRegion} Level: {summonerLevel}
-            </p>
-            <img src={profileIconId} />
+            </h2>
+            <img className={className} src={profileIconId} />
             <DrawRankSection type={LeagueType.SOLO_DUO}/>
             <DrawRankSection type={LeagueType.FLEX}/>
-            <style jsx>{Player}</style>
+            {styles}
         </div>
     );
 }

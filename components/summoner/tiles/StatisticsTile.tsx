@@ -11,95 +11,72 @@ const StatisticsTile = () => {
     return (
         <article className={className}>
             <div className="content">
-                <p className={className + " title"}>
+                <p style={{margin: '0px'}}className={className + " title"}>
                     Elo tracker
                 </p>
-                <p
-                    className={className + " subtitle"}
-                    style={{ margin: "-20px 0px 0px 0px" }}>
-                    Solo duo
-                </p>
-                <DrawChart />
+                <Chart />
             </div>
             {styles}
         </article>
     )
 }
 
-const DrawChart = () => <Chart />
-
 const chartConfig = {
     type: "line",
     scaleFontColor: "#FFFFFF",
+    borderColor: '#ffffff',
+    lineColor: '#ffffff',
     data: {
         labels: ["12/03/20", "13/03/20", "14/03/20", "15/03/20", "17/03/20", "16/03/20"],
         datasets: [
             {
                 label: "Solo Duo (LP)",
                 data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    "rgba(128, 32, 64, 0.4)",
-                    "rgba(128, 32, 64, 0.4)",
-                    "rgba(128, 32, 64, 0.4)",
-                    "rgba(128, 32, 64, 0.4)",
-                    "rgba(128, 32, 64, 0.4)",
-                    "rgba(128, 32, 64, 0.4)"
-                ],
-                borderColor: [
-                    "rgba(128, 32, 64, 1)",
-                    "rgba(128, 32, 64, 1)",
-                    "rgba(128, 32, 64, 1)",
-                    "rgba(128, 32, 64, 1)",
-                    "rgba(128, 32, 64, 1)",
-                    "rgba(128, 32, 64, 1)"
-                ],
-                borderWidth: 1
+                borderColor: "rgba(200, 40, 80, 1)",
+                borderWidth: 1,
+                backgroundColor: "rgba(0, 0, 0, 0.1)"
+
             },
             {
                 label: "Ranked Flex (LP)",
                 data: [3, 4, 7, 8, 7, 9],
-                backgroundColor: [
-                    "rgba(32, 64, 128, 0.4)",
-                    "rgba(32, 64, 128, 0.4)",
-                    "rgba(32, 64, 128, 0.4)",
-                    "rgba(32, 64, 128, 0.4)",
-                    "rgba(32, 64, 128, 0.4)",
-                    "rgba(32, 64, 128, 0.4)"
-                ],
-                borderColor: [
-                    "rgba(32, 64, 128, 1)",
-                    "rgba(32, 64, 128, 1)",
-                    "rgba(32, 64, 128, 1)",
-                    "rgba(32, 64, 128, 1)",
-                    "rgba(32, 64, 128, 1)",
-                    "rgba(32, 64, 128, 1)"
-                ],
-                borderWidth: 1
+                borderColor: "rgba(40, 80, 200, 1)",
+                borderWidth: 1,
+                backgroundColor: "rgba(0, 0, 0, 0.1)"
             }
         ]
     },
     options: {
         legend: {
             labels: {
-                fontColor: '#AAAAAA'
+                fontColor: '#eeeeee'
             },
         },
         scales: {
             yAxes: [
                 {
+                    gridLines: {
+                        color: "rgba(0,0,0,0.1)"
+                    },
                     ticks: {
                         beginAtZero: true,
-                        fontColor: '#AAAAAA'
+                        fontColor: '#eeeeee'
                     }
                 }
             ],
             xAxes: [
                 {
+                    gridLines: {
+                        color: "rgba(0,0,0,0.1)"
+                    },
                     ticks: {
-                        fontColor: '#AAAAAA'
+                        fontColor: '#eeeeee'
                     }
                 }
-            ]
+            ],
+            gridLines: {
+                color: '#ffffff'
+            }
         }
     }
 };
@@ -111,7 +88,7 @@ const GetStatsStyles = (Selected: IColorScheme) => css.resolve`
         
         margin: 15px 0px 0px 0px;
         padding: 10px;
-        box-shadow: inset 0px 0px 9px 1px rgba(0,0,0,0.47);
+        ${Selected.shadows && `box-shadow: inset 0px 0px 9px 1px rgba(0,0,0,0.47)`};
         width: 600px;
         height: 300px;
         min-width: 600px;
@@ -127,6 +104,8 @@ const GetStatsStyles = (Selected: IColorScheme) => css.resolve`
 const Chart = () => {
     const chartContainer = useRef(null);
     const [chartInstance, setChartInstance] = useState(null);
+
+    console.log(chartInstance);
 
     useEffect(() => {
         if (chartContainer && chartContainer.current) {

@@ -39,9 +39,6 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
 
     .is-focused.input {
         border-color: ${Selected.primary};
-        -webkit-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-        -moz-box-shadow: 0px 0px 5px 2px ${Selected.primary};
-        box-shadow: 0px 0px 5px 2px ${Selected.primary};
         width: 100%;
     }
 
@@ -53,9 +50,9 @@ const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     }
 `
 
-const BarImage = css`
+const GetBarImageStyle = (Selected: IColorScheme) => css.resolve`
     img {
-        box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5);
+        ${Selected.shadows && `box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.5)`};
         vertical-align: middle;
         border-radius: 100%;
         display: inline;
@@ -80,22 +77,27 @@ const Title = css`
 
 const ServerListStyles = css`
     div {
-        vertical-align: middle;
         display: inline-flex;
         flex-direction: row;
         flex-wrap: wrap;
         font-size: 13px;
         margin: 0px 0px 0px 5px;
         align-items: center; 
+        vertical-align: middle;
         justify-content: center;
     }
 `
 
-const DrawIcon: FC = () =>
-    <a href="../">
-        <img src="/data/images/Olangutan.webp" />
-        <style jsx>{BarImage}</style>
-    </a>
+const DrawIcon: FC = () => {
+    const Selected = useColorStore(state => state.Selected);
+    const {styles, className} = GetBarImageStyle(Selected)
+    return (
+        <a href="../">
+            <img className={className} src="/data/images/Olangutan.webp" />
+            {styles}
+        </a>
+    )
+}
 
 const DrawTitle: FC = () =>
     <span>

@@ -110,16 +110,16 @@ const GlobalStyles = css.global`
     html {
         overflow-y: auto;
         background-color: ${GetTheme("Dark").backgroundColor};
-        min-width: 0px;
         
         font-family: 'IstokWeb', Arial;
         font-style: normal;
+        position: fixed;
     }
 
     body {
-        margin: 0;
         width: 100%;
         height: 100%;
+        overflow: auto;
     }
 `
 

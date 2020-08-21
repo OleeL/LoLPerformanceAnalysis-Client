@@ -35,8 +35,11 @@ export const GetTileStyle = (p: IColorScheme) => css.resolve`
 
 const GetPageStyles = (Selected: IColorScheme) => css.resolve`
     div {
+        position: absolute;
+        display: flex;
         width: 100vw;
         height: 100vh;
+        overflow: auto;
         left: 0;
         top: 0;
 
@@ -63,7 +66,11 @@ const ContentStyle = css`
 
 const Screen = css`
     div {
+        display: flex;
+        flex-direction: row;
         position: relative;
+        width: 100%;
+        flex-wrap: wrap;
     }
 `
 
