@@ -1,6 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 import { OnGameUpdate } from "./SignalRListeners";
-import { _store } from "./Store";
+import { useStore } from "./Store";
 
 export let connection: signalR.HubConnection | null = null;
 
@@ -42,14 +42,14 @@ const retryRate: number = 5000;
 
 const OnDisconnect = () => {
     connection = null;
-    const { setConnected } = _store.getState();
+    const { setConnected } = useStore.getState();
     setConnected(false);
     setTimeout(() => SignalRReconnect(), 1000);
 }
 
 export const SignalRReconnect = async () => {
     console.log("%cConnecting to API", "color: green");
-    const { setConnected } = _store.getState()
+    const { setConnected } = useStore.getState()
     while (!isConnected()) {
         const results = await handleConnection();
         setConnected(results);
