@@ -105,8 +105,6 @@ const Chart = () => {
     const chartContainer = useRef(null);
     const [chartInstance, setChartInstance] = useState(null);
 
-    console.log(chartInstance);
-
     useEffect(() => {
         if (chartContainer && chartContainer.current) {
             const newChartInstance =
