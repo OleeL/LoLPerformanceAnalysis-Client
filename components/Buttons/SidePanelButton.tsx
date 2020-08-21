@@ -3,7 +3,7 @@ import css from 'styled-jsx/css';
 import create from "zustand";
 import shallow from "zustand/shallow";
 
-export const [useBurgerStore] = create(set => ({
+export const useButtonStore = create(set => ({
     pressed: false,
     hovered: false,
     togglePressed: () => set(s => ({ pressed: !s.pressed })),
@@ -44,7 +44,7 @@ const TorchStyle = css`
 const SidePanelButton = () => {
     const Selected = useColorStore(state => state.Selected);
     const { className, styles } = GetCollectionStyle(Selected);
-    const { togglePressed, setHovered } = useBurgerStore(state => ({
+    const { togglePressed, setHovered } = useButtonStore(state => ({
         togglePressed: state.togglePressed,
         setHovered: state.togglePressed
     }), shallow);

@@ -1,10 +1,10 @@
 import { useState, FC } from "react";
 import { animated, useSpring } from "react-spring";
-import { useColorStore, IColorScheme, Themes, _colorStore } from "./GlobalStyles";
+import { useColorStore, IColorScheme, Themes } from "./GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
 
-const [useColorDialStore, _colorDialStore] = create(set => ({
+const useColorDialStore = create(set => ({
     pressed: false,
     hovered: false,
     rotation: 0,
@@ -73,9 +73,9 @@ const GetDialStyle = (Selected: IColorScheme) => css.resolve`
 const DrawButton: FC<IPress> = ({ onClick, cName }) => {
     const [active, setActive] = useState(false);
     const Selected = useColorStore(state => state.Selected);
-    const Toggle = _colorStore.getState().Toggle;
+    const Toggle = useColorStore.getState().Toggle;
     const { className, styles } = GetButtonStyle(Selected);
-    const setDialRotation = _colorDialStore.getState().setDialRotation;
+    const setDialRotation = useColorDialStore.getState().setDialRotation;
 
     const spring = useSpring({
         backgroundColor: Selected.primary,
@@ -83,7 +83,7 @@ const DrawButton: FC<IPress> = ({ onClick, cName }) => {
 
     const Click = () => {
         if (onClick) onClick();
-        setDialRotation(_colorDialStore.getState().rotation + (360 / Themes.length));
+        setDialRotation(useColorDialStore.getState().rotation + (360 / Themes.length));
         setActive(!active);
         Toggle();
     }
