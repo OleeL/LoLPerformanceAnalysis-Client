@@ -202,7 +202,7 @@ const DrawTitle = () => {
 
 const DrawImage = () =>
     <>
-        <img src={"data/images/Olangutan.jpg"} alt="Olangutan" />
+        <img src={"data/images/Olangutan.webp"} alt="Olangutan" />
         <style jsx>{Image}</style>
     </>
 

@@ -93,7 +93,7 @@ const ServerListStyles = css`
 
 const DrawIcon: FC = () =>
     <a href="../">
-        <img src="/data/images/Olangutan.jpg" />
+        <img src="/data/images/Olangutan.webp" />
         <style jsx>{BarImage}</style>
     </a>
 
