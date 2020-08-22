@@ -2,9 +2,11 @@ import { SignalRReconnect } from '../Shared/SignalR';
 import React, {useEffect} from 'react';
 import GlobalStyles, { useColorStore, GetTheme } from '../components/GlobalStyles';
 import "../sass/main.scss";
+import { getCookie } from '../Shared/Cookies';
 
 const MyApp = ({Component, pageProps, router}) => {
-    const SetSelected = useColorStore(state => state.SetSelected);
+    const SetSelected: (theme: string) => void =
+        useColorStore(state => state.SetSelected);
     
     useEffect(() => {
         const html = document.getElementsByTagName('html');
@@ -18,7 +20,11 @@ const MyApp = ({Component, pageProps, router}) => {
         const timer = setTimeout(async () => {
             await SignalRReconnect();
         });
-        if (GetTheme(document.cookie)) SetSelected(document.cookie);
+        
+        const theme = getCookie("theme")
+        if (theme) {
+            SetSelected(theme);
+        }
 
         return () => clearTimeout(timer);
         

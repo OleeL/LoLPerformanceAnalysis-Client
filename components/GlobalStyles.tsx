@@ -1,6 +1,7 @@
 // styles/global.js
 import css from 'styled-jsx/css'
 import create from 'zustand';
+import { setCookie } from '../Shared/Cookies';
 
 export const Themes = [
     {
@@ -72,10 +73,13 @@ export const useColorStore = create((set, get) => ({
     SetSelected: (theme: string) => set({ Selected: GetTheme(theme) }),
     Toggle: () => set(s => {
         const theme = CycleStyle(s.Selected);
-        document.cookie = theme.name;
+        setCookie("theme", theme.name, 9999999);
+
+        console.log(document.cookie);
         return ({ Selected: theme })
     }),
 }));
+
 
 const GlobalStyles = css.global`
 
