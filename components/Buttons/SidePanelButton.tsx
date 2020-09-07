@@ -3,7 +3,14 @@ import css from 'styled-jsx/css';
 import create from "zustand";
 import shallow from "zustand/shallow";
 
-export const useButtonStore = create(set => ({
+type IButtonStore = {
+    pressed: boolean;
+    hovered: boolean;
+    togglePressed: () => void;
+    setHovered: (state: boolean) => void;
+}
+
+export const useButtonStore = create<IButtonStore>(set => ({
     pressed: false,
     hovered: false,
     togglePressed: () => set(s => ({ pressed: !s.pressed })),
@@ -46,7 +53,7 @@ const SidePanelButton = () => {
     const { className, styles } = GetCollectionStyle(Selected);
     const { togglePressed, setHovered } = useButtonStore(state => ({
         togglePressed: state.togglePressed,
-        setHovered: state.togglePressed
+        setHovered: state.setHovered
     }), shallow);
 
 
