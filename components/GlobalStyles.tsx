@@ -68,7 +68,13 @@ const Cycle = (n: number, max: number) => mod(n + 1, max);
 const CycleStyle = (theme: IColorScheme): IColorScheme =>
     Themes[Cycle(Themes.findIndex(t => t === theme), Themes.length)];
 
-export const useColorStore = create((set, get) => ({
+type IColorStore = {
+    Selected: IColorScheme;
+    SetSelected: (theme: string) => void;
+    Toggle: () => void;   
+}
+
+export const useColorStore = create<IColorStore>((set, get) => ({
     Selected: GetTheme("Darker") as IColorScheme,
     SetSelected: (theme: string) => set({ Selected: GetTheme(theme) }),
     Toggle: () => set(s => {

@@ -162,7 +162,7 @@ const Content = () => {
 }
 
 const Summoner = () => {
-    const Selected = useColorStore(state => state.Selected);
+    const Selected: IColorScheme = useColorStore(state => state.Selected);
     const {styles, className} = GetPageStyles(Selected) ;
 
     const spring = useSpring({

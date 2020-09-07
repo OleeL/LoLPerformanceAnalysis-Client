@@ -4,7 +4,14 @@ import create from "zustand";
 import shallow from 'zustand/shallow';
 import { useSpring, animated, SpringConfig } from 'react-spring';
 
-export const useBurgerStore = create(set => ({
+type IBurgerStore = {
+    pressed: boolean;
+    hovered: boolean;
+    togglePressed: () => void;
+    setHovered: (state: boolean) => void;
+}
+
+export const useBurgerStore = create<IBurgerStore>(set => ({
     pressed: false,
     hovered: false,
     togglePressed: () => set(s => ({ pressed: !s.pressed })),

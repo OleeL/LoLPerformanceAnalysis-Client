@@ -4,7 +4,16 @@ import { useColorStore, IColorScheme, Themes } from "./GlobalStyles";
 import css from 'styled-jsx/css';
 import create from "zustand";
 
-const useColorDialStore = create(set => ({
+type IColorDialStore = {
+    pressed: boolean;
+    hovered: boolean;
+    rotation: number;
+    setDialRotation: (r: number) => void;
+    togglePressed: () => void;
+    setHovered: (state: boolean) => void;
+}
+
+const useColorDialStore = create<IColorDialStore>(set => ({
     pressed: false,
     hovered: false,
     rotation: 0,

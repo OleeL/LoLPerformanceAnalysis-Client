@@ -137,7 +137,7 @@ const FlexStyle = css`
 `
 
 const index = () => {
-    const Selected = useColorStore(state => state.Selected);
+    const Selected: IColorScheme = useColorStore(state => state.Selected);
     const spring = useSpring({
         backgroundColor: Selected.backgroundColor,
         color: Selected.color
