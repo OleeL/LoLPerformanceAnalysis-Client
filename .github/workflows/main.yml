@@ -1,4 +1,4 @@
-name: Build LoLPerformanceAnalysis Client
+name: Build Client
 
 on:
   push:
