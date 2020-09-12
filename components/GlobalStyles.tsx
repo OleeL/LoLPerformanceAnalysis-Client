@@ -81,7 +81,6 @@ export const useColorStore = create<IColorStore>((set, get) => ({
         const theme = CycleStyle(s.Selected);
         setCookie("theme", theme.name, 9999999);
 
-        console.log(document.cookie);
         return ({ Selected: theme })
     }),
 }));

@@ -3,10 +3,12 @@ import { IColorScheme, useColorStore } from '../GlobalStyles';
 import { useSpring, animated } from 'react-spring';
 import { useBurgerStore } from '../Buttons/BurgerButton';
 import React from 'react';
+import SidePanelButton from '../Buttons/SidePanelButton';
 
 const GetBarStyle = (Selected: IColorScheme) => css.resolve`
     div {
         display: flex;
+        flex-direction: column;
         position: fixed;
         background-color: ${Selected.primary};
         height: 100%;
@@ -32,6 +34,53 @@ const GetShadow = () => css.resolve`
     }
 `
 
+interface IButton {
+    name: string;
+    onClick: () => void;
+}
+
+const Buttons: IButton[] = [
+    {
+        name: "Home",
+        onClick: () => { }
+    },
+    {
+        name: "Analytics",
+        onClick: () => { }
+    },
+    {
+        name: "Settings",
+        onClick: () => { }
+    },
+    {
+        name: "Change Theme",
+        onClick: useColorStore.getState().Toggle
+    },
+    {
+        name: "About",
+        onClick: () => { }
+    }
+]
+
+const DrawButtons = () =>
+    <div>
+        {
+            Buttons.map((value, index) =>
+                <SidePanelButton key={index} onClick={value.onClick}>
+                    {value.name}
+                </SidePanelButton>
+            )
+        }
+        <style jsx>{`
+            div {
+                position: relative;
+                left: 10%;
+                text-align: center;
+            }
+        `}
+        </style>
+    </div>
+
 const LeftBar = () => {
     const Selected = useColorStore(state => state.Selected);
     const pressed = useBurgerStore(state => state.pressed);
@@ -44,6 +93,7 @@ const LeftBar = () => {
         <animated.div
             style={spring}
             className={className}>
+            <DrawButtons />
             {styles}
         </animated.div>
     );
